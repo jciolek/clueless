@@ -1,9 +1,13 @@
 /* global window */
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import {
+  createAutoIdMiddleware,
+  createValidatorMiddleware
+} from './middleware';
 import saga from './saga';
 import reducer from './reducer';
-import { createAutoIdMiddleware } from './middleware';
+import validator from './validator';
 
 let store = null;
 
@@ -17,7 +21,11 @@ const composeEnhancers =
 
 function createCustomStore() {
   const sagaMiddleware = createSagaMiddleware();
-  const middlewareList = [createAutoIdMiddleware(), sagaMiddleware];
+  const middlewareList = [
+    createValidatorMiddleware(validator),
+    createAutoIdMiddleware(),
+    sagaMiddleware
+  ];
   const newStore = createStore(
     reducer,
     composeEnhancers(applyMiddleware(...middlewareList))
