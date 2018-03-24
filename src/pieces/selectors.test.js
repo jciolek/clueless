@@ -1,4 +1,8 @@
-import { getPiecesIdsByGroup, getPiecesForMurdererById } from './selectors';
+import {
+  getPiecesGroupIds,
+  getPiecesIdsByGroup,
+  getPiecesForMurdererById
+} from './selectors';
 import reducer from '../redux-store/reducer';
 import actions from '../redux-store/actions';
 import createMockStore from '../../test/reducer-utils';
@@ -10,6 +14,18 @@ describe('pieces selectors', () => {
   beforeEach(() => {
     store = createMockStore(reducer);
     ({ dispatch } = store);
+  });
+
+  describe('getPiecesGroupIds', () => {
+    it('should return an array [groupId, ...]', () => {
+      const state = {
+        pieces: [
+          { id: 'weapons', items: [{ id: 'wrench' }, { id: 'dagger' }] },
+          { id: 'suspects', items: [{ id: 'white' }, { id: 'green' }] }
+        ]
+      };
+      expect(getPiecesGroupIds(state)).toEqual(['weapons', 'suspects']);
+    });
   });
 
   describe('getPiecesIdsByGroup', () => {

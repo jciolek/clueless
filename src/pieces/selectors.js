@@ -1,10 +1,19 @@
 import { createSelector } from 'reselect';
 import { getPlayersPiecesByPieceId } from '../players/selectors';
 
+const getPiecesGroupIds = createSelector(
+  (state) => state.pieces,
+  (groups) => groups.map((group) => group.id)
+);
+
 const getPiecesIdsByGroup = createSelector(
   (state) => state.pieces,
   (groups) =>
     groups.map((group) => group.items.map((piece) => `${group.id}.${piece.id}`))
+);
+
+const getPiecesIds = createSelector(getPiecesIdsByGroup, (groups) =>
+  groups.reduce((result, group) => result.concat(group))
 );
 
 function getMurderStatus(statusList = [], playerCount) {
@@ -59,4 +68,9 @@ const getPiecesForMurdererById = createSelector(
   }
 );
 
-export { getPiecesIdsByGroup, getPiecesForMurdererById };
+export {
+  getPiecesIds,
+  getPiecesGroupIds,
+  getPiecesIdsByGroup,
+  getPiecesForMurdererById
+};
