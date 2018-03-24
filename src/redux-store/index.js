@@ -22,8 +22,8 @@ const composeEnhancers =
 function createCustomStore() {
   const sagaMiddleware = createSagaMiddleware();
   const middlewareList = [
-    createValidatorMiddleware(validator),
     createAutoIdMiddleware(),
+    createValidatorMiddleware(validator),
     sagaMiddleware
   ];
   const newStore = createStore(
