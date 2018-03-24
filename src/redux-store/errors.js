@@ -1,7 +1,9 @@
 import PIECES from '../pieces/errors';
+import PLAYERS from '../players/errors';
 
 const errors = {
-  PIECES
+  PIECES,
+  PLAYERS
 };
 
 export default errors;

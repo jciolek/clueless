@@ -32,7 +32,7 @@ function validateName(state, action) {
     : action;
 }
 
-function validateGameStatus(state, action) {
+function validateGameNotStarted(state, action) {
   return state.game.isStarted
     ? createError(action, errors.PIECES.GENERAL.GAME_IS_STARTED)
     : action;
@@ -40,18 +40,18 @@ function validateGameStatus(state, action) {
 
 const validator = createValidator({
   [types.PIECES.ADD]: combineValidators(
-    validateGameStatus,
+    validateGameNotStarted,
     validateGroupId,
     validateName
   ),
 
   [types.PIECES.REPLACE]: combineValidators(
-    validateGameStatus,
+    validateGameNotStarted,
     validateId,
     validateName
   ),
 
-  [types.PIECES.REMOVE]: combineValidators(validateGameStatus, validateId)
+  [types.PIECES.REMOVE]: combineValidators(validateGameNotStarted, validateId)
 });
 
 export default validator;
