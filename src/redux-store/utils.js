@@ -14,18 +14,28 @@ function createTypes(actionMap, ns = '') {
   return types;
 }
 
-function createActionMap(typeIds) {
-  const actionMap = {};
-
-  typeIds.forEach((id) => {
-    if (typeof id === 'object') {
-      Object.assign(actionMap, id);
-    } else {
-      actionMap[id] = undefined;
-    }
-  });
-
-  return actionMap;
+function metaCreator(payload, meta) {
+  return meta;
 }
 
-export { createTypes, createActionMap };
+// Create action map digestible by createActions
+// and add default metaCreator.
+// The assumption is that each action takes only two params: (payload, meta).
+function createActionMap(typeIds) {
+  return typeIds.reduce((result, item) => {
+    if (typeof item === 'object') {
+      Object.keys(item).forEach((id) => {
+        Object.assign(result, {
+          [id]: [].concat(item[id], metaCreator).slice(0, 2)
+        });
+      });
+      Object.assign(result);
+    } else {
+      Object.assign(result, { [item]: [undefined, metaCreator] });
+    }
+
+    return result;
+  }, {});
+}
+
+export { createTypes, createActionMap, metaCreator };
