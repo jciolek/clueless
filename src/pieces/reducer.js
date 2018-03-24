@@ -60,19 +60,23 @@ const reducer = handleActions(
       }));
     },
     [types.PIECES.REPLACE](state, action) {
-      const { groupId, id, name } = action.payload;
+      const { id, name } = action.payload;
+      const [groupId, pieceId] = id.split('.');
 
       return selectMap(state, groupId, (group) => ({
         ...group,
-        items: group.items.map((item) => (item.id !== id ? item : Piece(name)))
+        items: group.items.map(
+          (item) => (item.id !== pieceId ? item : Piece(name))
+        )
       }));
     },
     [types.PIECES.REMOVE](state, action) {
-      const { groupId, id } = action.payload;
+      const { id } = action.payload;
+      const [groupId, pieceId] = id.split('.');
 
       return selectMap(state, groupId, (group) => ({
         ...group,
-        items: group.items.filter((item) => item.id !== id)
+        items: group.items.filter((item) => item.id !== pieceId)
       }));
     }
   },

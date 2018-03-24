@@ -26,25 +26,30 @@ describe('pieces reducer', () => {
 
   it('should allow to remove an item from a group', () => {
     const [, { id: groupId, items }] = store.getState();
-    const [{ id }] = items;
+    const [{ id: pieceId }] = items;
 
-    dispatch(actions.pieces.remove({ groupId, id }));
+    dispatch(actions.pieces.remove({ id: `${groupId}.${pieceId}` }));
 
     const state = store.getState();
     expect(state[1].items.length).toBe(items.length - 1);
-    expect(state[1].items.some((item) => item.id === id)).toBe(false);
+    expect(state[1].items.some((item) => item.id === pieceId)).toBe(false);
   });
 
   it('should allow to replace an item in a group', () => {
     const [, , { id: groupId, items }] = store.getState();
-    const [{ id }] = items;
+    const [, { id: pieceId }] = items;
 
-    dispatch(actions.pieces.replace({ id, groupId, name: 'Baseball bat' }));
+    dispatch(
+      actions.pieces.replace({
+        id: `${groupId}.${pieceId}`,
+        name: 'Baseball bat'
+      })
+    );
 
     const state = store.getState();
     expect(state[2].items.length).toBe(items.length);
-    expect(state[2].items.some((item) => item.id === id)).toBe(false);
-    expect(state[2].items[0].id).not.toBe(id);
-    expect(state[2].items[0].name).toBe('Baseball bat');
+    expect(state[2].items.some((item) => item.id === pieceId)).toBe(false);
+    expect(state[2].items[1].id).not.toBe(pieceId);
+    expect(state[2].items[1].name).toBe('Baseball bat');
   });
 });
