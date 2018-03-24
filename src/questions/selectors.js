@@ -38,8 +38,4 @@ const getQuestionsByPlayerIdByPieceId = createSelector(
   }
 );
 
-export {
-  getQuestionsById,
-  getQuestionsByPieceId,
-  getQuestionsByPlayerIdByPieceId
-};
+export { getQuestionsById, getQuestionsByPlayerIdByPieceId };

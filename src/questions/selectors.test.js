@@ -1,8 +1,4 @@
-import {
-  getQuestionsById,
-  getQuestionsByPieceId,
-  getQuestionsByPlayerIdByPieceId
-} from './selectors';
+import { getQuestionsById, getQuestionsByPlayerIdByPieceId } from './selectors';
 import reducer from '../redux-store/reducer';
 import actions from '../redux-store/actions';
 

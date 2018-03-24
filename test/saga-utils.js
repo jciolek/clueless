@@ -10,7 +10,7 @@ function createMockStore(reducer, saga, initialState) {
       subscribe(callback) {
         subscriptions.push(callback);
         return () => {
-          const i = subscriptions.find(callback);
+          const i = subscriptions.indexOf(callback);
 
           if (i !== -1) {
             subscriptions.splice(i, 1);
