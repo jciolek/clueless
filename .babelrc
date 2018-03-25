@@ -1,14 +1,29 @@
 {
   "presets": [
+    "react",
     ["env", {
-      "modules": false
+      "modules": false,
+      "loose": true,
+      "useBuiltIns": false,
+      "targets": {
+        "browsers": [
+          "last 2 versions",
+          "ie >= 11"
+        ]
+      }
     }],
-    "react"
   ],
   "plugins": [
-    "transform-object-rest-spread"
+    "transform-runtime",
+    "transform-object-rest-spread",
+    "lodash"
   ],
   "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    },
     "test": {
       "presets": [
         ["env", {
