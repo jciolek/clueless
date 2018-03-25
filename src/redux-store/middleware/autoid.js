@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 function* defaultIdGenerator() {
   let currId = 1;
 
@@ -12,12 +10,11 @@ function* defaultIdGenerator() {
 function createAutoIdMiddleware({ idIterator = defaultIdGenerator() } = {}) {
   return () => (next) => (action) => {
     let newAction = action;
+    let { payload: { id } = {} } = action;
+    const { meta: { autoid: isAutoId = false } = {} } = action;
 
-    if (
-      _.get(action, 'meta.autoid') &&
-      _.get(action, 'payload.id') === undefined
-    ) {
-      const { value: id } = idIterator.next();
+    if (isAutoId && id === undefined) {
+      ({ value: id } = idIterator.next());
       newAction = {
         ...action,
         payload: {

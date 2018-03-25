@@ -10,7 +10,7 @@ describe('autoid middleware', () => {
   });
 
   it('should pass through an action with no meta', () => {
-    const action = { payload: null };
+    const action = {};
     middleware()(next)(action);
     expect(next).toHaveBeenCalledWith(action);
   });
@@ -34,7 +34,7 @@ describe('autoid middleware', () => {
   });
 
   it('should create a sequential id by default if meta.autoid === true', () => {
-    const action = { payload: null, meta: { autoid: true } };
+    const action = { meta: { autoid: true } };
     middleware()(next)(action);
     let [[result]] = next.mock.calls;
     expect(result).not.toBe(action);
@@ -46,7 +46,7 @@ describe('autoid middleware', () => {
   });
 
   it('should take custom id iterator', () => {
-    const action = { payload: null, meta: { autoid: true } };
+    const action = { meta: { autoid: true } };
     const idIterator = {
       next() {
         return { value: 'hello' };
