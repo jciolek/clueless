@@ -12,10 +12,12 @@
         ]
       }
     }],
+    "flow"
   ],
   "plugins": [
     "transform-runtime",
     "transform-object-rest-spread",
+    "transform-flow-strip-types",
     "lodash"
   ],
   "env": {

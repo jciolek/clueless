@@ -1,10 +1,11 @@
 module.exports = {
   extends: [
     'airbnb',
+    'plugin:flowtype/recommended',
     'prettier',
     'prettier/react'
   ],
-  plugins: ['react', 'prettier'],
+  plugins: ['react', 'flowtype', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
     'react/jsx-filename-extension': [
@@ -23,5 +24,10 @@ module.exports = {
       }      
     }
   ],
-  parser: 'babel-eslint'
+  parser: 'babel-eslint',
+  settings: {
+    flowtype: {
+      onlyFilesWithFlowAnnotation: true,
+    },
+  },
 };
