@@ -5,13 +5,13 @@ const errors = {
     GAME_NOT_STARTED: 'Players cannot be updated before the game has started.'
   },
   ADD: {
-    EXISTING_ID: 'Cannot add another player with the same id.',
-    MISSING_ID: 'Id has to be specified when adding a player.'
+    EXISTING_ID: 'Cannot add another player with the same id.'
   },
   PARAMS: {
     INVALID_ID: 'There is no player with specified id.',
-    INVALID_NAME: 'The name should be a string.',
-    INVALID_STATUS: 'The status should be boolean.',
+    INVALID_ID_TYPE: 'The id has to be a string.',
+    INVALID_NAME_TYPE: 'The name has to be a string.',
+    INVALID_STATUS: 'The status has to be boolean.',
     INVALID_PIECE_ID: 'There is no piece with specified id.'
   }
 };

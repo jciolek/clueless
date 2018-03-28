@@ -16,20 +16,20 @@ describe('questions selectors', () => {
   beforeEach(() => {
     state = undefined;
     dispatch({});
-    dispatch(actions.players.add({ id: 1, name: 'Shrek' }));
-    dispatch(actions.players.add({ id: 2, name: 'Fiona' }));
+    dispatch(actions.players.add({ id: '1', name: 'Shrek' }));
+    dispatch(actions.players.add({ id: '2', name: 'Fiona' }));
     dispatch(
       actions.questions.add({
-        id: 2,
-        playerId: 1,
+        id: '2',
+        playerId: '1',
         pieces: ['weapons.dagger', 'locations.study', 'suspects.green'],
         answer: 1
       })
     );
     dispatch(
       actions.questions.add({
-        id: 5,
-        playerId: 2,
+        id: '5',
+        playerId: '2',
         pieces: ['weapons.wrench', 'locations.study', 'suspects.white'],
         answer: 1
       })
@@ -55,8 +55,8 @@ describe('questions selectors', () => {
     it('should return an object { [playerId]: { [pieceId]: [<Question>, ...], ... }, ... }', () => {
       dispatch(
         actions.questions.add({
-          id: 3,
-          playerId: 1,
+          id: '3',
+          playerId: '1',
           pieces: ['weapons.dagger', 'locations.study', 'suspects.white'],
           answer: 1
         })

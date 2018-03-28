@@ -2,7 +2,7 @@ function* defaultIdGenerator() {
   let currId = 1;
 
   while (true) {
-    yield currId;
+    yield String(currId);
     currId += 1;
   }
 }

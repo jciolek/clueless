@@ -17,13 +17,13 @@ describe('players validator', () => {
 
   describe('ADD', () => {
     it('should return the same action if it is valid', () => {
-      const action = add({ id: 1, name: 'Douglas' });
+      const action = add({ id: '1', name: 'Douglas' });
 
       expect(validator(store.getState(), action)).toEqual(action);
     });
 
     it('should return an error when the game is in progress', () => {
-      const action = add({ id: 1, name: 'Douglas' });
+      const action = add({ id: '1', name: 'Douglas' });
       dispatch(actions.game.start());
 
       expect(validator(store.getState(), action)).toEqual(
@@ -32,15 +32,15 @@ describe('players validator', () => {
     });
 
     it('should return an error if the name is not a string', () => {
-      const action = add({ id: 1, name: null });
+      const action = add({ id: '1', name: null });
 
       expect(validator(store.getState(), action)).toEqual(
-        createError(action, errors.PLAYERS.PARAMS.INVALID_NAME)
+        createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_TYPE)
       );
     });
 
     it('should return an error if player id already exists', () => {
-      const action = add({ id: 1, name: 'Snape' });
+      const action = add({ id: '1', name: 'Snape' });
       dispatch(action);
 
       expect(validator(store.getState(), action)).toEqual(
@@ -52,39 +52,39 @@ describe('players validator', () => {
       const action = add({ name: 'Anakin' });
 
       expect(validator(store.getState(), action)).toEqual(
-        createError(action, errors.PLAYERS.ADD.MISSING_ID)
+        createError(action, errors.PLAYERS.PARAMS.INVALID_ID_TYPE)
       );
     });
   });
 
   describe('RENAME', () => {
     beforeEach(() => {
-      dispatch(add({ id: 1, name: 'Doug' }));
+      dispatch(add({ id: '1', name: 'Doug' }));
     });
 
     it('should return the same action if it is valid', () => {
-      const action = rename({ id: 1, name: 'Douglas' });
+      const action = rename({ id: '1', name: 'Douglas' });
 
       expect(validator(store.getState(), action)).toEqual(action);
     });
 
     it('should return the same action if the game is in progress', () => {
-      const action = rename({ id: 1, name: 'Douglas' });
+      const action = rename({ id: '1', name: 'Douglas' });
       dispatch(actions.game.start());
 
       expect(validator(store.getState(), action)).toEqual(action);
     });
 
     it('should return an error if the name is not a string', () => {
-      const action = rename({ id: 1, name: null });
+      const action = rename({ id: '1', name: null });
 
       expect(validator(store.getState(), action)).toEqual(
-        createError(action, errors.PLAYERS.PARAMS.INVALID_NAME)
+        createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_TYPE)
       );
     });
 
     it('should return an error if player id does not exists', () => {
-      const action = rename({ id: 2, name: 'Vitas' });
+      const action = rename({ id: '2', name: 'Vitas' });
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PLAYERS.PARAMS.INVALID_ID)
@@ -94,17 +94,17 @@ describe('players validator', () => {
 
   describe('REMOVE', () => {
     beforeEach(() => {
-      dispatch(add({ id: 1, name: 'Doug' }));
+      dispatch(add({ id: '1', name: 'Doug' }));
     });
 
     it('should return the same action if it is valid', () => {
-      const action = remove({ id: 1 });
+      const action = remove({ id: '1' });
 
       expect(validator(store.getState(), action)).toEqual(action);
     });
 
     it('should return an error when the game is in progress', () => {
-      const action = remove({ id: 1 });
+      const action = remove({ id: '1' });
       dispatch(actions.game.start());
 
       expect(validator(store.getState(), action)).toEqual(
@@ -113,7 +113,7 @@ describe('players validator', () => {
     });
 
     it('should return an error if player id does not exists', () => {
-      const action = remove({ id: 2 });
+      const action = remove({ id: '2' });
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PLAYERS.PARAMS.INVALID_ID)
@@ -123,12 +123,12 @@ describe('players validator', () => {
 
   describe('UPDATE', () => {
     beforeEach(() => {
-      dispatch(add({ id: 1, name: 'Doug' }));
+      dispatch(add({ id: '1', name: 'Doug' }));
     });
 
     it('should return the same action if it is valid', () => {
       const action = update({
-        id: 1,
+        id: '1',
         pieceId: 'weapons.dagger',
         status: false
       });
@@ -139,7 +139,7 @@ describe('players validator', () => {
 
     it('should return an error if the game is not in progress', () => {
       const action = update({
-        id: 1,
+        id: '1',
         pieceId: 'weapons.dagger',
         status: false
       });
@@ -151,7 +151,7 @@ describe('players validator', () => {
 
     it('should return an error if player id does not exist', () => {
       const action = update({
-        id: 2,
+        id: '2',
         pieceId: 'weapons.dagger',
         status: false
       });
@@ -164,7 +164,7 @@ describe('players validator', () => {
 
     it('should return an error if piece id does not exist', () => {
       const action = update({
-        id: 1,
+        id: '1',
         pieceId: 'magic.avadaKedavra',
         status: false
       });
@@ -177,7 +177,7 @@ describe('players validator', () => {
 
     it('should return an error if piece status is not boolean', () => {
       const action = update({
-        id: 1,
+        id: '1',
         pieceId: 'weapons.dagger',
         status: null
       });

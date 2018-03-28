@@ -33,16 +33,16 @@ describe('autoid middleware', () => {
     expect(next).toHaveBeenCalledWith(action);
   });
 
-  it('should create a sequential id by default if meta.autoid === true', () => {
+  it('should create a sequential id:string by default if meta.autoid === true', () => {
     const action = { meta: { autoid: true } };
     middleware()(next)(action);
     let [[result]] = next.mock.calls;
     expect(result).not.toBe(action);
-    expect(result).toHaveProperty('payload.id', 1);
+    expect(result).toHaveProperty('payload.id', '1');
     middleware()(next)(action);
     [, [result]] = next.mock.calls;
     expect(result).not.toBe(action);
-    expect(result).toHaveProperty('payload.id', 2);
+    expect(result).toHaveProperty('payload.id', '2');
   });
 
   it('should take custom id iterator', () => {

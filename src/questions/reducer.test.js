@@ -13,14 +13,14 @@ describe('questions reducer', () => {
     ({ dispatch } = store);
     payloads = [
       {
-        id: 1,
-        playerId: 1,
+        id: '1',
+        playerId: '1',
         pieces: ['weapons.knife', 'locations.study', 'suspects.green'],
         answer: 1
       },
       {
-        id: 2,
-        playerId: 2,
+        id: '2',
+        playerId: '2',
         pieces: ['weapons.rope', 'locations.livingRoom', 'suspects.mustard'],
         answer: 1
       }
@@ -36,16 +36,16 @@ describe('questions reducer', () => {
   it('should add only a question with answer === 1', () => {
     dispatch(
       actions.questions.add({
-        id: 3,
-        playerId: 1,
+        id: '3',
+        playerId: '1',
         pieces: ['weapons.wrench', 'locations.livingRoom', 'suspects.white'],
         answer: 0
       })
     );
     dispatch(
       actions.questions.add({
-        id: 4,
-        playerId: 3,
+        id: '4',
+        playerId: '3',
         pieces: ['weapons.wrench', 'locations.study', 'suspects.white'],
         answer: 'weapons.wrench'
       })
@@ -57,14 +57,14 @@ describe('questions reducer', () => {
   });
 
   it('should allow to remove a question', () => {
-    dispatch(actions.questions.remove({ id: 2 }));
+    dispatch(actions.questions.remove({ id: '2' }));
     expect(store.getState()).toEqual([Question(payloads[0])]);
   });
 
   it('should allow to update a question', () => {
     dispatch(
       actions.questions.update({
-        id: 2,
+        id: '2',
         pieceId: 'weapons.rope'
       })
     );

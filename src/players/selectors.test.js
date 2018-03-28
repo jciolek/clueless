@@ -23,16 +23,16 @@ describe('players selectors', () => {
 
     state = undefined;
     dispatch({});
-    dispatch(add({ id: 1, name: 'Shrek' }));
-    dispatch(add({ id: 2, name: 'Fiona' }));
-    dispatch(add({ id: 3, name: 'Donkey' }));
+    dispatch(add({ id: '1', name: 'Shrek' }));
+    dispatch(add({ id: '2', name: 'Fiona' }));
+    dispatch(add({ id: '3', name: 'Donkey' }));
 
     expect(state.players).toHaveLength(4);
   });
 
   describe('getPlayersIds', () => {
     it('should return an array [playerId, ...]', () => {
-      expect(getPlayersIds(state)).toEqual(['table', 1, 2, 3]);
+      expect(getPlayersIds(state)).toEqual(['table', '1', '2', '3']);
     });
   });
 
@@ -53,11 +53,13 @@ describe('players selectors', () => {
     it('should return an object { [playerId]: [pieceId, ...] }', () => {
       const { update } = actions.players;
 
-      dispatch(update({ id: 1, pieceId: 'weapons.wrench', status: true }));
-      dispatch(update({ id: 1, pieceId: 'location.study', status: true }));
-      dispatch(update({ id: 2, pieceId: 'weapons.dagger', status: false }));
-      dispatch(update({ id: 2, pieceId: 'locations.bathroom', status: false }));
-      dispatch(update({ id: 2, pieceId: 'suspects.white', status: false }));
+      dispatch(update({ id: '1', pieceId: 'weapons.wrench', status: true }));
+      dispatch(update({ id: '1', pieceId: 'location.study', status: true }));
+      dispatch(update({ id: '2', pieceId: 'weapons.dagger', status: false }));
+      dispatch(
+        update({ id: '2', pieceId: 'locations.bathroom', status: false })
+      );
+      dispatch(update({ id: '2', pieceId: 'suspects.white', status: false }));
 
       const players = clone(state.players);
 
@@ -77,13 +79,15 @@ describe('players selectors', () => {
       dispatch(
         update({ id: 'table', pieceId: 'weapons.dagger', status: true })
       );
-      dispatch(update({ id: 1, pieceId: 'weapons.wrench', status: true }));
-      dispatch(update({ id: 1, pieceId: 'suspects.white', status: false }));
-      dispatch(update({ id: 2, pieceId: 'weapons.wrench', status: false }));
-      dispatch(update({ id: 1, pieceId: 'location.study', status: false }));
-      dispatch(update({ id: 2, pieceId: 'weapons.dagger', status: false }));
-      dispatch(update({ id: 2, pieceId: 'locations.bathroom', status: false }));
-      dispatch(update({ id: 2, pieceId: 'suspects.white', status: false }));
+      dispatch(update({ id: '1', pieceId: 'weapons.wrench', status: true }));
+      dispatch(update({ id: '1', pieceId: 'suspects.white', status: false }));
+      dispatch(update({ id: '2', pieceId: 'weapons.wrench', status: false }));
+      dispatch(update({ id: '1', pieceId: 'location.study', status: false }));
+      dispatch(update({ id: '2', pieceId: 'weapons.dagger', status: false }));
+      dispatch(
+        update({ id: '2', pieceId: 'locations.bathroom', status: false })
+      );
+      dispatch(update({ id: '2', pieceId: 'suspects.white', status: false }));
 
       expect(getPlayersPiecesByPieceId(state)).toEqual({
         'weapons.wrench': [false, true, false],

@@ -8,11 +8,11 @@ import errors from '../redux-store/errors';
 import { getPlayersIds } from './selectors';
 import { getPiecesIds } from '../pieces/selectors';
 
-function validateName(state, action) {
+function validateNameType(state, action) {
   const { name } = action.payload;
 
   return typeof name !== 'string'
-    ? createError(action, errors.PLAYERS.PARAMS.INVALID_NAME)
+    ? createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_TYPE)
     : action;
 }
 
@@ -24,9 +24,9 @@ function validateId(state, action) {
     : action;
 }
 
-function validateDefinedId(state, action) {
-  return action.payload.id === undefined
-    ? createError(action, errors.PLAYERS.ADD.MISSING_ID)
+function validateIdType(state, action) {
+  return typeof action.payload.id !== 'string'
+    ? createError(action, errors.PLAYERS.PARAMS.INVALID_ID_TYPE)
     : action;
 }
 
@@ -67,14 +67,23 @@ function validateGameIsStarted(state, action) {
 const validator = createValidator({
   [types.PLAYERS.ADD]: combineValidators(
     validateGameNotStarted,
-    validateDefinedId,
+    validateIdType,
     validateNewId,
-    validateName
+    validateNameType
   ),
-  [types.PLAYERS.RENAME]: combineValidators(validateName, validateId),
-  [types.PLAYERS.REMOVE]: combineValidators(validateGameNotStarted, validateId),
+  [types.PLAYERS.RENAME]: combineValidators(
+    validateNameType,
+    validateIdType,
+    validateId
+  ),
+  [types.PLAYERS.REMOVE]: combineValidators(
+    validateGameNotStarted,
+    validateIdType,
+    validateId
+  ),
   [types.PLAYERS.UPDATE]: combineValidators(
     validateGameIsStarted,
+    validateIdType,
     validateId,
     validatePieceId,
     validatePieceStatus

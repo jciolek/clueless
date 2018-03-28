@@ -12,7 +12,7 @@ describe('players reducer', () => {
     store = createMockStore(reducer);
     ({ dispatch } = store);
 
-    const payloads = [{ id: 1, name: 'Shrek' }, { id: 2, name: 'Fiona' }];
+    const payloads = [{ id: '1', name: 'Shrek' }, { id: '2', name: 'Fiona' }];
     players = {
       table: Player({ id: 'table', name: 'Table', isProtected: true }),
       shrek: Player(payloads[0]),
@@ -37,7 +37,7 @@ describe('players reducer', () => {
   });
 
   it('should allow to remove a player', () => {
-    dispatch(actions.players.remove({ id: 1 }));
+    dispatch(actions.players.remove({ id: '1' }));
     expect(store.getState()).toHaveLength(2);
     expect(store.getState()).toEqual([players.table, players.fiona]);
   });
@@ -53,7 +53,7 @@ describe('players reducer', () => {
   });
 
   it('should allow to rename a player', () => {
-    dispatch(actions.players.rename({ id: 1, name: 'Donkey' }));
+    dispatch(actions.players.rename({ id: '1', name: 'Donkey' }));
     expect(store.getState()).toEqual([
       players.table,
       { ...players.shrek, name: 'Donkey' },
@@ -73,7 +73,7 @@ describe('players reducer', () => {
   it('should allow to set piece status for a player', () => {
     dispatch(
       actions.players.update({
-        id: 1,
+        id: '1',
         pieceId: 'weapons.wrench',
         status: false
       })
