@@ -9,25 +9,30 @@ type Props = {
   onRemove?: (IdType) => void
 };
 type State = {
-  name: NameType
+  name: NameType,
+  isSaveEnabled: boolean
 };
 
 class ItemInput extends React.Component<Props, State> {
   state = {
-    name: this.props.name
+    name: this.props.name,
+    isSaveEnabled: !!this.props.name
   };
 
   handleChange = (evt: SyntheticEvent<HTMLInputElement>) => {
-    this.setState({ name: evt.currentTarget.value });
+    const name = evt.currentTarget.value;
+    this.setState({ name, isSaveEnabled: !!name });
   };
 
   handleSave = () => {
-    this.props.onSave(this.state.name);
+    if (this.state.isSaveEnabled) {
+      this.props.onSave(this.state.name);
+    }
   };
 
   render() {
     const { onCancel, onRemove } = this.props;
-    const { name } = this.state;
+    const { name, isSaveEnabled } = this.state;
 
     return (
       <div className="input-group">
@@ -50,7 +55,11 @@ class ItemInput extends React.Component<Props, State> {
           </button>
         </div>
         <div className="input-group-button">
-          <button className="button" onClick={this.handleSave}>
+          <button
+            className="button"
+            disabled={!isSaveEnabled}
+            onClick={this.handleSave}
+          >
             <i className="fa fa-check" />
           </button>
         </div>
