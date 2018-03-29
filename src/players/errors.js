@@ -11,6 +11,7 @@ const errors = {
     INVALID_ID: 'There is no player with specified id.',
     INVALID_ID_TYPE: 'The id has to be a string.',
     INVALID_NAME_TYPE: 'The name has to be a string.',
+    INVALID_NAME_VALUE: 'The name cannot be an empty string.',
     INVALID_STATUS: 'The status has to be boolean.',
     INVALID_PIECE_ID: 'There is no piece with specified id.'
   }

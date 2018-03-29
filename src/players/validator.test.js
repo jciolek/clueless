@@ -39,6 +39,14 @@ describe('players validator', () => {
       );
     });
 
+    it('should return an error if the name is an empty string', () => {
+      const action = add({ id: '1', name: '' });
+
+      expect(validator(store.getState(), action)).toEqual(
+        createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_VALUE)
+      );
+    });
+
     it('should return an error if player id already exists', () => {
       const action = add({ id: '1', name: 'Snape' });
       dispatch(action);
@@ -80,6 +88,14 @@ describe('players validator', () => {
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_TYPE)
+      );
+    });
+
+    it('should return an error if the name is an empty string', () => {
+      const action = rename({ id: '1', name: '' });
+
+      expect(validator(store.getState(), action)).toEqual(
+        createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_VALUE)
       );
     });
 

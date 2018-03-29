@@ -16,6 +16,14 @@ function validateNameType(state, action) {
     : action;
 }
 
+function validateNameValue(state, action) {
+  const { name } = action.payload;
+
+  return name === ''
+    ? createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_VALUE)
+    : action;
+}
+
 function validateId(state, action) {
   const { id } = action.payload;
 
@@ -69,12 +77,14 @@ const validator = createValidator({
     validateGameNotStarted,
     validateIdType,
     validateNewId,
-    validateNameType
+    validateNameType,
+    validateNameValue
   ),
   [types.PLAYERS.RENAME]: combineValidators(
-    validateNameType,
     validateIdType,
-    validateId
+    validateId,
+    validateNameType,
+    validateNameValue
   ),
   [types.PLAYERS.REMOVE]: combineValidators(
     validateGameNotStarted,
