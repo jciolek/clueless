@@ -42,7 +42,15 @@ describe('pieces validator', () => {
       const action = add({ groupId: 'weapons', name: null });
 
       expect(validator(store.getState(), action)).toEqual(
-        createError(action, errors.PIECES.PARAMS.INVALID_NAME)
+        createError(action, errors.PIECES.PARAMS.INVALID_NAME_TYPE)
+      );
+    });
+
+    it('should return an error if the name is an empty string', () => {
+      const action = add({ groupId: 'weapons', name: '' });
+
+      expect(validator(store.getState(), action)).toEqual(
+        createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_VALUE)
       );
     });
   });
@@ -73,7 +81,15 @@ describe('pieces validator', () => {
       const action = replace({ id: 'weapons.dagger', name: null });
 
       expect(validator(store.getState(), action)).toEqual(
-        createError(action, errors.PIECES.PARAMS.INVALID_NAME)
+        createError(action, errors.PIECES.PARAMS.INVALID_NAME_TYPE)
+      );
+    });
+
+    it('should return an error if the name is an empty string', () => {
+      const action = replace({ id: 'weapons.dagger', name: '' });
+
+      expect(validator(store.getState(), action)).toEqual(
+        createError(action, errors.PIECES.PARAMS.INVALID_NAME_VALUE)
       );
     });
 

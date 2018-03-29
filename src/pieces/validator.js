@@ -24,11 +24,19 @@ function validateGroupId(state, action) {
     : action;
 }
 
-function validateName(state, action) {
+function validateNameType(state, action) {
   const { name } = action.payload;
 
   return typeof name !== 'string'
-    ? createError(action, errors.PIECES.PARAMS.INVALID_NAME)
+    ? createError(action, errors.PIECES.PARAMS.INVALID_NAME_TYPE)
+    : action;
+}
+
+function validateNameValue(state, action) {
+  const { name } = action.payload;
+
+  return name === ''
+    ? createError(action, errors.PIECES.PARAMS.INVALID_NAME_VALUE)
     : action;
 }
 
@@ -42,13 +50,15 @@ const validator = createValidator({
   [types.PIECES.ADD]: combineValidators(
     validateGameNotStarted,
     validateGroupId,
-    validateName
+    validateNameType,
+    validateNameValue
   ),
 
   [types.PIECES.REPLACE]: combineValidators(
     validateGameNotStarted,
     validateId,
-    validateName
+    validateNameType,
+    validateNameValue
   ),
 
   [types.PIECES.REMOVE]: combineValidators(validateGameNotStarted, validateId)
