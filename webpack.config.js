@@ -118,7 +118,7 @@ const commonConfig = {
 };
 
 const developmentConfig = {
-  entry: ['react-hot-loader/patch', './src/index.js'],
+  entry: ['react-hot-loader/patch', './src/index.jsx'],
   module: {
     rules: [
       {
@@ -146,7 +146,7 @@ const developmentConfig = {
 };
 
 const productionConfig = {
-  entry: ['./src/index.js'],
+  entry: ['./src/index.jsx'],
   module: {
     rules: [
       {

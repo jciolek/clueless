@@ -18,6 +18,7 @@
     "transform-runtime",
     "transform-object-rest-spread",
     "transform-flow-strip-types",
+    "transform-class-properties",
     "lodash"
   ],
   "env": {
