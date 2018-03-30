@@ -6,21 +6,12 @@ const defaultPieces = [
   {
     id: 'weapons',
     name: 'Weapons',
-    items: [
-      'Candlestick',
-      'Dagger',
-      'Wrench',
-      'Rope',
-      'Lead pipe',
-      'Pistol'
-    ].map(Piece)
+    items: ['Candlestick', 'Dagger', 'Wrench', 'Rope', 'Lead pipe', 'Pistol']
   },
   {
     id: 'suspects',
     name: 'Suspects',
-    items: ['White', 'Green', 'Mustard', 'Scarlet', 'Peacock', 'Plum'].map(
-      Piece
-    )
+    items: ['White', 'Green', 'Mustard', 'Scarlet', 'Peacock', 'Plum']
   },
   {
     id: 'locations',
@@ -35,9 +26,12 @@ const defaultPieces = [
       'Garage',
       'Kitchen',
       'Study'
-    ].map(Piece)
+    ]
   }
-];
+].map((group) => ({
+  ...group,
+  items: group.items.map((item) => Piece({ groupId: group.id, name: item }))
+}));
 
 function selectMap(list, id, mapper) {
   return list.map((item) => {
@@ -56,27 +50,27 @@ const reducer = handleActions(
 
       return selectMap(state, groupId, (group) => ({
         ...group,
-        items: group.items.concat(Piece(name))
+        items: group.items.concat(Piece({ name, groupId }))
       }));
     },
     [types.PIECES.REPLACE](state, action) {
       const { id, name } = action.payload;
-      const [groupId, pieceId] = id.split('.');
+      const [groupId] = id.split('.');
 
       return selectMap(state, groupId, (group) => ({
         ...group,
         items: group.items.map(
-          (item) => (item.id !== pieceId ? item : Piece(name))
+          (item) => (item.id !== id ? item : Piece({ name, groupId }))
         )
       }));
     },
     [types.PIECES.REMOVE](state, action) {
       const { id } = action.payload;
-      const [groupId, pieceId] = id.split('.');
+      const [groupId] = id.split('.');
 
       return selectMap(state, groupId, (group) => ({
         ...group,
-        items: group.items.filter((item) => item.id !== pieceId)
+        items: group.items.filter((item) => item.id !== id)
       }));
     }
   },

@@ -20,8 +20,14 @@ describe('pieces selectors', () => {
     it('should return an array [groupId, ...]', () => {
       const state = {
         pieces: [
-          { id: 'weapons', items: [{ id: 'wrench' }, { id: 'dagger' }] },
-          { id: 'suspects', items: [{ id: 'white' }, { id: 'green' }] }
+          {
+            id: 'weapons',
+            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }]
+          },
+          {
+            id: 'suspects',
+            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }]
+          }
         ]
       };
       expect(getPiecesGroupIds(state)).toEqual(['weapons', 'suspects']);
@@ -32,8 +38,14 @@ describe('pieces selectors', () => {
     it('should return an array [[groupId.pieceId, ... ], ... ]', () => {
       const state = {
         pieces: [
-          { id: 'weapons', items: [{ id: 'wrench' }, { id: 'dagger' }] },
-          { id: 'suspects', items: [{ id: 'white' }, { id: 'green' }] }
+          {
+            id: 'weapons',
+            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }]
+          },
+          {
+            id: 'suspects',
+            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }]
+          }
         ]
       };
       expect(getPiecesIdsByGroup(state)).toEqual([

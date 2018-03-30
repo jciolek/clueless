@@ -1,8 +1,21 @@
+// @flow
 import _ from 'lodash';
 
-function Piece(name) {
+export type IdType = string;
+export type NameType = string;
+export type PieceType = {
+  id: IdType,
+  name: NameType
+};
+
+type Props = {
+  name: NameType,
+  groupId: IdType
+};
+
+function Piece({ name, groupId }: Props) {
   return {
-    id: _.camelCase(name),
+    id: `${groupId}.${_.camelCase(name)}`,
     name
   };
 }

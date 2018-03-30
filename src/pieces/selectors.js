@@ -8,8 +8,7 @@ const getPiecesGroupIds = createSelector(
 
 const getPiecesIdsByGroup = createSelector(
   (state) => state.pieces,
-  (groups) =>
-    groups.map((group) => group.items.map((piece) => `${group.id}.${piece.id}`))
+  (groups) => groups.map((group) => group.items.map((piece) => piece.id))
 );
 
 const getPiecesIds = createSelector(getPiecesIdsByGroup, (groups) =>
