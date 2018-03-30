@@ -4,5 +4,5 @@ export type NameType = string;
 export type ItemType = {
   id: IdType,
   name: NameType,
-  isProtected: boolean
+  isProtected?: boolean
 };

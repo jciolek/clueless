@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import PlayerListContainer from '../players/player-list.container';
+import PieceListContainer from '../pieces/piece-list.container';
 import RouteContainer from '../router/route.container';
 import StepsContainer from '../steps/steps.container';
 import type { RouteType } from '../router/route.type';
@@ -23,6 +24,9 @@ class App extends React.Component<Props> {
               Clueless <small>no more</small>
             </h1>
             <StepsContainer />
+            <RouteContainer route="/pieces">
+              <PieceListContainer />
+            </RouteContainer>
             <RouteContainer route="/players">
               <PlayerListContainer />
             </RouteContainer>

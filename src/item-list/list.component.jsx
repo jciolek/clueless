@@ -3,12 +3,14 @@ import * as React from 'react';
 import Item from './item.component';
 import type { ItemType, IdType, NameType } from './item.type';
 
+type MetaType = any;
 type Props = {
   title: string,
-  items: Array<ItemType>,
-  onAdd: (NameType) => void,
-  onSave: (IdType, NameType) => void,
-  onRemove?: (IdType) => void
+  items: ItemType[],
+  onAdd: (NameType, MetaType) => void,
+  onSave: (IdType, NameType, MetaType) => void,
+  onRemove?: (IdType, MetaType) => void,
+  meta?: MetaType
 };
 type State = {
   isCreateMode: boolean
@@ -19,30 +21,32 @@ class List extends React.Component<Props, State> {
     isCreateMode: false
   };
 
-  handleSave = (id: ?IdType, name: NameType) => {
-    if (id || id === 0) {
-      this.props.onSave(id, name);
-    } else {
-      this.props.onAdd(name);
-    }
-
-    this.setState({ isCreateMode: false });
-  };
-
   handleCreate = () => {
     this.setState({ isCreateMode: true });
   };
 
-  handleCancel = () => {
+  handleSave = (id: ?IdType, name: NameType) => {
+    const { meta } = this.props;
+
+    if (id || id === 0) {
+      this.props.onSave(id, name, meta);
+    } else {
+      this.props.onAdd(name, meta);
+    }
+
     this.setState({ isCreateMode: false });
   };
 
   handleRemove = (id: IdType) => {
-    const { onRemove } = this.props;
+    const { onRemove, meta } = this.props;
 
     if (onRemove) {
-      onRemove(id);
+      onRemove(id, meta);
     }
+  };
+
+  handleCancel = () => {
+    this.setState({ isCreateMode: false });
   };
 
   render() {

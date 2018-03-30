@@ -5,7 +5,8 @@ export type IdType = string;
 export type NameType = string;
 export type PieceType = {
   id: IdType,
-  name: NameType
+  name: NameType,
+  [string]: any
 };
 
 type Props = {
