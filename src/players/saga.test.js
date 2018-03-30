@@ -18,7 +18,7 @@ describe('players saga', () => {
       actions.questions.add({
         id: '1',
         playerId: '1',
-        pieces: ['weapons.pistol'],
+        pieces: ['weapons.pistol', 'suspects.white'],
         answer: 1
       })
     );
@@ -26,7 +26,7 @@ describe('players saga', () => {
       actions.questions.add({
         id: '2',
         playerId: '1',
-        pieces: ['locations.study'],
+        pieces: ['locations.study', 'suspects.green'],
         answer: 1
       })
     );
@@ -34,7 +34,7 @@ describe('players saga', () => {
       actions.questions.add({
         id: '3',
         playerId: '1',
-        pieces: ['weapons.pistol'],
+        pieces: ['weapons.pistol', 'locations.courtyard'],
         answer: 1
       })
     );
@@ -42,13 +42,13 @@ describe('players saga', () => {
       actions.questions.add({
         id: '4',
         playerId: '2',
-        pieces: ['weapons.pistol'],
+        pieces: ['weapons.pistol', 'locations.bedroom'],
         answer: 1
       })
     );
 
     const { questions, players } = store.getState();
-    expect(players).toHaveLength(4);
+    expect(players).toHaveLength(5);
     expect(questions).toHaveLength(4);
   });
 
@@ -72,6 +72,11 @@ describe('players saga', () => {
         }),
         actions.players.update({
           id: 'table',
+          pieceId: 'weapons.pistol',
+          status: false
+        }),
+        actions.players.update({
+          id: 'me',
           pieceId: 'weapons.pistol',
           status: false
         }),
@@ -101,6 +106,11 @@ describe('players saga', () => {
       expect(store.output).toEqual([
         actions.players.update({
           id: 'table',
+          pieceId: 'weapons.wrench',
+          status: false
+        }),
+        actions.players.update({
+          id: 'me',
           pieceId: 'weapons.wrench',
           status: false
         }),

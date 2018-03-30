@@ -36,7 +36,7 @@ describe('questions selectors', () => {
     );
 
     const { players, questions } = state;
-    expect(players).toHaveLength(3);
+    expect(players).toHaveLength(4);
     expect(questions).toHaveLength(2);
   });
 
@@ -65,6 +65,7 @@ describe('questions selectors', () => {
 
       expect(getQuestionsByPlayerIdByPieceId(state)).toEqual({
         table: {},
+        me: {},
         1: {
           'weapons.dagger': [questions[0], questions[2]],
           'locations.study': [questions[0], questions[2]],

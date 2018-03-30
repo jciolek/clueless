@@ -42,7 +42,10 @@ const reducer = handleActions(
       );
     }
   },
-  [Player({ id: 'table', name: 'Table', isProtected: true })]
+  [
+    Player({ id: 'table', name: 'Table', isProtected: true }),
+    Player({ id: 'me', name: 'Me', isProtected: true })
+  ]
 );
 
 export default reducer;

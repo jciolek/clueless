@@ -15,6 +15,7 @@ describe('players reducer', () => {
     const payloads = [{ id: '1', name: 'Shrek' }, { id: '2', name: 'Fiona' }];
     players = {
       table: Player({ id: 'table', name: 'Table', isProtected: true }),
+      me: Player({ id: 'me', name: 'Me', isProtected: true }),
       shrek: Player(payloads[0]),
       fiona: Player(payloads[1])
     };
@@ -22,15 +23,16 @@ describe('players reducer', () => {
     dispatch(actions.players.add(payloads[1]));
   });
 
-  it('should return just the table in the list of players', () => {
+  it('should return just the table and me players', () => {
     store = createMockStore(reducer);
-    expect(store.getState()).toEqual([players.table]);
+    expect(store.getState()).toEqual([players.table, players.me]);
   });
 
   it('should allow to add a player', () => {
-    expect(store.getState()).toHaveLength(3);
+    expect(store.getState()).toHaveLength(4);
     expect(store.getState()).toEqual([
       players.table,
+      players.me,
       players.shrek,
       players.fiona
     ]);
@@ -38,15 +40,20 @@ describe('players reducer', () => {
 
   it('should allow to remove a player', () => {
     dispatch(actions.players.remove({ id: '1' }));
-    expect(store.getState()).toHaveLength(2);
-    expect(store.getState()).toEqual([players.table, players.fiona]);
+    expect(store.getState()).toHaveLength(3);
+    expect(store.getState()).toEqual([
+      players.table,
+      players.me,
+      players.fiona
+    ]);
   });
 
   it('should not allow to remove protected player', () => {
     dispatch(actions.players.remove({ id: 'table' }));
-    expect(store.getState()).toHaveLength(3);
+    expect(store.getState()).toHaveLength(4);
     expect(store.getState()).toEqual([
       players.table,
+      players.me,
       players.shrek,
       players.fiona
     ]);
@@ -56,6 +63,7 @@ describe('players reducer', () => {
     dispatch(actions.players.rename({ id: '1', name: 'Donkey' }));
     expect(store.getState()).toEqual([
       players.table,
+      players.me,
       { ...players.shrek, name: 'Donkey' },
       players.fiona
     ]);
@@ -65,6 +73,7 @@ describe('players reducer', () => {
     dispatch(actions.players.rename({ id: 'table', name: 'Donkey' }));
     expect(store.getState()).toEqual([
       { ...players.table, name: 'Donkey' },
+      players.me,
       players.shrek,
       players.fiona
     ]);
@@ -80,6 +89,7 @@ describe('players reducer', () => {
     );
     expect(store.getState()).toEqual([
       players.table,
+      players.me,
       {
         ...players.shrek,
         pieces: { 'weapons.wrench': false }

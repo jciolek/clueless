@@ -27,12 +27,12 @@ describe('players selectors', () => {
     dispatch(add({ id: '2', name: 'Fiona' }));
     dispatch(add({ id: '3', name: 'Donkey' }));
 
-    expect(state.players).toHaveLength(4);
+    expect(state.players).toHaveLength(5);
   });
 
   describe('getPlayersIds', () => {
     it('should return an array [playerId, ...]', () => {
-      expect(getPlayersIds(state)).toEqual(['table', '1', '2', '3']);
+      expect(getPlayersIds(state)).toEqual(['table', 'me', '1', '2', '3']);
     });
   });
 
@@ -42,9 +42,10 @@ describe('players selectors', () => {
 
       expect(getPlayersById(state)).toEqual({
         table: players[0],
-        1: players[1],
-        2: players[2],
-        3: players[3]
+        me: players[1],
+        1: players[2],
+        2: players[3],
+        3: players[4]
       });
     });
   });
@@ -65,9 +66,10 @@ describe('players selectors', () => {
 
       expect(getPlayersPiecesByPlayerId(state)).toEqual({
         table: players[0].pieces,
-        1: players[1].pieces,
-        2: players[2].pieces,
-        3: players[3].pieces
+        me: players[1].pieces,
+        1: players[2].pieces,
+        2: players[3].pieces,
+        3: players[4].pieces
       });
     });
   });
@@ -89,12 +91,15 @@ describe('players selectors', () => {
       );
       dispatch(update({ id: '2', pieceId: 'suspects.white', status: false }));
 
+      // The first two values in each array always represent table an me players.
+      // Please note, that if table has a piece and me does not,
+      // the order for the two will be reversed.
       expect(getPlayersPiecesByPieceId(state)).toEqual({
-        'weapons.wrench': [false, true, false],
-        'location.study': [false, false],
-        'weapons.dagger': [true, false],
-        'locations.bathroom': [false, false],
-        'suspects.white': [false, false, false]
+        'weapons.wrench': [false, false, true, false],
+        'location.study': [false, false, false],
+        'weapons.dagger': [false, true, false],
+        'locations.bathroom': [false, false, false],
+        'suspects.white': [false, false, false, false]
       });
     });
   });

@@ -29,13 +29,19 @@ const getPlayersPiecesByPieceId = createSelector(
   (players, playersById) =>
     players.reduce((result, player) => {
       const tablePieces = playersById.table.pieces;
+      const mePieces = playersById.me.pieces;
 
       Object.keys(player.pieces).forEach((pieceId) => {
         if (!result[pieceId]) {
           Object.assign(result, { [pieceId]: [] });
-          // We need to special case the table user
-          // because we know all of the table's pieces up front.
+          // We need to special case the table and me players
+          // because we know all of their pieces up front.
+          // Please note that the order of the values returned
+          // does not have to reflect the order of players.
           if (!tablePieces[pieceId]) {
+            result[pieceId].push(false);
+          }
+          if (!mePieces[pieceId]) {
             result[pieceId].push(false);
           }
         }
