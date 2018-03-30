@@ -18,12 +18,13 @@ describe('pieces validator', () => {
   describe('ADD', () => {
     it('should return the same action if it is valid', () => {
       const action = add({ groupId: 'weapons', name: 'pen' });
+
       expect(validator(store.getState(), action)).toEqual(action);
     });
 
     it('should return an error when the game is in progress', () => {
-      dispatch(actions.game.start());
       const action = add({ groupId: 'weapons', name: 'pen' });
+      dispatch(actions.game.start());
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PIECES.GENERAL.GAME_IS_STARTED)
@@ -50,7 +51,16 @@ describe('pieces validator', () => {
       const action = add({ groupId: 'weapons', name: '' });
 
       expect(validator(store.getState(), action)).toEqual(
-        createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_VALUE)
+        createError(action, errors.PIECES.PARAMS.INVALID_NAME_VALUE)
+      );
+    });
+
+    it('should return an error if there is already a piece with the same id', () => {
+      const action = add({ groupId: 'weapons', name: 'baseball bat' });
+      dispatch(add({ groupId: 'weapons', name: 'Baseball bat' }));
+
+      expect(validator(store.getState(), action)).toEqual(
+        createError(action, errors.PIECES.PARAMS.INVALID_ID_AVAILABLE)
       );
     });
   });
