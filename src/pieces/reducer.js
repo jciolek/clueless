@@ -21,7 +21,7 @@ const defaultPieces = [
       'Dining room',
       'Games room',
       'Courtyard',
-      'Bahtroom',
+      'Bathroom',
       'Bedroom',
       'Garage',
       'Kitchen',
