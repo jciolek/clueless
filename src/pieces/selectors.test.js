@@ -1,6 +1,8 @@
 import {
+  getPiecesIds,
   getPiecesGroupIds,
   getPiecesIdsByGroup,
+  getPiecesNumberPerPlayer,
   getPiecesForMurdererById
 } from './selectors';
 import reducer from '../redux-store/reducer';
@@ -14,6 +16,29 @@ describe('pieces selectors', () => {
   beforeEach(() => {
     store = createMockStore(reducer);
     ({ dispatch } = store);
+  });
+
+  describe('getPiecesIds', () => {
+    it('should return an array [id, ...]', () => {
+      const state = {
+        pieces: [
+          {
+            id: 'weapons',
+            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }]
+          },
+          {
+            id: 'suspects',
+            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }]
+          }
+        ]
+      };
+      expect(getPiecesIds(state)).toEqual([
+        'weapons.wrench',
+        'weapons.dagger',
+        'suspects.white',
+        'suspects.green'
+      ]);
+    });
   });
 
   describe('getPiecesGroupIds', () => {
@@ -55,11 +80,32 @@ describe('pieces selectors', () => {
     });
   });
 
+  describe('getPiecesNumberPerPlayer', () => {
+    it('should return number of pieces per player, excluding table', () => {
+      const { add } = actions.players;
+      const piecesLength = getPiecesIds(store.getState()).length;
+
+      dispatch(add({ id: '1', name: 'Fiona' }));
+      expect(getPiecesNumberPerPlayer(store.getState())).toBe(
+        Math.floor(piecesLength / 2)
+      );
+
+      dispatch(add({ id: '2', name: 'Shrek' }));
+      expect(getPiecesNumberPerPlayer(store.getState())).toBe(
+        Math.floor(piecesLength / 3)
+      );
+
+      dispatch(add({ id: '3', name: 'Donkey' }));
+      expect(getPiecesNumberPerPlayer(store.getState())).toBe(
+        Math.floor(piecesLength / 4)
+      );
+    });
+  });
+
   describe('getPiecesForMurdererById', () => {
     const { add, update } = actions.players;
 
     beforeEach(() => {
-      dispatch({});
       dispatch(add({ id: '1', name: 'Shrek' }));
       dispatch(add({ id: '2', name: 'Fiona' }));
       dispatch(add({ id: '3', name: 'Donkey' }));

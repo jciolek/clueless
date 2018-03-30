@@ -15,6 +15,17 @@ const getPiecesIds = createSelector(getPiecesIdsByGroup, (groups) =>
   groups.reduce((result, group) => result.concat(group))
 );
 
+const getPiecesNumberPerPlayer = createSelector(
+  (state) => state.players,
+  getPiecesIds,
+  (players, piecesIds) => {
+    const playersLength = players.length - 1;
+    const piecesLength = piecesIds.length;
+
+    return Math.floor(piecesLength / playersLength);
+  }
+);
+
 function getMurderStatus(statusList = [], playerCount) {
   // If any of the players has the piece, then murderer does not have it.
   if (statusList.some((status) => status)) {
@@ -71,5 +82,6 @@ export {
   getPiecesIds,
   getPiecesGroupIds,
   getPiecesIdsByGroup,
+  getPiecesNumberPerPlayer,
   getPiecesForMurdererById
 };
