@@ -4,12 +4,14 @@ import QUESTIONS from '../questions/action-map';
 import PLAYERS from '../players/action-map';
 import PIECES from '../pieces/action-map';
 import GAME from '../game/action-map';
+import ROUTER from '../router/action-map';
 
 const actionMap = {
   QUESTIONS,
   PLAYERS,
   PIECES,
-  GAME
+  GAME,
+  ROUTER
 };
 
 const types = createTypes(actionMap);
