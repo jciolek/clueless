@@ -1,17 +1,11 @@
 // @flow
 import _ from 'lodash';
 
-export type IdType = string;
-export type NameType = string;
-export type PieceType = {
-  id: IdType,
-  name: NameType,
-  [string]: any
-};
+import type { PieceIdType, PieceNameType } from './types/piece';
 
 type Props = {
-  name: NameType,
-  groupId: IdType
+  name: PieceNameType,
+  groupId: PieceIdType
 };
 
 function Piece({ name, groupId }: Props) {

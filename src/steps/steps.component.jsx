@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import LinkContainer from '../router/link.container';
-import type { RouteType } from '../router/route.type';
+import type { RouteType } from '../router/types/route';
 
 type LabelType = string;
 type StepType = {

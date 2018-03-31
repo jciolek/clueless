@@ -1,15 +1,15 @@
 // @flow
 import * as React from 'react';
-import type { IdType, NameType } from './item.type';
+import type { ItemIdType, ItemNameType } from './types/item';
 
 type Props = {
-  name: NameType,
-  onSave: (name: NameType) => void,
+  name: ItemNameType,
+  onSave: (name: ItemNameType) => void,
   onCancel: () => void,
-  onRemove?: (IdType) => void
+  onRemove?: (ItemIdType) => void
 };
 type State = {
-  name: NameType,
+  name: ItemNameType,
   isSaveEnabled: boolean
 };
 

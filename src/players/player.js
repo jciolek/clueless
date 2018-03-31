@@ -1,13 +1,9 @@
 // @flow
-export type PlayerType = {
-  id: string,
-  name: string,
-  isProtected: boolean,
-  pieces: { [pieceId: string]: boolean }
-};
+import type { PlayerType, PlayerIdType, PlayerNameType } from './types/player';
+
 type Props = {
-  id: string,
-  name: string,
+  id: PlayerIdType,
+  name: PlayerNameType,
   isProtected: boolean
 };
 

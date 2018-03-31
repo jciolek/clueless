@@ -2,15 +2,15 @@
 import * as React from 'react';
 import ItemText from './item-text.component';
 import ItemInput from './item-input.component';
-import type { IdType, NameType } from './item.type';
+import type { ItemIdType, ItemNameType } from './types/item';
 
 type Props = {
-  id?: IdType,
-  name: NameType,
+  id?: ItemIdType,
+  name: ItemNameType,
   isEditMode: boolean,
-  onSave: (?IdType, NameType) => void,
+  onSave: (?ItemIdType, ItemNameType) => void,
   onCancel: () => void,
-  onRemove?: (IdType) => void
+  onRemove?: (ItemIdType) => void
 };
 
 type State = {
@@ -39,7 +39,7 @@ class Item extends React.Component<Props, State> {
     onCancel();
   };
 
-  handleSave = (name: NameType) => {
+  handleSave = (name: ItemNameType) => {
     const { id, onSave } = this.props;
 
     this.setState({ isEditMode: false });

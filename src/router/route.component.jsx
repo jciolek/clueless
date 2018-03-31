@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import type { RouteType } from './route.type';
+import type { RouteType } from './types/route';
 
 type Props = {
   route: RouteType,

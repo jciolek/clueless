@@ -1,25 +1,18 @@
 // @flow
 import * as React from 'react';
 import List from '../item-list/list.component';
-import type { PieceType, IdType, NameType } from './piece';
-
-type GroupIdType = string;
-type GroupNameType = string;
-type GroupType = {
-  id: GroupIdType,
-  name: GroupNameType,
-  items: PieceType[]
-};
+import type { PieceIdType, PieceNameType } from './types/piece';
+import type { PieceGroupType, PieceGroupIdType } from './types/piece-group';
 
 type Props = {
-  groups: GroupType[],
-  onAdd: (GroupIdType, NameType) => void,
-  onSave: (IdType, NameType) => void,
-  onRemove: (IdType) => void
+  groups: PieceGroupType[],
+  onAdd: (PieceGroupIdType, PieceNameType) => void,
+  onSave: (PieceIdType, PieceNameType) => void,
+  onRemove: (PieceIdType) => void
 };
 
 class PieceList extends React.Component<Props> {
-  handleAdd = (name: NameType, groupId: GroupIdType) => {
+  handleAdd = (name: PieceNameType, groupId: PieceGroupIdType) => {
     this.props.onAdd(groupId, name);
   };
 

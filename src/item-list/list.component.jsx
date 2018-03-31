@@ -1,15 +1,15 @@
 // @flow
 import * as React from 'react';
 import Item from './item.component';
-import type { ItemType, IdType, NameType } from './item.type';
+import type { ItemType, ItemIdType, ItemNameType } from './types/item';
 
 type MetaType = any;
 type Props = {
   title: string,
   items: ItemType[],
-  onAdd: (NameType, MetaType) => void,
-  onSave: (IdType, NameType, MetaType) => void,
-  onRemove?: (IdType, MetaType) => void,
+  onAdd: (ItemNameType, MetaType) => void,
+  onSave: (ItemIdType, ItemNameType, MetaType) => void,
+  onRemove?: (ItemIdType, MetaType) => void,
   meta?: MetaType
 };
 type State = {
@@ -25,7 +25,7 @@ class List extends React.Component<Props, State> {
     this.setState({ isCreateMode: true });
   };
 
-  handleSave = (id: ?IdType, name: NameType) => {
+  handleSave = (id: ?ItemIdType, name: ItemNameType) => {
     const { meta } = this.props;
 
     if (id || id === 0) {
@@ -37,7 +37,7 @@ class List extends React.Component<Props, State> {
     this.setState({ isCreateMode: false });
   };
 
-  handleRemove = (id: IdType) => {
+  handleRemove = (id: ItemIdType) => {
     const { onRemove, meta } = this.props;
 
     if (onRemove) {

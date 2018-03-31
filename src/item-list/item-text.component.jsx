@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
-import type { NameType } from './item.type';
+import type { ItemNameType } from './types/item';
 
 type Props = {
-  name: NameType,
+  name: ItemNameType,
   onEdit: () => void
 };
 

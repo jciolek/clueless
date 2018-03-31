@@ -4,7 +4,7 @@ import PlayerListContainer from '../players/player-list.container';
 import PieceListContainer from '../pieces/piece-list.container';
 import RouteContainer from '../router/route.container';
 import StepsContainer from '../steps/steps.container';
-import type { RouteType } from '../router/route.type';
+import type { RouteType } from '../router/types/route';
 
 type Props = {
   onNavigate: (route: RouteType) => void
