@@ -2,11 +2,17 @@ import { handleActions } from 'redux-actions';
 import { types } from '../redux-store/actions';
 import Player from './player';
 
+const defaultPlayers = [
+  Player({ id: 'table', name: 'Table', isProtected: true }),
+  Player({ id: 'me', name: 'Me', isProtected: true })
+];
+
 const reducer = handleActions(
   {
     [types.PLAYERS.ADD](state, action) {
       return state.concat(Player(action.payload));
     },
+
     [types.PLAYERS.RENAME](state, action) {
       const { id, name } = action.payload;
 
@@ -20,11 +26,13 @@ const reducer = handleActions(
               }
       );
     },
+
     [types.PLAYERS.REMOVE](state, action) {
       const { id } = action.payload;
 
       return state.filter((player) => player.id !== id || player.isProtected);
     },
+
     [types.PLAYERS.UPDATE](state, action) {
       const { id, pieceId, status } = action.payload;
 
@@ -40,12 +48,16 @@ const reducer = handleActions(
                 }
               }
       );
+    },
+
+    [types.PLAYERS.RESET](state) {
+      return state.map((player) => ({
+        ...player,
+        pieces: {}
+      }));
     }
   },
-  [
-    Player({ id: 'table', name: 'Table', isProtected: true }),
-    Player({ id: 'me', name: 'Me', isProtected: true })
-  ]
+  defaultPlayers
 );
 
 export default reducer;

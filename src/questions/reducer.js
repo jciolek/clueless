@@ -2,6 +2,8 @@ import { handleActions } from 'redux-actions';
 import { types } from '../redux-store/actions';
 import Question from './question';
 
+const defaultQuestions = [];
+
 const reducer = handleActions(
   {
     [types.QUESTIONS.ADD](state, action) {
@@ -35,9 +37,13 @@ const reducer = handleActions(
           pieces: question.pieces.filter((item) => item !== pieceId)
         };
       });
+    },
+
+    [types.QUESTIONS.RESET]() {
+      return defaultQuestions;
     }
   },
-  []
+  defaultQuestions
 );
 
 export default reducer;

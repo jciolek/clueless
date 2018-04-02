@@ -4,6 +4,7 @@ import Question from './question';
 import createMockStore from '../../test/reducer-utils';
 
 describe('questions reducer', () => {
+  const { add, update, remove, reset } = actions.questions;
   let store = null;
   let dispatch = null;
   let payloads = null;
@@ -25,8 +26,8 @@ describe('questions reducer', () => {
         answer: 1
       }
     ];
-    dispatch(actions.questions.add(payloads[0]));
-    dispatch(actions.questions.add(payloads[1]));
+    dispatch(add(payloads[0]));
+    dispatch(add(payloads[1]));
   });
 
   it('should return empty list of questions', () => {
@@ -35,7 +36,7 @@ describe('questions reducer', () => {
 
   it('should add only a question with answer === 1', () => {
     dispatch(
-      actions.questions.add({
+      add({
         id: '3',
         playerId: '1',
         pieces: ['weapons.wrench', 'locations.livingRoom', 'suspects.white'],
@@ -43,13 +44,14 @@ describe('questions reducer', () => {
       })
     );
     dispatch(
-      actions.questions.add({
+      add({
         id: '4',
         playerId: '3',
         pieces: ['weapons.wrench', 'locations.study', 'suspects.white'],
         answer: 'weapons.wrench'
       })
     );
+
     expect(store.getState()).toEqual([
       Question(payloads[0]),
       Question(payloads[1])
@@ -57,22 +59,24 @@ describe('questions reducer', () => {
   });
 
   it('should allow to remove a question', () => {
-    dispatch(actions.questions.remove({ id: '2' }));
+    dispatch(remove({ id: '2' }));
     expect(store.getState()).toEqual([Question(payloads[0])]);
   });
 
   it('should allow to update a question', () => {
-    dispatch(
-      actions.questions.update({
-        id: '2',
-        pieceId: 'weapons.rope'
-      })
-    );
+    dispatch(update({ id: '2', pieceId: 'weapons.rope' }));
+
     expect(store.getState()).toEqual([
       Question(payloads[0]),
       Object.assign(Question(payloads[1]), {
         pieces: ['locations.livingRoom', 'suspects.mustard']
       })
     ]);
+  });
+
+  it('should allow to reset questions', () => {
+    dispatch(reset());
+
+    expect(store.getState()).toEqual([]);
   });
 });

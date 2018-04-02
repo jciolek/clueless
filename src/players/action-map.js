@@ -4,7 +4,8 @@ const actionMap = createActionMap([
   { ADD: [undefined, (payload, meta) => ({ autoid: true, ...meta })] },
   'REMOVE',
   'RENAME',
-  'UPDATE'
+  'UPDATE',
+  'RESET'
 ]);
 
 export default actionMap;

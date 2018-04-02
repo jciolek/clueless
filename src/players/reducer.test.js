@@ -4,6 +4,7 @@ import actions from '../redux-store/actions';
 import createMockStore from '../../test/reducer-utils';
 
 describe('players reducer', () => {
+  const { add, update, remove, reset } = actions.players;
   let store = null;
   let dispatch = null;
   let players = null;
@@ -19,8 +20,8 @@ describe('players reducer', () => {
       shrek: Player(payloads[0]),
       fiona: Player(payloads[1])
     };
-    dispatch(actions.players.add(payloads[0]));
-    dispatch(actions.players.add(payloads[1]));
+    dispatch(add(payloads[0]));
+    dispatch(add(payloads[1]));
   });
 
   it('should return just the table and me players', () => {
@@ -39,7 +40,7 @@ describe('players reducer', () => {
   });
 
   it('should allow to remove a player', () => {
-    dispatch(actions.players.remove({ id: '1' }));
+    dispatch(remove({ id: '1' }));
     expect(store.getState()).toHaveLength(3);
     expect(store.getState()).toEqual([
       players.table,
@@ -49,7 +50,7 @@ describe('players reducer', () => {
   });
 
   it('should not allow to remove protected player', () => {
-    dispatch(actions.players.remove({ id: 'table' }));
+    dispatch(remove({ id: 'table' }));
     expect(store.getState()).toHaveLength(4);
     expect(store.getState()).toEqual([
       players.table,
@@ -80,13 +81,7 @@ describe('players reducer', () => {
   });
 
   it('should allow to set piece status for a player', () => {
-    dispatch(
-      actions.players.update({
-        id: '1',
-        pieceId: 'weapons.wrench',
-        status: false
-      })
-    );
+    dispatch(update({ id: '1', pieceId: 'weapons.wrench', status: false }));
     expect(store.getState()).toEqual([
       players.table,
       players.me,
@@ -94,6 +89,20 @@ describe('players reducer', () => {
         ...players.shrek,
         pieces: { 'weapons.wrench': false }
       },
+      players.fiona
+    ]);
+  });
+
+  it('should allow to reset all players', () => {
+    dispatch(update({ id: '1', pieceId: 'weapons.wrench', status: false }));
+    dispatch(update({ id: '1', pieceId: 'weapons.dagger', status: true }));
+    dispatch(update({ id: '2', pieceId: 'weapons.dagger', status: false }));
+    dispatch(reset());
+
+    expect(store.getState()).toEqual([
+      players.table,
+      players.me,
+      players.shrek,
       players.fiona
     ]);
   });
