@@ -33,7 +33,7 @@ function Steps(props: Props) {
     const className = step.route === activeRoute ? 'is-active' : '';
 
     return (
-      <li className={className}>
+      <li key={step.route} className={className}>
         <LinkContainer route={step.route}>{step.label}</LinkContainer>
       </li>
     );

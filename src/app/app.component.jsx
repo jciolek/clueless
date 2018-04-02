@@ -2,6 +2,7 @@
 import * as React from 'react';
 import PlayerListContainer from '../players/player-list.container';
 import PieceListContainer from '../pieces/piece-list.container';
+import NotesContainer from '../game/notes.container';
 import RouteContainer from '../router/route.container';
 import StepsContainer from '../steps/steps.container';
 import type { RouteType } from '../router/types/route';
@@ -29,6 +30,9 @@ class App extends React.Component<Props> {
             </RouteContainer>
             <RouteContainer route="/players">
               <PlayerListContainer />
+            </RouteContainer>
+            <RouteContainer route="/game">
+              <NotesContainer />
             </RouteContainer>
           </div>
         </div>

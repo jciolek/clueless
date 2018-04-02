@@ -1,0 +1,99 @@
+$notespiece-border: 1px solid rgba($black, .25) !default;
+$notespiece-padding: .5rem 0 .5rem 0;
+
+@mixin webnicer-notes {
+  .notes {
+    table-layout: fixed;
+    width: 100%;
+
+    .button {
+      margin-bottom: 0;
+      overflow: hidden;
+      padding-left: 0;
+      padding-right: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    thead,
+    tbody {
+      border-left: 0;
+      border-right: 0;
+    }
+
+    td,
+    th {
+      padding: 0 1px;
+    }
+
+    td {
+      vertical-align: middle;
+    }
+
+    th {
+      vertical-align: top;
+    }
+  }
+
+  .notes-group-heading {
+    text-align: left;
+  }
+
+  .notes-piece {
+    border-bottom: $notespiece-border;
+    padding: $notespiece-padding;
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+
+    @each $name, $color in $foundation-palette {
+      &.#{$name} {
+        @include callout-style($color);
+      }
+    }
+  }
+
+  .notes-piece-name {
+    .button {
+      text-align: left;
+    }
+  }
+
+  .notes-piece-name-placeholder {
+    width: 5rem;
+
+    @media screen and (min-width: 480px) {
+      width: 25%;
+    }
+  }
+
+  .notes-player {
+    .button {
+      text-overflow: clip;
+    }
+  }
+
+  @for $i from 3 through 7 {
+    .players-#{i} {
+      .notes-player {
+        width: calc((100% - 5rem) / $i);
+
+        @media screen and (min-width: 480px) {
+          width: 75% / $i;
+        }
+      }
+    }
+  }
+
+  .notes-piece-status {
+    text-align: center;
+
+    @each $name, $color in $foundation-palette {
+      &.#{$name} {
+        @include callout-style($color);
+      }
+    }
+  }
+}

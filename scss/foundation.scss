@@ -1,6 +1,8 @@
 @import 'foundation/settings';
 @import '~foundation-sites/scss/foundation';
 
+@import 'foundation/notes';
+
 @include foundation-global-styles;
 @include foundation-xy-grid-classes;
 @include foundation-typography;
@@ -30,7 +32,7 @@
 // @include foundation-sticky;
 // @include foundation-reveal;
 // @include foundation-switch;
-// @include foundation-table;
+@include foundation-table;
 // @include foundation-tabs;
 // @include foundation-thumbnail;
 // @include foundation-title-bar;
@@ -41,3 +43,5 @@
 @include foundation-flex-classes;
 
 @include foundation-prototype-spacing;
+
+@include webnicer-notes;
