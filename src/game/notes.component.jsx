@@ -17,6 +17,7 @@ type Props = {
   players: PlayerType[],
   isStarted: boolean,
   onStart: () => void,
+  onFinish: () => void,
   onAnswer: (PlayerIdType, QuestionPiecesType, QuestionAnswerType) => void,
   onStatusToggle: (PlayerIdType, PieceIdType) => void
 };
@@ -174,22 +175,25 @@ class Notes extends React.Component<Props, State> {
   };
 
   render() {
-    const { piecesByGroup, players, isStarted, onStart } = this.props;
+    const { piecesByGroup, players, isStarted, onStart, onFinish } = this.props;
     const playersRowNode = this.getPlayersRow();
     const groupRowNodes = piecesByGroup.map(this.getGroupRows);
 
-    return (
+    return !isStarted ? (
+      <button className="alert button" onClick={onStart}>
+        Start the game
+      </button>
+    ) : (
       <React.Fragment>
-        {!isStarted ? (
-          <button className="alert button" onClick={onStart}>
-            Start the game
+        <div className="button-group">
+          <button className="alert button" onClick={onFinish}>
+            Finish the game
           </button>
-        ) : (
-          <table className={`notes unstriped players-${players.length}`}>
-            <thead>{playersRowNode}</thead>
-            <tbody>{groupRowNodes}</tbody>
-          </table>
-        )}
+        </div>
+        <table className={`notes unstriped players-${players.length}`}>
+          <thead>{playersRowNode}</thead>
+          <tbody>{groupRowNodes}</tbody>
+        </table>
       </React.Fragment>
     );
   }

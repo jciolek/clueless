@@ -16,6 +16,9 @@ function mapDispatchToProps(dispatch) {
     onStart() {
       dispatch(actions.game.start());
     },
+    onFinish() {
+      dispatch(actions.game.finish());
+    },
     onStatusToggle(playerId, pieceId) {
       dispatch(actions.players.update({ id: playerId, pieceId, status: true }));
     },
