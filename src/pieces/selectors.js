@@ -19,8 +19,10 @@ const getPiecesNumberPerPlayer = createSelector(
   (state) => state.players,
   getPiecesIds,
   (players, piecesIds) => {
+    // We subtract 1, because table does not count as a regular player.
     const playersLength = players.length - 1;
-    const piecesLength = piecesIds.length;
+    // We subtract 3, because that's how many pieces are in the envelope.
+    const piecesLength = piecesIds.length - 3;
 
     return Math.floor(piecesLength / playersLength);
   }

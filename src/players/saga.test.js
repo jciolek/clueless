@@ -107,12 +107,12 @@ describe('players saga', () => {
     });
 
     it("should mark false all unmarked player's pieces when status === true and player's hand is known", () => {
-      // There are 4 players, exluding table, and there is 21 pieces.
-      // That means floor(21 / 4) = 5 pieces per player.
+      // There are 4 players, exluding table, and there is 18 pieces to share
+      // 21 altogether - 3 in the envelope.
+      // That means floor((21 - 3)/ 4) = 4 pieces per player.
       dispatch(update({ id: '3', pieceId: 'weapons.wrench', status: true }));
       dispatch(update({ id: '3', pieceId: 'weapons.rope', status: true }));
       dispatch(update({ id: '3', pieceId: 'suspects.mustard', status: true }));
-      dispatch(update({ id: '3', pieceId: 'suspects.scarlet', status: true }));
       dispatch(update({ id: '3', pieceId: 'suspects.white', status: false }));
       dispatch(update({ id: '3', pieceId: 'suspects.green', status: false }));
 
@@ -131,6 +131,7 @@ describe('players saga', () => {
         update({ id: '3', pieceId: 'weapons.dagger', status: false }),
         update({ id: '3', pieceId: 'weapons.leadPipe', status: false }),
         update({ id: '3', pieceId: 'weapons.pistol', status: false }),
+        update({ id: '3', pieceId: 'suspects.scarlet', status: false }),
         update({ id: '3', pieceId: 'suspects.peacock', status: false }),
         update({ id: '3', pieceId: 'suspects.plum', status: false }),
         update({ id: '3', pieceId: 'locations.livingRoom', status: false }),

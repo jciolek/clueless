@@ -83,7 +83,8 @@ describe('pieces selectors', () => {
   describe('getPiecesNumberPerPlayer', () => {
     it('should return number of pieces per player, excluding table', () => {
       const { add } = actions.players;
-      const piecesLength = getPiecesIds(store.getState()).length;
+      // We exclude 3 pieces from the envelope as well.
+      const piecesLength = getPiecesIds(store.getState()).length - 3;
 
       dispatch(add({ id: '1', name: 'Fiona' }));
       expect(getPiecesNumberPerPlayer(store.getState())).toBe(
