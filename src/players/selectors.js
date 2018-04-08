@@ -38,10 +38,10 @@ const getPlayersPiecesByPieceId = createSelector(
           // because we know all of their pieces up front.
           // Please note that the order of the values returned
           // does not have to reflect the order of players.
-          if (!tablePieces[pieceId]) {
+          if (tablePieces[pieceId] === undefined) {
             result[pieceId].push(false);
           }
-          if (!mePieces[pieceId]) {
+          if (mePieces[pieceId] === undefined) {
             result[pieceId].push(false);
           }
         }

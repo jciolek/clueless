@@ -82,6 +82,7 @@ describe('players selectors', () => {
         update({ id: 'table', pieceId: 'weapons.dagger', status: true })
       );
       dispatch(update({ id: 'me', pieceId: 'weapons.rope', status: true }));
+      dispatch(update({ id: 'me', pieceId: 'weapons.wrench', status: false }));
       dispatch(update({ id: '1', pieceId: 'weapons.wrench', status: true }));
       dispatch(update({ id: '1', pieceId: 'suspects.white', status: false }));
       dispatch(update({ id: '2', pieceId: 'weapons.wrench', status: false }));
