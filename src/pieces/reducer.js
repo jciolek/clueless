@@ -4,14 +4,14 @@ import Piece from './piece';
 
 const defaultPieces = [
   {
-    id: 'weapons',
-    name: 'Weapons',
-    items: ['Candlestick', 'Dagger', 'Wrench', 'Rope', 'Lead pipe', 'Pistol']
-  },
-  {
     id: 'suspects',
     name: 'Suspects',
     items: ['White', 'Green', 'Mustard', 'Scarlet', 'Peacock', 'Plum']
+  },
+  {
+    id: 'weapons',
+    name: 'Weapons',
+    items: ['Candlestick', 'Dagger', 'Wrench', 'Rope', 'Lead pipe', 'Pistol']
   },
   {
     id: 'locations',
