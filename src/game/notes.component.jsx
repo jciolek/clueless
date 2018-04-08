@@ -20,6 +20,9 @@ type Props = {
       [PieceIdType]: QuestionType[]
     }
   },
+  murderPiecesById: {
+    [PieceIdType]: ?boolean
+  },
   players: PlayerType[],
   isStarted: boolean,
   hasUndo: boolean,
@@ -98,7 +101,11 @@ class Notes extends React.Component<Props, State> {
   }
 
   getGroupRows = (group: PieceGroupType) => {
-    const { players, questionsByPlayerIdByPieceId } = this.props;
+    const {
+      players,
+      questionsByPlayerIdByPieceId,
+      murderPiecesById
+    } = this.props;
     const {
       selectedPlayerId,
       selectedPieceIds: { [group.id]: selectedPieceId }
@@ -107,6 +114,7 @@ class Notes extends React.Component<Props, State> {
       <NotesRow
         key={piece.id}
         piece={piece}
+        murderStatus={murderPiecesById[piece.id]}
         players={players}
         selectedPlayerId={selectedPlayerId}
         questionsByPlayerIdByPieceId={questionsByPlayerIdByPieceId}

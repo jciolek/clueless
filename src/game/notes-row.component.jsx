@@ -10,6 +10,7 @@ type Props = {
   players: PlayerType[],
   selectedPlayerId: ?PlayerIdType,
   isSelected: boolean,
+  murderStatus: ?boolean,
   questionsByPlayerIdByPieceId: {
     [PlayerIdType]: {
       [PieceIdType]: QuestionType[]
@@ -45,6 +46,7 @@ class NotesRow extends React.Component<Props> {
       piece,
       players,
       isSelected,
+      murderStatus,
       selectedPlayerId,
       questionsByPlayerIdByPieceId
     } = this.props;
@@ -55,11 +57,12 @@ class NotesRow extends React.Component<Props> {
         ? 'questions'
         : String(player.pieces[piece.id]);
       const statusIcon = statusMap[status];
-      const iconNode = statusIcon ? (
-        <i className={`fa fa-fw ${statusIcon}`} />
-      ) : (
-        '\u00A0'
-      );
+      const iconNode =
+        !murderStatus && statusIcon ? (
+          <i className={`fa fa-fw ${statusIcon}`} />
+        ) : (
+          '\u00A0'
+        );
 
       return (
         <td
@@ -87,7 +90,7 @@ class NotesRow extends React.Component<Props> {
       <tr className={`${isSelected ? 'secondary' : ''} notes-piece`}>
         <td className="notes-piece-name">
           <button
-            className="clear button expanded"
+            className={`${murderStatus ? 'alert' : ''} clear button expanded`}
             onClick={this.handlePieceToggle}
           >
             {piece.name}

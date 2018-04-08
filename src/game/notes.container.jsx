@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import actions from '../redux-store/actions';
 import Notes from './notes.component';
 import { getQuestionsByPlayerIdByPieceId } from '../questions/selectors';
+import { getPiecesForMurdererById } from '../pieces/selectors';
 
 function mapStateToProps(state) {
   return {
@@ -11,7 +12,8 @@ function mapStateToProps(state) {
     hasRedo: !!state.undoable.future.length,
     piecesByGroup: state.pieces,
     players: state.players,
-    questionsByPlayerIdByPieceId: getQuestionsByPlayerIdByPieceId(state)
+    questionsByPlayerIdByPieceId: getQuestionsByPlayerIdByPieceId(state),
+    murderPiecesById: getPiecesForMurdererById(state)
   };
 }
 
