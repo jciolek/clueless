@@ -3,19 +3,26 @@ import * as React from 'react';
 
 import type { PlayerType, PlayerIdType } from '../players/types/player';
 import type { PieceType, PieceIdType } from '../pieces/types/piece';
+import type { QuestionType } from '../questions/types/question';
 
 type Props = {
   piece: PieceType,
   players: PlayerType[],
   selectedPlayerId: ?PlayerIdType,
   isSelected: boolean,
+  questionsByPlayerIdByPieceId: {
+    [PlayerIdType]: {
+      [PieceIdType]: QuestionType[]
+    }
+  },
   onPieceToggle: (PieceIdType) => void,
   onStatusToggle: (PieceIdType, PlayerIdType) => void
 };
 
 const statusMap = {
   undefined: 'fa-question',
-  true: 'fa-check'
+  true: 'fa-check',
+  questions: 'fa-search'
 };
 
 class NotesRow extends React.Component<Props> {
@@ -34,12 +41,25 @@ class NotesRow extends React.Component<Props> {
   };
 
   render() {
-    const { piece, players, isSelected, selectedPlayerId } = this.props;
+    const {
+      piece,
+      players,
+      isSelected,
+      selectedPlayerId,
+      questionsByPlayerIdByPieceId
+    } = this.props;
     const statusNodes = players.map((player) => {
       const isPlayerSelected = selectedPlayerId === player.id;
       const isActive = isSelected && isPlayerSelected;
-      const statusIcon = statusMap[String(player.pieces[piece.id])];
-      const iconNode = statusIcon && <i className={`fa fa-fw ${statusIcon}`} />;
+      const status = questionsByPlayerIdByPieceId[player.id][piece.id]
+        ? 'questions'
+        : String(player.pieces[piece.id]);
+      const statusIcon = statusMap[status];
+      const iconNode = statusIcon ? (
+        <i className={`fa fa-fw ${statusIcon}`} />
+      ) : (
+        '\u00A0'
+      );
 
       return (
         <td

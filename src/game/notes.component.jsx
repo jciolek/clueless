@@ -8,12 +8,18 @@ import type {
 } from '../pieces/types/piece-group';
 import type { PlayerType, PlayerIdType } from '../players/types/player';
 import type {
+  QuestionType,
   QuestionPiecesType,
   QuestionAnswerType
 } from '../questions/types/question';
 
 type Props = {
   piecesByGroup: PieceGroupType[],
+  questionsByPlayerIdByPieceId: {
+    [PlayerIdType]: {
+      [PieceIdType]: QuestionType[]
+    }
+  },
   players: PlayerType[],
   isStarted: boolean,
   hasUndo: boolean,
@@ -92,7 +98,7 @@ class Notes extends React.Component<Props, State> {
   }
 
   getGroupRows = (group: PieceGroupType) => {
-    const { players } = this.props;
+    const { players, questionsByPlayerIdByPieceId } = this.props;
     const {
       selectedPlayerId,
       selectedPieceIds: { [group.id]: selectedPieceId }
@@ -103,6 +109,7 @@ class Notes extends React.Component<Props, State> {
         piece={piece}
         players={players}
         selectedPlayerId={selectedPlayerId}
+        questionsByPlayerIdByPieceId={questionsByPlayerIdByPieceId}
         onPieceToggle={this.handlePieceToggle}
         onStatusToggle={this.handleStatusToggle}
         isSelected={selectedPieceId === piece.id}
