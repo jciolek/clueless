@@ -1,5 +1,5 @@
 import { createActions } from 'redux-actions';
-import { createTypes } from './utils';
+import { createTypes, createActionMap } from './utils';
 import QUESTIONS from '../questions/action-map';
 import PLAYERS from '../players/action-map';
 import PIECES from '../pieces/action-map';
@@ -11,7 +11,8 @@ const actionMap = {
   PLAYERS,
   PIECES,
   GAME,
-  ROUTER
+  ROUTER,
+  UNDOABLE: createActionMap(['UNDO', 'REDO'])
 };
 
 const types = createTypes(actionMap);

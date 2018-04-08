@@ -5,9 +5,11 @@ import {
   createAutoIdMiddleware,
   createValidatorMiddleware
 } from './middleware';
+import createUndoableEnhancer from './reducer-enhancers/undoable';
 import saga from './saga';
 import reducer from './reducer';
 import validator from './validator';
+import { types } from './actions';
 
 let store = null;
 
@@ -27,7 +29,10 @@ function createCustomStore() {
     sagaMiddleware
   ];
   const newStore = createStore(
-    reducer,
+    createUndoableEnhancer({
+      undoType: types.UNDOABLE.UNDO,
+      redoType: types.UNDOABLE.REDO
+    })(reducer),
     composeEnhancers(applyMiddleware(...middlewareList))
   );
   sagaMiddleware.run(saga);

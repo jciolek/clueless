@@ -21,7 +21,10 @@ module.exports = {
       files: ['*.test.js', '*.test.jsx'],
       env: {
         jest: true
-      }      
+      },
+      rules: {
+        'no-unused-expressions': 'off'
+      }
     }
   ],
   parser: 'babel-eslint',

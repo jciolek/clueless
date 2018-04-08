@@ -16,8 +16,12 @@ type Props = {
   piecesByGroup: PieceGroupType[],
   players: PlayerType[],
   isStarted: boolean,
+  hasUndo: boolean,
+  hasRedo: boolean,
   onStart: () => void,
   onFinish: () => void,
+  onUndo: () => void,
+  onRedo: () => void,
   onAnswer: (PlayerIdType, QuestionPiecesType, QuestionAnswerType) => void,
   onStatusToggle: (PlayerIdType, PieceIdType) => void
 };
@@ -175,20 +179,46 @@ class Notes extends React.Component<Props, State> {
   };
 
   render() {
-    const { piecesByGroup, players, isStarted, onStart, onFinish } = this.props;
+    const {
+      piecesByGroup,
+      players,
+      isStarted,
+      onStart,
+      onFinish,
+      hasUndo,
+      hasRedo,
+      onUndo,
+      onRedo
+    } = this.props;
     const playersRowNode = this.getPlayersRow();
     const groupRowNodes = piecesByGroup.map(this.getGroupRows);
+    const undoButton = (
+      <button className="button" disabled={!hasUndo} onClick={onUndo}>
+        Undo
+      </button>
+    );
+    const redoButton = (
+      <button className="button" disabled={!hasRedo} onClick={onRedo}>
+        Redo
+      </button>
+    );
 
     return !isStarted ? (
-      <button className="alert button" onClick={onStart}>
-        Start the game
-      </button>
+      <div className="button-group">
+        <button className="alert button" onClick={onStart}>
+          Start the game
+        </button>
+        {undoButton}
+        {redoButton}
+      </div>
     ) : (
       <React.Fragment>
         <div className="button-group">
           <button className="alert button" onClick={onFinish}>
             Finish the game
           </button>
+          {undoButton}
+          {redoButton}
         </div>
         <table className={`notes unstriped players-${players.length}`}>
           <thead>{playersRowNode}</thead>
