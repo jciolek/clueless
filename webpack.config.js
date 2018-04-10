@@ -118,7 +118,7 @@ const commonConfig = {
 };
 
 const developmentConfig = {
-  entry: ['react-hot-loader/patch', './src/index.jsx'],
+  entry: ['./src/index.jsx'],
   module: {
     rules: [
       {
