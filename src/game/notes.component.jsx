@@ -25,6 +25,7 @@ type Props = {
   },
   players: PlayerType[],
   isStarted: boolean,
+  isQuestion: boolean,
   hasUndo: boolean,
   hasRedo: boolean,
   onStart: () => void,
@@ -42,17 +43,9 @@ type Props = {
   }
 };
 
-function getIsQuestion(props: Props) {
-  return (
-    Object.keys(props.selectedPieceIds).length === props.piecesByGroup.length &&
-    props.selectedPlayerId !== null
-  );
-}
-
 class Notes extends React.Component<Props> {
   getPlayersRow() {
-    const { players, selectedPlayerId } = this.props;
-    const isQuestion = getIsQuestion(this.props);
+    const { players, selectedPlayerId, isQuestion } = this.props;
     const playerNodes = players.map((player) => (
       <th key={player.id} className="notes-player">
         <button
@@ -60,7 +53,7 @@ class Notes extends React.Component<Props> {
             selectedPlayerId === player.id ? 'warning' : 'clear'
           }`}
           data-player-id={player.id}
-          onClick={this.handlePlayerToggle}
+          onClick={this.handlePlayerToggleClick}
         >
           {player.name}
         </button>
@@ -70,14 +63,14 @@ class Notes extends React.Component<Props> {
               <button
                 className="clear button"
                 data-answer={1}
-                onClick={this.handleAnswer}
+                onClick={this.handleAnswerClick}
               >
                 1
               </button>
               <button
                 className="clear button"
                 data-answer={0}
-                onClick={this.handleAnswer}
+                onClick={this.handleAnswerClick}
               >
                 0
               </button>
@@ -128,25 +121,32 @@ class Notes extends React.Component<Props> {
     );
   };
 
-  handleAnswer = (evt: SyntheticEvent<HTMLButtonElement>) => {
+  handleAnswerClick = (evt: SyntheticEvent<HTMLButtonElement>) => {
     const answer = +evt.currentTarget.getAttribute('data-answer');
+
+    if (answer === 0 || answer === 1) {
+      this.handleAnswer(answer);
+    }
+  };
+
+  handleAnswer = (answer: QuestionAnswerType) => {
     const {
       onAnswer,
       onPlayerToggle,
       onAllPiecesUnselect,
       selectedPlayerId: playerId,
-      selectedPieceIds
+      selectedPieceIds,
+      isQuestion
     } = this.props;
     const pieceIds = Object.keys(selectedPieceIds).map(
       (groupId) => selectedPieceIds[groupId]
     );
-    const isQuestion = getIsQuestion(this.props);
 
-    if (playerId && isQuestion && (answer === 1 || answer === 0)) {
+    if (playerId && isQuestion) {
       onAnswer(playerId, pieceIds, answer);
       onPlayerToggle(playerId);
 
-      if (answer === 1) {
+      if (answer !== 0) {
         onAllPiecesUnselect();
       }
     }
@@ -157,17 +157,17 @@ class Notes extends React.Component<Props> {
   };
 
   handleStatusToggle = (playerId: PlayerIdType, pieceId: PieceIdType) => {
-    const { onStatusToggle, onAllPiecesUnselect, onPlayerToggle } = this.props;
+    const { onStatusToggle, onPieceToggle, isQuestion } = this.props;
 
-    onStatusToggle(playerId, pieceId);
-    onAllPiecesUnselect();
-
-    if (getIsQuestion(this.props)) {
-      onPlayerToggle(playerId);
+    if (isQuestion) {
+      this.handleAnswer(pieceId);
+    } else {
+      onStatusToggle(playerId, pieceId);
+      onPieceToggle(pieceId);
     }
   };
 
-  handlePlayerToggle = (evt: SyntheticEvent<HTMLButtonElement>) => {
+  handlePlayerToggleClick = (evt: SyntheticEvent<HTMLButtonElement>) => {
     const playerId = evt.currentTarget.getAttribute('data-player-id');
 
     if (typeof playerId === 'string') {

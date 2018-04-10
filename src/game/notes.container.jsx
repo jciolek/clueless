@@ -6,16 +6,21 @@ import { getQuestionsByPlayerIdByPieceId } from '../questions/selectors';
 import { getPiecesForMurdererById } from '../pieces/selectors';
 
 function mapStateToProps(state) {
+  const { selectedPlayerId, selectedPieceIds } = state.game;
+
   return {
     isStarted: state.game.isStarted,
     hasUndo: !!state.undoable.past.length,
     hasRedo: !!state.undoable.future.length,
     piecesByGroup: state.pieces,
     players: state.players,
-    selectedPlayerId: state.game.selectedPlayerId,
-    selectedPieceIds: state.game.selectedPieceIds,
+    selectedPlayerId,
+    selectedPieceIds,
     questionsByPlayerIdByPieceId: getQuestionsByPlayerIdByPieceId(state),
-    murderPiecesById: getPiecesForMurdererById(state)
+    murderPiecesById: getPiecesForMurdererById(state),
+    isQuestion:
+      selectedPlayerId !== null &&
+      Object.keys(selectedPieceIds).length === state.pieces.length
   };
 }
 
