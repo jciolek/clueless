@@ -32,33 +32,27 @@ type Props = {
   onUndo: () => void,
   onRedo: () => void,
   onAnswer: (PlayerIdType, QuestionPiecesType, QuestionAnswerType) => void,
-  onStatusToggle: (PlayerIdType, PieceIdType) => void
-};
-
-type State = {
+  onPlayerToggle: (PlayerIdType) => void,
+  onPieceToggle: (PieceIdType) => void,
+  onAllPiecesUnselect: () => void,
+  onStatusToggle: (PlayerIdType, PieceIdType) => void,
   selectedPlayerId: ?PlayerIdType,
   selectedPieceIds: {
     [PieceGroupIdType]: PieceIdType
   }
 };
 
-function getIsQuestion(state, props) {
+function getIsQuestion(props: Props) {
   return (
-    Object.keys(state.selectedPieceIds).length === props.piecesByGroup.length &&
-    state.selectedPlayerId !== null
+    Object.keys(props.selectedPieceIds).length === props.piecesByGroup.length &&
+    props.selectedPlayerId !== null
   );
 }
 
-class Notes extends React.Component<Props, State> {
-  state = {
-    selectedPlayerId: null,
-    selectedPieceIds: {}
-  };
-
+class Notes extends React.Component<Props> {
   getPlayersRow() {
-    const { players } = this.props;
-    const { selectedPlayerId } = this.state;
-    const isQuestion = getIsQuestion(this.state, this.props);
+    const { players, selectedPlayerId } = this.props;
+    const isQuestion = getIsQuestion(this.props);
     const playerNodes = players.map((player) => (
       <th key={player.id} className="notes-player">
         <button
@@ -104,12 +98,10 @@ class Notes extends React.Component<Props, State> {
     const {
       players,
       questionsByPlayerIdByPieceId,
-      murderPiecesById
-    } = this.props;
-    const {
+      murderPiecesById,
       selectedPlayerId,
       selectedPieceIds: { [group.id]: selectedPieceId }
-    } = this.state;
+    } = this.props;
     const notesRowNodes = group.items.map((piece) => (
       <NotesRow
         key={piece.id}
@@ -138,59 +130,49 @@ class Notes extends React.Component<Props, State> {
 
   handleAnswer = (evt: SyntheticEvent<HTMLButtonElement>) => {
     const answer = +evt.currentTarget.getAttribute('data-answer');
-    const { onAnswer } = this.props;
-    const { selectedPlayerId: playerId, selectedPieceIds } = this.state;
+    const {
+      onAnswer,
+      onPlayerToggle,
+      onAllPiecesUnselect,
+      selectedPlayerId: playerId,
+      selectedPieceIds
+    } = this.props;
     const pieceIds = Object.keys(selectedPieceIds).map(
       (groupId) => selectedPieceIds[groupId]
     );
-    const isQuestion = getIsQuestion(this.state, this.props);
+    const isQuestion = getIsQuestion(this.props);
 
     if (playerId && isQuestion && (answer === 1 || answer === 0)) {
       onAnswer(playerId, pieceIds, answer);
+      onPlayerToggle(playerId);
+
       if (answer === 1) {
-        this.setState({
-          selectedPlayerId: null,
-          selectedPieceIds: {}
-        });
-      } else {
-        this.setState({ selectedPlayerId: null });
+        onAllPiecesUnselect();
       }
     }
   };
 
   handlePieceToggle = (pieceId: PieceIdType) => {
-    const [groupId] = pieceId.split('.');
-
-    this.setState((prevState) => {
-      const selectedPieceIds = { ...prevState.selectedPieceIds };
-
-      if (prevState.selectedPieceIds[groupId] !== pieceId) {
-        selectedPieceIds[groupId] = pieceId;
-      } else {
-        delete selectedPieceIds[groupId];
-      }
-
-      return { selectedPieceIds };
-    });
+    this.props.onPieceToggle(pieceId);
   };
 
   handleStatusToggle = (playerId: PlayerIdType, pieceId: PieceIdType) => {
-    this.props.onStatusToggle(playerId, pieceId);
-    this.setState((prevState) => ({
-      selectedPieceIds: {},
-      selectedPlayerId: getIsQuestion(prevState, this.props)
-        ? null
-        : prevState.selectedPlayerId
-    }));
+    const { onStatusToggle, onAllPiecesUnselect, onPlayerToggle } = this.props;
+
+    onStatusToggle(playerId, pieceId);
+    onAllPiecesUnselect();
+
+    if (getIsQuestion(this.props)) {
+      onPlayerToggle(playerId);
+    }
   };
 
   handlePlayerToggle = (evt: SyntheticEvent<HTMLButtonElement>) => {
     const playerId = evt.currentTarget.getAttribute('data-player-id');
 
-    this.setState((prevState) => ({
-      selectedPlayerId:
-        prevState.selectedPlayerId === playerId ? null : playerId
-    }));
+    if (typeof playerId === 'string') {
+      this.props.onPlayerToggle(playerId);
+    }
   };
 
   render() {

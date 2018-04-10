@@ -12,6 +12,8 @@ function mapStateToProps(state) {
     hasRedo: !!state.undoable.future.length,
     piecesByGroup: state.pieces,
     players: state.players,
+    selectedPlayerId: state.game.selectedPlayerId,
+    selectedPieceIds: state.game.selectedPieceIds,
     questionsByPlayerIdByPieceId: getQuestionsByPlayerIdByPieceId(state),
     murderPiecesById: getPiecesForMurdererById(state)
   };
@@ -38,6 +40,15 @@ function mapDispatchToProps(dispatch) {
           { isUndoable: true }
         )
       );
+    },
+    onPlayerToggle(playerId) {
+      dispatch(actions.game.togglePlayer({ id: playerId }));
+    },
+    onPieceToggle(pieceId) {
+      dispatch(actions.game.togglePiece({ id: pieceId }));
+    },
+    onAllPiecesUnselect() {
+      dispatch(actions.game.unselectAllPieces());
     },
     onAnswer(playerId, pieces, answer) {
       dispatch(
