@@ -1,10 +1,12 @@
 // @flow
 import * as React from 'react';
-import type { RouteType } from './types/route';
+import type { PathType } from './types/path';
+import type { RouterType } from './types/router';
 
 type Props = {
-  route: RouteType,
-  onNavigate: (RouteType) => void,
+  router: RouterType,
+  path: PathType,
+  onNavigate: (PathType) => void,
   className?: string,
   children: React.Node
 };
@@ -12,13 +14,14 @@ type Props = {
 class Link extends React.Component<Props> {
   handleClick = (evt: SyntheticEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
-    this.props.onNavigate(evt.currentTarget.pathname);
+    this.props.router.onNavigate(evt.currentTarget.pathname);
   };
 
   render() {
-    const { className, children, route } = this.props;
+    const { className, children, path } = this.props;
+
     return (
-      <a href={route} className={className} onClick={this.handleClick}>
+      <a href={path} className={className} onClick={this.handleClick}>
         {children}
       </a>
     );

@@ -1,17 +1,19 @@
 // @flow
 import * as React from 'react';
+import { matchRoute } from './utils';
 import type { RouteType } from './types/route';
+import type { RouterType } from './types/router';
 
 type Props = {
+  router: RouterType,
   route: RouteType,
-  activeRoute: RouteType,
   children: React.Node
 };
 
 function Route(props: Props) {
-  const { route, activeRoute, children } = props;
+  const { route, router: { path }, children } = props;
 
-  return route === activeRoute ? children : null;
+  return matchRoute(route, path) ? children : null;
 }
 
 export default Route;

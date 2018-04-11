@@ -4,16 +4,16 @@ import { types } from '../redux-store/actions';
 const reducer = handleActions(
   {
     [types.ROUTER.NAVIGATE](state, action) {
-      const { route } = action.payload;
+      const { path } = action.payload;
 
       return {
         ...state,
-        activeRoute: route
+        path
       };
     }
   },
   {
-    activeRoute: '/'
+    path: '/'
   }
 );
 

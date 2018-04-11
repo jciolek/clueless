@@ -11,6 +11,10 @@ module.exports = {
     'react/jsx-filename-extension': [
       'error',
       { extensions: ['.jsx'] }
+    ],
+    'jsx-a11y/anchor-is-valid': [
+      'error',
+      { 'components': [] }
     ]
   },
   env: {

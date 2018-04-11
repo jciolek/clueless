@@ -13,13 +13,13 @@ describe('router reducer', () => {
 
   it("should return activeRoute === '/'", () => {
     expect(store.getState()).toEqual({
-      activeRoute: '/'
+      path: '/'
     });
   });
 
   it('should allow to navigate to another route', () => {
-    dispatch(actions.router.navigate({ route: '/hello' }));
+    dispatch(actions.router.navigate({ path: '/hello' }));
 
-    expect(store.getState()).toHaveProperty('activeRoute', '/hello');
+    expect(store.getState()).toHaveProperty('path', '/hello');
   });
 });

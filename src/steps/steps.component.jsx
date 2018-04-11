@@ -1,40 +1,41 @@
 // @flow
 import * as React from 'react';
-import LinkContainer from '../router/link.container';
-import type { RouteType } from '../router/types/route';
+import { Link } from '../router';
+import type { PathType } from '../router/types/path';
+import type { RouterType } from '../router/types/router';
 
 type LabelType = string;
 type StepType = {
-  route: RouteType,
+  path: PathType,
   label: LabelType
 };
 type Props = {
-  activeRoute: RouteType
+  router: RouterType
 };
 
 const stepList: StepType[] = [
   {
-    route: '/pieces',
+    path: '/pieces',
     label: 'Pieces'
   },
   {
-    route: '/players',
+    path: '/players',
     label: 'Players'
   },
   {
-    route: '/game',
+    path: '/game',
     label: 'Game'
   }
 ];
 
 function Steps(props: Props) {
-  const { activeRoute } = props;
+  const { path } = props.router;
   const menuItemNodes = stepList.map((step) => {
-    const className = step.route === activeRoute ? 'is-active' : '';
+    const className = step.path === path ? 'is-active' : '';
 
     return (
-      <li key={step.route} className={className}>
-        <LinkContainer route={step.route}>{step.label}</LinkContainer>
+      <li key={step.path} className={className}>
+        <Link path={step.path}>{step.label}</Link>
       </li>
     );
   });
