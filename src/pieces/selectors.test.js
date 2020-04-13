@@ -3,6 +3,7 @@ import {
   getPiecesGroupIds,
   getPiecesIdsByGroup,
   getPiecesNumberPerPlayer,
+  getPiecesNumberForTable,
   getPiecesForMurdererById
 } from './selectors';
 import reducer from '../redux-store/reducer';
@@ -99,6 +100,29 @@ describe('pieces selectors', () => {
       dispatch(add({ id: '3', name: 'Donkey' }));
       expect(getPiecesNumberPerPlayer(store.getState())).toBe(
         Math.floor(piecesLength / 4)
+      );
+    });
+  });
+
+  describe('getPiecesNumberForTable', () => {
+    it('should return number of pieces per player, excluding table', () => {
+      const { add } = actions.players;
+      // We exclude 3 pieces from the envelope as well.
+      const piecesLength = getPiecesIds(store.getState()).length - 3;
+
+      dispatch(add({ id: '1', name: 'Fiona' }));
+      expect(getPiecesNumberForTable(store.getState())).toBe(
+        Math.floor(piecesLength % 2)
+      );
+
+      dispatch(add({ id: '2', name: 'Shrek' }));
+      expect(getPiecesNumberForTable(store.getState())).toBe(
+        Math.floor(piecesLength % 3)
+      );
+
+      dispatch(add({ id: '3', name: 'Donkey' }));
+      expect(getPiecesNumberForTable(store.getState())).toBe(
+        Math.floor(piecesLength % 4)
       );
     });
   });

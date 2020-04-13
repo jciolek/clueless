@@ -2,7 +2,11 @@ import { takeEvery, select, all, put } from 'redux-saga/effects';
 import actions, { types } from '../redux-store/actions';
 import { getPlayersIds, getPlayersPiecesByPlayerId } from './selectors';
 import { getQuestionsByPlayerIdByPieceId } from '../questions/selectors';
-import { getPiecesIds, getPiecesNumberPerPlayer } from '../pieces/selectors';
+import {
+  getPiecesIds,
+  getPiecesNumberPerPlayer,
+  getPiecesNumberForTable
+} from '../pieces/selectors';
 
 function* watchPlayersUpdate() {
   yield takeEvery(types.PLAYERS.UPDATE, function* playersUpdate(action) {
@@ -24,7 +28,10 @@ function* watchPlayersUpdate() {
     }
 
     const pieceIds = yield select(getPiecesIds);
-    const piecesNumberPerPlayer = yield select(getPiecesNumberPerPlayer);
+    const piecesNumberForPlayer =
+      id === 'table'
+        ? yield select(getPiecesNumberForTable)
+        : yield select(getPiecesNumberPerPlayer);
     const { [id]: playerPiecesById } = yield select(getPlayersPiecesByPlayerId);
     const playerPiecesIds = Object.keys(playerPiecesById);
     const playerOwnedPieceIds = playerPiecesIds.filter(
@@ -52,7 +59,7 @@ function* watchPlayersUpdate() {
       )
     );
     // - check if we know all of the players pieces already.
-    if (playerOwnedPieceIds.length === piecesNumberPerPlayer) {
+    if (playerOwnedPieceIds.length === piecesNumberForPlayer) {
       // The player cannot have any more pieces,
       // so we marked all of unknown player's pieces as not had.
       yield all(

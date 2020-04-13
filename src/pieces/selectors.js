@@ -28,6 +28,19 @@ const getPiecesNumberPerPlayer = createSelector(
   }
 );
 
+const getPiecesNumberForTable = createSelector(
+  (state) => state.players,
+  getPiecesIds,
+  (players, piecesIds) => {
+    // We subtract 1, because table does not count as a regular player.
+    const playersLength = players.length - 1;
+    // We subtract 3, because that's how many pieces are in the envelope.
+    const piecesLength = piecesIds.length - 3;
+
+    return piecesLength % playersLength;
+  }
+);
+
 function getMurderStatus(statusList = [], playerCount) {
   // If any of the players has the piece, then murderer does not have it.
   if (statusList.some((status) => status)) {
@@ -85,5 +98,6 @@ export {
   getPiecesGroupIds,
   getPiecesIdsByGroup,
   getPiecesNumberPerPlayer,
+  getPiecesNumberForTable,
   getPiecesForMurdererById
 };

@@ -109,7 +109,7 @@ describe('players saga', () => {
     it("should mark false all unmarked player's pieces when status === true and player's hand is known", () => {
       // There are 4 players, exluding table, and there is 18 pieces to share
       // 21 altogether - 3 in the envelope.
-      // That means floor((21 - 3)/ 4) = 4 pieces per player.
+      // That means floor((21 - 3) / 4) = 4 pieces per player.
       dispatch(update({ id: '3', pieceId: 'weapons.wrench', status: true }));
       dispatch(update({ id: '3', pieceId: 'weapons.rope', status: true }));
       dispatch(update({ id: '3', pieceId: 'suspects.mustard', status: true }));
@@ -142,6 +142,54 @@ describe('players saga', () => {
         update({ id: '3', pieceId: 'locations.bedroom', status: false }),
         update({ id: '3', pieceId: 'locations.kitchen', status: false }),
         update({ id: '3', pieceId: 'locations.study', status: false })
+      ]);
+    });
+
+    it("should mark false all unmarked table's pieces when status === true and table's hand is known", () => {
+      // There are 4 players, excluding table, and there is 18 pieces to share
+      // 21 altogether - 3 in the envelope.
+      // That means floor((21 - 3) / 4) = 4 pieces per player,
+      // and (21 - 3) % 4 = 2 pieces for the table
+      dispatch(
+        update({ id: 'table', pieceId: 'weapons.wrench', status: true })
+      );
+      dispatch(update({ id: 'table', pieceId: 'weapons.rope', status: true }));
+      store.runner.cancel();
+
+      expect(store.output).toEqual([
+        // First table piece.
+        // Updating all other players.
+        update({ id: 'me', pieceId: 'weapons.wrench', status: false }),
+        update({ id: '1', pieceId: 'weapons.wrench', status: false }),
+        update({ id: '2', pieceId: 'weapons.wrench', status: false }),
+        update({ id: '3', pieceId: 'weapons.wrench', status: false }),
+
+        // Second table piece
+        // Updating all other players.
+        update({ id: 'me', pieceId: 'weapons.rope', status: false }),
+        update({ id: '1', pieceId: 'weapons.rope', status: false }),
+        update({ id: '2', pieceId: 'weapons.rope', status: false }),
+        update({ id: '3', pieceId: 'weapons.rope', status: false }),
+        // Now updating all pieces not marked.
+        update({ id: 'table', pieceId: 'suspects.white', status: false }),
+        update({ id: 'table', pieceId: 'suspects.green', status: false }),
+        update({ id: 'table', pieceId: 'suspects.mustard', status: false }),
+        update({ id: 'table', pieceId: 'suspects.scarlet', status: false }),
+        update({ id: 'table', pieceId: 'suspects.peacock', status: false }),
+        update({ id: 'table', pieceId: 'suspects.plum', status: false }),
+        update({ id: 'table', pieceId: 'weapons.candlestick', status: false }),
+        update({ id: 'table', pieceId: 'weapons.dagger', status: false }),
+        update({ id: 'table', pieceId: 'weapons.leadPipe', status: false }),
+        update({ id: 'table', pieceId: 'weapons.pistol', status: false }),
+        update({ id: 'table', pieceId: 'locations.livingRoom', status: false }),
+        update({ id: 'table', pieceId: 'locations.diningRoom', status: false }),
+        update({ id: 'table', pieceId: 'locations.gamesRoom', status: false }),
+        update({ id: 'table', pieceId: 'locations.courtyard', status: false }),
+        update({ id: 'table', pieceId: 'locations.bathroom', status: false }),
+        update({ id: 'table', pieceId: 'locations.bedroom', status: false }),
+        update({ id: 'table', pieceId: 'locations.garage', status: false }),
+        update({ id: 'table', pieceId: 'locations.kitchen', status: false }),
+        update({ id: 'table', pieceId: 'locations.study', status: false })
       ]);
     });
   });
