@@ -5,7 +5,8 @@ import actions from '../redux-store/actions';
 
 function mapStateToProps(state) {
   return {
-    items: state.players
+    items: state.players,
+    isStarted: state.game.isStarted
   };
 }
 
@@ -29,12 +30,17 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-  return {
+  const props = {
     title: 'Players',
     ...ownProps,
     ...stateProps,
-    ...dispatchProps
+    ...(!stateProps.isStarted
+      ? dispatchProps
+      : { onSave: dispatchProps.onSave })
   };
+
+  delete props.isStarted;
+  return props;
 }
 
 const PlayerListContainer = connect(

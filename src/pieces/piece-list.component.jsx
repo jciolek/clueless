@@ -6,18 +6,21 @@ import type { PieceGroupType, PieceGroupIdType } from './types/piece-group';
 
 type Props = {
   groups: PieceGroupType[],
-  onAdd: (PieceGroupIdType, PieceNameType) => void,
-  onSave: (PieceIdType, PieceNameType) => void,
-  onRemove: (PieceIdType) => void
+  onAdd?: (PieceGroupIdType, PieceNameType) => void,
+  onSave?: (PieceIdType, PieceNameType) => void,
+  onRemove?: (PieceIdType) => void
 };
 
 class PieceList extends React.Component<Props> {
   handleAdd = (name: PieceNameType, groupId: PieceGroupIdType) => {
-    this.props.onAdd(groupId, name);
+    const { onAdd } = this.props;
+    if (onAdd) {
+      onAdd(groupId, name);
+    }
   };
 
   render() {
-    const { onSave, onRemove, groups } = this.props;
+    const { onSave, onRemove, onAdd, groups } = this.props;
 
     return groups.map((group) => (
       <List
@@ -25,7 +28,7 @@ class PieceList extends React.Component<Props> {
         title={group.name}
         items={group.items}
         meta={group.id}
-        onAdd={this.handleAdd}
+        onAdd={onAdd && this.handleAdd}
         onSave={onSave}
         onRemove={onRemove}
       />

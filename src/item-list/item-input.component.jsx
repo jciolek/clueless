@@ -4,9 +4,9 @@ import type { ItemIdType, ItemNameType } from './types/item';
 
 type Props = {
   name: ItemNameType,
-  onSave: (name: ItemNameType) => void,
   onCancel: () => void,
-  onRemove?: (ItemIdType) => void
+  onSave: ?(name: ItemNameType) => void,
+  onRemove: ?(ItemIdType) => void
 };
 type State = {
   name: ItemNameType,
@@ -25,24 +25,26 @@ class ItemInput extends React.Component<Props, State> {
   };
 
   handleSave = () => {
-    if (this.state.isSaveEnabled) {
-      this.props.onSave(this.state.name);
+    const { onSave } = this.props;
+
+    if (this.state.isSaveEnabled && onSave) {
+      onSave(this.state.name);
     }
   };
 
   render() {
-    const { onCancel, onRemove } = this.props;
+    const { onCancel, onRemove, onSave } = this.props;
     const { name, isSaveEnabled } = this.state;
 
     return (
       <div className="input-group">
-        {onRemove ? (
+        {onRemove && (
           <div className="input-group-button">
             <button className="alert button" onClick={onRemove}>
               <i className="fa fa-trash-o" />
             </button>
           </div>
-        ) : null}
+        )}
         <input
           type="text"
           className="input-group-field"
@@ -54,15 +56,17 @@ class ItemInput extends React.Component<Props, State> {
             <i className="fa fa-times" />
           </button>
         </div>
-        <div className="input-group-button">
-          <button
-            className="button"
-            disabled={!isSaveEnabled}
-            onClick={this.handleSave}
-          >
-            <i className="fa fa-check" />
-          </button>
-        </div>
+        {onSave && (
+          <div className="input-group-button">
+            <button
+              className="button"
+              disabled={!isSaveEnabled}
+              onClick={this.handleSave}
+            >
+              <i className="fa fa-check" />
+            </button>
+          </div>
+        )}
       </div>
     );
   }

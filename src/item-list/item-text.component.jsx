@@ -4,7 +4,7 @@ import type { ItemNameType } from './types/item';
 
 type Props = {
   name: ItemNameType,
-  onEdit: () => void
+  onEdit: ?() => void
 };
 
 function ItemText({ name, onEdit }: Props) {
@@ -12,7 +12,11 @@ function ItemText({ name, onEdit }: Props) {
     <div className="grid-x grid-margin-x align-middle">
       <div className="cell auto">{name}</div>
       <div className="cell shrink">
-        <button className="button margin-bottom-0" onClick={onEdit}>
+        <button
+          className="button margin-bottom-0"
+          disabled={!onEdit}
+          onClick={onEdit}
+        >
           <i className="fa fa-pencil" />
         </button>
       </div>

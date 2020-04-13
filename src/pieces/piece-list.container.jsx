@@ -5,7 +5,8 @@ import actions from '../redux-store/actions';
 
 function mapStateToProps(state) {
   return {
-    groups: state.pieces
+    groups: state.pieces,
+    isStarted: state.game.isStarted
   };
 }
 
@@ -23,8 +24,21 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const PieceListContainer = connect(mapStateToProps, mapDispatchToProps)(
-  PieceList
-);
+function mergeProps(stateProps, dispatchProps, ownProps) {
+  const props = {
+    ...ownProps,
+    ...stateProps,
+    ...(!stateProps.isStarted ? dispatchProps : null)
+  };
+
+  delete props.isStarted;
+  return props;
+}
+
+const PieceListContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(PieceList);
 
 export default PieceListContainer;

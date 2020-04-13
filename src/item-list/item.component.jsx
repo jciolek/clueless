@@ -8,8 +8,8 @@ type Props = {
   id?: ItemIdType,
   name: ItemNameType,
   isEditMode: boolean,
-  onSave: (?ItemIdType, ItemNameType) => void,
-  onCancel: () => void,
+  onCancel?: () => void,
+  onSave?: (?ItemIdType, ItemNameType) => void,
   onRemove?: (ItemIdType) => void
 };
 
@@ -20,8 +20,7 @@ type State = {
 class Item extends React.Component<Props, State> {
   static defaultProps = {
     name: '',
-    isEditMode: false,
-    onCancel: () => {}
+    isEditMode: false
   };
 
   state = {
@@ -36,14 +35,19 @@ class Item extends React.Component<Props, State> {
     const { onCancel } = this.props;
 
     this.setState({ isEditMode: false });
-    onCancel();
+
+    if (onCancel) {
+      onCancel();
+    }
   };
 
   handleSave = (name: ItemNameType) => {
     const { id, onSave } = this.props;
 
     this.setState({ isEditMode: false });
-    onSave(id, name);
+    if (onSave) {
+      onSave(id, name);
+    }
   };
 
   handleRemove = () => {
@@ -55,7 +59,7 @@ class Item extends React.Component<Props, State> {
   };
 
   render() {
-    const { name, onRemove } = this.props;
+    const { name, onRemove, onSave } = this.props;
     const { isEditMode } = this.state;
     const className = ['callout', 'small'];
 
@@ -65,15 +69,18 @@ class Item extends React.Component<Props, State> {
 
     return (
       <div className={className.join(' ')}>
-        {isEditMode ? (
+        {isEditMode && (onSave || onRemove) ? (
           <ItemInput
             name={name}
             onCancel={this.handleCancel}
-            onSave={this.handleSave}
-            onRemove={onRemove ? this.handleRemove : undefined}
+            onSave={onSave && this.handleSave}
+            onRemove={onRemove && this.handleRemove}
           />
         ) : (
-          <ItemText name={name} onEdit={this.handleEdit} />
+          <ItemText
+            name={name}
+            onEdit={(onSave || onRemove) && this.handleEdit}
+          />
         )}
       </div>
     );

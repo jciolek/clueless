@@ -7,8 +7,8 @@ type MetaType = any;
 type Props = {
   title: string,
   items: ItemType[],
-  onAdd: (ItemNameType, MetaType) => void,
-  onSave: (ItemIdType, ItemNameType, MetaType) => void,
+  onAdd?: (ItemNameType, MetaType) => void,
+  onSave?: (ItemIdType, ItemNameType, MetaType) => void,
   onRemove?: (ItemIdType, MetaType) => void,
   meta?: MetaType
 };
@@ -26,15 +26,17 @@ class List extends React.Component<Props, State> {
   };
 
   handleSave = (id: ?ItemIdType, name: ItemNameType) => {
-    const { meta } = this.props;
-
-    if (id || id === 0) {
-      this.props.onSave(id, name, meta);
-    } else {
-      this.props.onAdd(name, meta);
-    }
+    const { meta, onSave, onAdd } = this.props;
 
     this.setState({ isCreateMode: false });
+
+    if (id === undefined && onAdd) {
+      onAdd(name, meta);
+    }
+
+    if (id !== null && id !== undefined && onSave) {
+      onSave(id, name, meta);
+    }
   };
 
   handleRemove = (id: ItemIdType) => {
@@ -50,28 +52,29 @@ class List extends React.Component<Props, State> {
   };
 
   render() {
-    const { title, items } = this.props;
+    const { title, items, onRemove, onAdd, onSave } = this.props;
     const { isCreateMode } = this.state;
     const itemNodes = items.map((item) => (
       <Item
         key={item.id}
         id={item.id}
         name={item.name}
-        onSave={this.handleSave}
-        onRemove={item.isProtected ? undefined : this.handleRemove}
+        onSave={onSave && this.handleSave}
+        onRemove={onRemove && !item.isProtected ? this.handleRemove : undefined}
       />
     ));
     const newItemNode = isCreateMode ? (
       <Item onSave={this.handleSave} onCancel={this.handleCancel} isEditMode />
     ) : null;
-    const addItemButton = !isCreateMode ? (
-      <button
-        className="clear small secondary button"
-        onClick={this.handleCreate}
-      >
-        <i className="fa fa-2x fa-plus-circle" />
-      </button>
-    ) : null;
+    const addItemButton =
+      !isCreateMode && onAdd ? (
+        <button
+          className="clear small secondary button margin-bottom-0"
+          onClick={this.handleCreate}
+        >
+          <i className="fa fa-2x fa-plus-circle" />
+        </button>
+      ) : null;
 
     return (
       <div>
