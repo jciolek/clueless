@@ -40,7 +40,14 @@ describe('persistent middleware', () => {
     });
 
     it('should use localStorage by default if available', () => {
-      window.localStorage = storage;
+      const localStorage = Object.getOwnPropertyDescriptor(
+        window,
+        'localStorage'
+      );
+      Object.defineProperty(window, 'localStorage', {
+        ...localStorage,
+        get: () => storage
+      });
 
       middleware = createPersistentMiddleware();
       middleware(store)(next)({});
@@ -50,10 +57,10 @@ describe('persistent middleware', () => {
         JSON.stringify(store.getState())
       );
 
-      delete window.localStorage;
+      Object.defineProperty(window, 'localStorage', localStorage);
     });
 
-    it('should store state *after* passing the action though', () => {
+    it('should store state *after* passing the action through', () => {
       next = (action) => {
         expect(storage.setItem).not.toHaveBeenCalled();
         return action;
@@ -69,28 +76,49 @@ describe('persistent middleware', () => {
 
     it('should not throw if there is no localStorage', () => {
       const action = { type: 'ACTION' };
+      const localStorage = Object.getOwnPropertyDescriptor(
+        window,
+        'localStorage'
+      );
+      delete window.localStorage;
 
       middleware = createPersistentMiddleware();
 
       expect(() => middleware(store)(next)(action)).not.toThrow();
       expect(next).toHaveBeenCalledWith(action);
+
+      Object.defineProperty(window, 'localStorage', localStorage);
     });
   });
 
   describe('getPersistedState', () => {
     it('should return undefined if there is no localStorage', () => {
+      const localStorage = Object.getOwnPropertyDescriptor(
+        window,
+        'localStorage'
+      );
+      delete window.localStorage;
+
       expect(getPersistedState()).toBe(undefined);
+      Object.defineProperty(window, 'localStorage', localStorage);
     });
 
     it('should use localStorage "state" key', () => {
-      window.localStorage = storage;
+      const localStorage = Object.getOwnPropertyDescriptor(
+        window,
+        'localStorage'
+      );
+      Object.defineProperty(window, 'localStorage', {
+        ...localStorage,
+        get: () => storage
+      });
 
       expect(getPersistedState()).toEqual({
         prop: 'value'
       });
       expect(storage.getItem).toHaveBeenCalledWith('state');
 
-      delete window.localStorage;
+      Object.defineProperty(window, 'localStorage', localStorage);
     });
 
     it('should use given storage', () => {
