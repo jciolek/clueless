@@ -1,10 +1,6 @@
 // @flow
-import type {
-  QuestionType,
-  QuestionIdType,
-  QuestionPiecesType
-} from './types/question';
-import type { PlayerIdType } from '../players/types/player';
+import type { QuestionType, QuestionIdType, QuestionPiecesType } from './types';
+import type { PlayerIdType } from '../players/types';
 
 type Props = {
   id: QuestionIdType,

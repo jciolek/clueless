@@ -1,8 +1,12 @@
 // @flow
 import * as React from 'react';
 import List from '../item-list/list.component';
-import type { PieceIdType, PieceNameType } from './types/piece';
-import type { PieceGroupType, PieceGroupIdType } from './types/piece-group';
+import type {
+  PieceIdType,
+  PieceNameType,
+  PieceGroupType,
+  PieceGroupIdType
+} from './types';
 
 type Props = {
   groups: PieceGroupType[],

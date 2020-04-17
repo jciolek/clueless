@@ -1,6 +1,6 @@
 // @flow
-import type { PieceIdType } from '../../pieces/types/piece';
-import type { PlayerIdType } from '../../players/types/player';
+import type { PieceIdType } from '../pieces/types';
+import type { PlayerIdType } from '../players/types';
 
 export type QuestionIdType = string;
 export type QuestionPiecesType = PieceIdType[];

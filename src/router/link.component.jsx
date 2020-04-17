@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
-import type { PathType } from './types/path';
-import type { RouterType } from './types/router';
+import type { PathType, RouterType } from './types';
 
 type Props = {
   router: RouterType,

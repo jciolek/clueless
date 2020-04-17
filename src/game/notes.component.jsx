@@ -1,17 +1,17 @@
 // @flow
 import * as React from 'react';
 import NotesRow from './notes-row.component';
-import type { PieceIdType } from '../pieces/types/piece';
 import type {
+  PieceIdType,
   PieceGroupType,
   PieceGroupIdType
-} from '../pieces/types/piece-group';
-import type { PlayerType, PlayerIdType } from '../players/types/player';
+} from '../pieces/types';
+import type { PlayerType, PlayerIdType } from '../players/types';
 import type {
   QuestionType,
   QuestionPiecesType,
   QuestionAnswerType
-} from '../questions/types/question';
+} from '../questions/types';
 
 type Props = {
   piecesByGroup: PieceGroupType[],

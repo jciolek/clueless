@@ -1,5 +1,7 @@
 // @flow
-import type { PathType } from './path';
+export type PathType = string;
+
+export type RouteType = string;
 
 export type RouterType = {
   onNavigate: (PathType) => void,

@@ -1,8 +1,7 @@
 // @flow
 import * as React from 'react';
 import { Link } from '../router';
-import type { PathType } from '../router/types/path';
-import type { RouterType } from '../router/types/router';
+import type { PathType, RouterType } from '../router/types';
 
 type LabelType = string;
 type StepType = {

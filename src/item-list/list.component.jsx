@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import Item from './item.component';
-import type { ItemType, ItemIdType, ItemNameType } from './types/item';
+import type { ItemType, ItemIdType, ItemNameType } from './types';
 
 type MetaType = any;
 type Props = {

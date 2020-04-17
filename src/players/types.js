@@ -1,5 +1,5 @@
 // @flow
-import type { PieceIdType } from '../../pieces/types/piece';
+import type { PieceIdType } from '../pieces/types';
 
 export type PlayerIdType = string;
 export type PlayerNameType = string;

@@ -1,8 +1,7 @@
 // @flow
 import * as React from 'react';
 import { matchRoute } from './utils';
-import type { RouteType } from './types/route';
-import type { RouterType } from './types/router';
+import type { RouteType, RouterType } from './types';
 
 type Props = {
   router: RouterType,

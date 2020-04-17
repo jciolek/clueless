@@ -1,5 +1,5 @@
 // @flow
-import type { PlayerType, PlayerIdType, PlayerNameType } from './types/player';
+import type { PlayerType, PlayerIdType, PlayerNameType } from './types';
 
 type Props = {
   id: PlayerIdType,

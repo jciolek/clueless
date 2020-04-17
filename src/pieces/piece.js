@@ -1,7 +1,7 @@
 // @flow
 import _ from 'lodash';
 
-import type { PieceIdType, PieceNameType } from './types/piece';
+import type { PieceIdType, PieceNameType } from './types';
 
 type Props = {
   name: PieceNameType,

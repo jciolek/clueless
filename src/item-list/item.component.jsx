@@ -2,7 +2,7 @@
 import * as React from 'react';
 import ItemText from './item-text.component';
 import ItemInput from './item-input.component';
-import type { ItemIdType, ItemNameType } from './types/item';
+import type { ItemIdType, ItemNameType } from './types';
 
 type Props = {
   id?: ItemIdType,

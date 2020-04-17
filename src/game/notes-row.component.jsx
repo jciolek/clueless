@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 
-import type { PlayerType, PlayerIdType } from '../players/types/player';
-import type { PieceType, PieceIdType } from '../pieces/types/piece';
-import type { QuestionType } from '../questions/types/question';
+import type { PlayerType, PlayerIdType } from '../players/types';
+import type { PieceType, PieceIdType } from '../pieces/types';
+import type { QuestionType } from '../questions/types';
 
 type Props = {
   piece: PieceType,
