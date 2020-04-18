@@ -19,8 +19,8 @@ function createAutoIdMiddleware({ idIterator = defaultIdGenerator() } = {}) {
         ...action,
         payload: {
           ...action.payload,
-          id
-        }
+          id,
+        },
       };
     }
 

@@ -1,10 +1,9 @@
-/* global window */
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {
   createAutoIdMiddleware,
   createValidatorMiddleware,
-  createPersistentMiddleware
+  createPersistentMiddleware,
 } from './middleware';
 import { getPersistedState } from './middleware/persistent';
 import createUndoableEnhancer from './reducer-enhancers/undoable';
@@ -29,12 +28,12 @@ function createCustomStore() {
     createAutoIdMiddleware(),
     createValidatorMiddleware(validator),
     createPersistentMiddleware(),
-    sagaMiddleware
+    sagaMiddleware,
   ];
   const newStore = createStore(
     createUndoableEnhancer({
       undoType: types.UNDOABLE.UNDO,
-      redoType: types.UNDOABLE.REDO
+      redoType: types.UNDOABLE.REDO,
     })(reducer),
     getPersistedState(),
     composeEnhancers(applyMiddleware(...middlewareList))

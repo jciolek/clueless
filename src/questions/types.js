@@ -7,6 +7,6 @@ export type QuestionPiecesType = PieceIdType[];
 export type QuestionType = {
   id: QuestionIdType,
   playerId: PlayerIdType,
-  pieces: QuestionPiecesType
+  pieces: QuestionPiecesType,
 };
 export type QuestionAnswerType = 0 | 1 | PieceIdType;

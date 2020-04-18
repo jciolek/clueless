@@ -2,7 +2,7 @@ import {
   getPlayersIds,
   getPlayersById,
   getPlayersPiecesByPlayerId,
-  getPlayersPiecesByPieceId
+  getPlayersPiecesByPieceId,
 } from './selectors';
 import reducer from '../redux-store/reducer';
 import actions from '../redux-store/actions';
@@ -45,7 +45,7 @@ describe('players selectors', () => {
         me: players[1],
         1: players[2],
         2: players[3],
-        3: players[4]
+        3: players[4],
       });
     });
   });
@@ -69,7 +69,7 @@ describe('players selectors', () => {
         me: players[1].pieces,
         1: players[2].pieces,
         2: players[3].pieces,
-        3: players[4].pieces
+        3: players[4].pieces,
       });
     });
   });
@@ -102,7 +102,7 @@ describe('players selectors', () => {
         'location.study': [false, false, false],
         'weapons.dagger': [false, true, false],
         'locations.bathroom': [false, false, false],
-        'suspects.white': [false, false, false, false]
+        'suspects.white': [false, false, false, false],
       });
     });
   });

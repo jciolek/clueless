@@ -146,7 +146,7 @@ describe('players validator', () => {
       const action = update({
         id: '1',
         pieceId: 'weapons.dagger',
-        status: false
+        status: false,
       });
       dispatch(actions.game.start());
 
@@ -157,7 +157,7 @@ describe('players validator', () => {
       const action = update({
         id: '1',
         pieceId: 'weapons.dagger',
-        status: false
+        status: false,
       });
 
       expect(validator(store.getState(), action)).toEqual(
@@ -169,7 +169,7 @@ describe('players validator', () => {
       const action = update({
         id: '2',
         pieceId: 'weapons.dagger',
-        status: false
+        status: false,
       });
       dispatch(actions.game.start());
 
@@ -182,7 +182,7 @@ describe('players validator', () => {
       const action = update({
         id: '1',
         pieceId: 'magic.avadaKedavra',
-        status: false
+        status: false,
       });
       dispatch(actions.game.start());
 
@@ -195,7 +195,7 @@ describe('players validator', () => {
       const action = update({
         id: '1',
         pieceId: 'weapons.dagger',
-        status: null
+        status: null,
       });
       dispatch(actions.game.start());
 

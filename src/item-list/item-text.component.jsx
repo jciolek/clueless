@@ -4,7 +4,7 @@ import type { ItemNameType } from './types';
 
 type Props = {
   name: ItemNameType,
-  onEdit: ?() => void
+  onEdit: ?() => void,
 };
 
 function ItemText({ name, onEdit }: Props) {
@@ -13,6 +13,7 @@ function ItemText({ name, onEdit }: Props) {
       <div className="cell auto">{name}</div>
       <div className="cell shrink">
         <button
+          type="button"
           className="button margin-bottom-0"
           disabled={!onEdit}
           onClick={onEdit}

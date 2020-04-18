@@ -6,18 +6,23 @@ type Props = {
   name: ItemNameType,
   onCancel: () => void,
   onSave: ?(name: ItemNameType) => void,
-  onRemove: ?(ItemIdType) => void
+  onRemove: ?(ItemIdType) => void,
 };
 type State = {
   name: ItemNameType,
-  isSaveEnabled: boolean
+  isSaveEnabled: boolean,
 };
 
 class ItemInput extends React.Component<Props, State> {
-  state = {
-    name: this.props.name,
-    isSaveEnabled: !!this.props.name
-  };
+  constructor(props) {
+    const { name } = props;
+
+    super(props);
+    this.state = {
+      name,
+      isSaveEnabled: !!name,
+    };
+  }
 
   handleChange = (evt: SyntheticEvent<HTMLInputElement>) => {
     const name = evt.currentTarget.value;
@@ -26,9 +31,10 @@ class ItemInput extends React.Component<Props, State> {
 
   handleSave = () => {
     const { onSave } = this.props;
+    const { name, isSaveEnabled } = this.state;
 
-    if (this.state.isSaveEnabled && onSave) {
-      onSave(this.state.name);
+    if (isSaveEnabled && onSave) {
+      onSave(name);
     }
   };
 
@@ -40,7 +46,7 @@ class ItemInput extends React.Component<Props, State> {
       <div className="input-group">
         {onRemove && (
           <div className="input-group-button">
-            <button className="alert button" onClick={onRemove}>
+            <button type="button" className="alert button" onClick={onRemove}>
               <i className="fa fa-trash-o" />
             </button>
           </div>
@@ -52,13 +58,18 @@ class ItemInput extends React.Component<Props, State> {
           onChange={this.handleChange}
         />
         <div className="input-group-button">
-          <button className="hollow secondary button" onClick={onCancel}>
+          <button
+            type="button"
+            className="hollow secondary button"
+            onClick={onCancel}
+          >
             <i className="fa fa-times" />
           </button>
         </div>
         {onSave && (
           <div className="input-group-button">
             <button
+              type="button"
               className="button"
               disabled={!isSaveEnabled}
               onClick={this.handleSave}

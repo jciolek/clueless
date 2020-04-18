@@ -7,7 +7,7 @@ const getQuestionsById = createSelector(
     questions.reduce(
       (result, question) =>
         Object.assign(result, {
-          [question.id]: question
+          [question.id]: question,
         }),
       {}
     )

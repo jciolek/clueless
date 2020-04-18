@@ -1,7 +1,7 @@
 import {
   createValidator,
   combineValidators,
-  createError
+  createError,
 } from '../redux-store/middleware/validator';
 import { types } from '../redux-store/actions';
 import errors from '../redux-store/errors';
@@ -75,7 +75,7 @@ const validator = createValidator({
   [types.PIECES.REMOVE]: combineValidators(
     validateGameNotStarted,
     validateIdExists
-  )
+  ),
 });
 
 export default validator;

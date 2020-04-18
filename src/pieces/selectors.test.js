@@ -4,7 +4,7 @@ import {
   getPiecesIdsByGroup,
   getPiecesNumberPerPlayer,
   getPiecesNumberForTable,
-  getPiecesForMurdererById
+  getPiecesForMurdererById,
 } from './selectors';
 import reducer from '../redux-store/reducer';
 import actions from '../redux-store/actions';
@@ -25,19 +25,19 @@ describe('pieces selectors', () => {
         pieces: [
           {
             id: 'weapons',
-            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }]
+            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }],
           },
           {
             id: 'suspects',
-            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }]
-          }
-        ]
+            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }],
+          },
+        ],
       };
       expect(getPiecesIds(state)).toEqual([
         'weapons.wrench',
         'weapons.dagger',
         'suspects.white',
-        'suspects.green'
+        'suspects.green',
       ]);
     });
   });
@@ -48,13 +48,13 @@ describe('pieces selectors', () => {
         pieces: [
           {
             id: 'weapons',
-            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }]
+            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }],
           },
           {
             id: 'suspects',
-            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }]
-          }
-        ]
+            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }],
+          },
+        ],
       };
       expect(getPiecesGroupIds(state)).toEqual(['weapons', 'suspects']);
     });
@@ -66,17 +66,17 @@ describe('pieces selectors', () => {
         pieces: [
           {
             id: 'weapons',
-            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }]
+            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }],
           },
           {
             id: 'suspects',
-            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }]
-          }
-        ]
+            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }],
+          },
+        ],
       };
       expect(getPiecesIdsByGroup(state)).toEqual([
         ['weapons.wrench', 'weapons.dagger'],
-        ['suspects.white', 'suspects.green']
+        ['suspects.white', 'suspects.green'],
       ]);
     });
   });
@@ -168,7 +168,7 @@ describe('pieces selectors', () => {
         'weapons.wrench': false,
         'weapons.rope': false,
         'weapons.leadPipe': false,
-        'weapons.pistol': true
+        'weapons.pistol': true,
       });
     });
 
@@ -179,7 +179,7 @@ describe('pieces selectors', () => {
         'weapons.dagger': true,
         'weapons.wrench': false,
         'weapons.rope': false,
-        'weapons.leadPipe': false
+        'weapons.leadPipe': false,
       });
     });
   });

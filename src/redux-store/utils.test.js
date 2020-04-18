@@ -6,7 +6,7 @@ describe('redux-store utils', () => {
       const actionMap = createActionMap(['ADD', 'RENAME']);
       expect(actionMap).toEqual({
         ADD: [undefined, metaCreator],
-        RENAME: [undefined, metaCreator]
+        RENAME: [undefined, metaCreator],
       });
     });
 
@@ -14,11 +14,11 @@ describe('redux-store utils', () => {
       const customPayloadCreator = jest.fn();
       const actionMap = createActionMap([
         { ADD: customPayloadCreator },
-        'RENAME'
+        'RENAME',
       ]);
       expect(actionMap).toEqual({
         ADD: [customPayloadCreator, metaCreator],
-        RENAME: [undefined, metaCreator]
+        RENAME: [undefined, metaCreator],
       });
     });
 
@@ -29,14 +29,14 @@ describe('redux-store utils', () => {
       const actionMap = createActionMap([
         {
           ADD: customPayloadCreator,
-          REMOVE: [customPayloadCreator, customMetaCreator]
+          REMOVE: [customPayloadCreator, customMetaCreator],
         },
-        'RENAME'
+        'RENAME',
       ]);
       expect(actionMap).toEqual({
         ADD: [customPayloadCreator, metaCreator],
         REMOVE: [customPayloadCreator, customMetaCreator],
-        RENAME: [undefined, metaCreator]
+        RENAME: [undefined, metaCreator],
       });
     });
   });
@@ -47,33 +47,33 @@ describe('redux-store utils', () => {
       const types = createTypes(actionMap);
       expect(types).toEqual({
         ADD: 'ADD',
-        RENAME: 'RENAME'
+        RENAME: 'RENAME',
       });
     });
 
     it('should return types from nested actionMap', () => {
       const actionMap = {
-        PLAYERS: createActionMap(['ADD', 'RENAME'])
+        PLAYERS: createActionMap(['ADD', 'RENAME']),
       };
       const types = createTypes(actionMap);
       expect(types).toEqual({
         PLAYERS: {
           ADD: 'PLAYERS/ADD',
-          RENAME: 'PLAYERS/RENAME'
-        }
+          RENAME: 'PLAYERS/RENAME',
+        },
       });
     });
 
     it('should return types from actionMap with arrays', () => {
       const actionMap = {
-        PLAYERS: createActionMap([{ ADD: [undefined, metaCreator] }, 'RENAME'])
+        PLAYERS: createActionMap([{ ADD: [undefined, metaCreator] }, 'RENAME']),
       };
       const types = createTypes(actionMap);
       expect(types).toEqual({
         PLAYERS: {
           ADD: 'PLAYERS/ADD',
-          RENAME: 'PLAYERS/RENAME'
-        }
+          RENAME: 'PLAYERS/RENAME',
+        },
       });
     });
   });

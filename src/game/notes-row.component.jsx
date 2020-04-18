@@ -13,17 +13,17 @@ type Props = {
   murderStatus: ?boolean,
   questionsByPlayerIdByPieceId: {
     [PlayerIdType]: {
-      [PieceIdType]: QuestionType[]
-    }
+      [PieceIdType]: QuestionType[],
+    },
   },
   onPieceToggle: (PieceIdType) => void,
-  onStatusToggle: (PieceIdType, PlayerIdType) => void
+  onStatusToggle: (PieceIdType, PlayerIdType) => void,
 };
 
 const statusMap = {
   undefined: 'fa-question',
   true: 'fa-check',
-  questions: 'fa-search'
+  questions: 'fa-search',
 };
 
 class NotesRow extends React.Component<Props> {
@@ -48,7 +48,7 @@ class NotesRow extends React.Component<Props> {
       isSelected,
       murderStatus,
       selectedPlayerId,
-      questionsByPlayerIdByPieceId
+      questionsByPlayerIdByPieceId,
     } = this.props;
     const statusNodes = players.map((player) => {
       const isPlayerSelected = selectedPlayerId === player.id;
@@ -73,6 +73,7 @@ class NotesRow extends React.Component<Props> {
         >
           {isActive ? (
             <button
+              type="button"
               className="warning button"
               data-player-id={player.id}
               onClick={this.handleStatusToggle}
@@ -90,6 +91,7 @@ class NotesRow extends React.Component<Props> {
       <tr className={`${isSelected ? 'secondary' : ''} notes-piece`}>
         <td className="notes-piece-name">
           <button
+            type="button"
             className={`${murderStatus ? 'alert' : ''} clear button expanded`}
             onClick={this.handlePieceToggle}
           >

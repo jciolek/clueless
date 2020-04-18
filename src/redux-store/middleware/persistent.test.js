@@ -7,7 +7,7 @@ describe('persistent middleware', () => {
   beforeEach(() => {
     storage = {
       setItem: jest.fn(),
-      getItem: jest.fn(() => '{"prop": "value"}')
+      getItem: jest.fn(() => '{"prop": "value"}'),
     };
   });
 
@@ -46,7 +46,7 @@ describe('persistent middleware', () => {
       );
       Object.defineProperty(window, 'localStorage', {
         ...localStorage,
-        get: () => storage
+        get: () => storage,
       });
 
       middleware = createPersistentMiddleware();
@@ -110,11 +110,11 @@ describe('persistent middleware', () => {
       );
       Object.defineProperty(window, 'localStorage', {
         ...localStorage,
-        get: () => storage
+        get: () => storage,
       });
 
       expect(getPersistedState()).toEqual({
-        prop: 'value'
+        prop: 'value',
       });
       expect(storage.getItem).toHaveBeenCalledWith('state');
 
@@ -123,7 +123,7 @@ describe('persistent middleware', () => {
 
     it('should use given storage', () => {
       expect(getPersistedState(storage)).toEqual({
-        prop: 'value'
+        prop: 'value',
       });
       expect(storage.getItem).toHaveBeenCalledWith('state');
     });

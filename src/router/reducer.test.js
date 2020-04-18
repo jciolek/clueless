@@ -13,7 +13,7 @@ describe('router reducer', () => {
 
   it("should return activeRoute === '/'", () => {
     expect(store.getState()).toEqual({
-      path: '/'
+      path: '/',
     });
   });
 

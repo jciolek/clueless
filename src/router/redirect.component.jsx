@@ -4,7 +4,7 @@ import type { RouterType, PathType } from './types';
 
 type Props = {
   path: PathType,
-  router: RouterType
+  router: RouterType,
 };
 
 class Redirect extends React.Component<Props> {

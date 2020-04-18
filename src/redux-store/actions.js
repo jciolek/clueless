@@ -12,7 +12,7 @@ const actionMap = {
   PIECES,
   GAME,
   ROUTER,
-  UNDOABLE: createActionMap(['UNDO', 'REDO'])
+  UNDOABLE: createActionMap(['UNDO', 'REDO']),
 };
 
 const types = createTypes(actionMap);

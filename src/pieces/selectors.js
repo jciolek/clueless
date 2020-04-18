@@ -72,7 +72,7 @@ const getPiecesForMurdererById = createSelector(
 
           if (status !== undefined) {
             Object.assign(result.all, {
-              [pieceId]: status
+              [pieceId]: status,
             });
           }
 
@@ -99,5 +99,5 @@ export {
   getPiecesIdsByGroup,
   getPiecesNumberPerPlayer,
   getPiecesNumberForTable,
-  getPiecesForMurdererById
+  getPiecesForMurdererById,
 };

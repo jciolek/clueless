@@ -4,7 +4,7 @@ import Player from './player';
 
 const defaultPlayers = [
   Player({ id: 'table', name: 'Table', isProtected: true }),
-  Player({ id: 'me', name: 'Me', isProtected: true })
+  Player({ id: 'me', name: 'Me', isProtected: true }),
 ];
 
 const reducer = handleActions(
@@ -16,14 +16,13 @@ const reducer = handleActions(
     [types.PLAYERS.RENAME](state, action) {
       const { id, name } = action.payload;
 
-      return state.map(
-        (player) =>
-          player.id !== id
-            ? player
-            : {
-                ...player,
-                name
-              }
+      return state.map((player) =>
+        player.id !== id
+          ? player
+          : {
+              ...player,
+              name,
+            }
       );
     },
 
@@ -36,26 +35,25 @@ const reducer = handleActions(
     [types.PLAYERS.UPDATE](state, action) {
       const { id, pieceId, status } = action.payload;
 
-      return state.map(
-        (player) =>
-          player.id !== id
-            ? player
-            : {
-                ...player,
-                pieces: {
-                  ...player.pieces,
-                  [pieceId]: status
-                }
-              }
+      return state.map((player) =>
+        player.id !== id
+          ? player
+          : {
+              ...player,
+              pieces: {
+                ...player.pieces,
+                [pieceId]: status,
+              },
+            }
       );
     },
 
     [types.PLAYERS.RESET](state) {
       return state.map((player) => ({
         ...player,
-        pieces: {}
+        pieces: {},
       }));
-    }
+    },
   },
   defaultPlayers
 );

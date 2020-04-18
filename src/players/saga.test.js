@@ -20,7 +20,7 @@ describe('players saga', () => {
         id: '1',
         playerId: '1',
         pieces: ['weapons.pistol', 'suspects.white'],
-        answer: 1
+        answer: 1,
       })
     );
     dispatch(
@@ -28,7 +28,7 @@ describe('players saga', () => {
         id: '2',
         playerId: '1',
         pieces: ['locations.study', 'suspects.green'],
-        answer: 1
+        answer: 1,
       })
     );
     dispatch(
@@ -36,7 +36,7 @@ describe('players saga', () => {
         id: '3',
         playerId: '1',
         pieces: ['weapons.pistol', 'locations.courtyard'],
-        answer: 1
+        answer: 1,
       })
     );
     dispatch(
@@ -44,7 +44,7 @@ describe('players saga', () => {
         id: '4',
         playerId: '2',
         pieces: ['weapons.pistol', 'locations.bedroom'],
-        answer: 1
+        answer: 1,
       })
     );
 
@@ -59,22 +59,22 @@ describe('players saga', () => {
         update({
           id: '1',
           pieceId: 'weapons.pistol',
-          status: true
+          status: true,
         })
       );
       store.runner.cancel();
 
       expect(store.output).toEqual([
         actions.questions.remove({
-          id: '1'
+          id: '1',
         }),
         actions.questions.remove({
-          id: '3'
+          id: '3',
         }),
         update({ id: 'table', pieceId: 'weapons.pistol', status: false }),
         update({ id: 'me', pieceId: 'weapons.pistol', status: false }),
         update({ id: '2', pieceId: 'weapons.pistol', status: false }),
-        update({ id: '3', pieceId: 'weapons.pistol', status: false })
+        update({ id: '3', pieceId: 'weapons.pistol', status: false }),
       ]);
     });
 
@@ -86,7 +86,7 @@ describe('players saga', () => {
         update({ id: 'table', pieceId: 'weapons.wrench', status: false }),
         update({ id: 'me', pieceId: 'weapons.wrench', status: false }),
         update({ id: '2', pieceId: 'weapons.wrench', status: false }),
-        update({ id: '3', pieceId: 'weapons.wrench', status: false })
+        update({ id: '3', pieceId: 'weapons.wrench', status: false }),
       ]);
     });
 
@@ -97,12 +97,12 @@ describe('players saga', () => {
       expect(store.output).toEqual([
         actions.questions.update({
           id: '1',
-          pieceId: 'weapons.pistol'
+          pieceId: 'weapons.pistol',
         }),
         actions.questions.update({
           id: '3',
-          pieceId: 'weapons.pistol'
-        })
+          pieceId: 'weapons.pistol',
+        }),
       ]);
     });
 
@@ -141,7 +141,7 @@ describe('players saga', () => {
         update({ id: '3', pieceId: 'locations.bathroom', status: false }),
         update({ id: '3', pieceId: 'locations.bedroom', status: false }),
         update({ id: '3', pieceId: 'locations.kitchen', status: false }),
-        update({ id: '3', pieceId: 'locations.study', status: false })
+        update({ id: '3', pieceId: 'locations.study', status: false }),
       ]);
     });
 
@@ -189,7 +189,7 @@ describe('players saga', () => {
         update({ id: 'table', pieceId: 'locations.bedroom', status: false }),
         update({ id: 'table', pieceId: 'locations.garage', status: false }),
         update({ id: 'table', pieceId: 'locations.kitchen', status: false }),
-        update({ id: 'table', pieceId: 'locations.study', status: false })
+        update({ id: 'table', pieceId: 'locations.study', status: false }),
       ]);
     });
   });

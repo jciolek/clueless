@@ -2,7 +2,7 @@ function createUndoableEnhancer({
   stateProp = 'undoable',
   undoType = 'UNDO',
   redoType = 'REDO',
-  undoLevels = 5
+  undoLevels = 5,
 } = {}) {
   return (reducer) => (state, action) => {
     if (!state) {
@@ -10,8 +10,8 @@ function createUndoableEnhancer({
         ...reducer(state, action),
         [stateProp]: {
           past: [],
-          future: []
-        }
+          future: [],
+        },
       };
     }
 
@@ -43,8 +43,8 @@ function createUndoableEnhancer({
       ...reducer(currState, action),
       [stateProp]: {
         past,
-        future
-      }
+        future,
+      },
     };
   };
 }

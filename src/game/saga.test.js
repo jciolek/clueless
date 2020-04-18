@@ -18,7 +18,7 @@ describe('game saga', () => {
 
       expect(store.output).toEqual([
         actions.players.reset(),
-        actions.questions.reset()
+        actions.questions.reset(),
       ]);
     });
   });

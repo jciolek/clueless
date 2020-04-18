@@ -26,7 +26,7 @@ function createActionMap(typeIds) {
     if (typeof item === 'object') {
       Object.keys(item).forEach((id) => {
         Object.assign(result, {
-          [id]: [].concat(item[id], metaCreator).slice(0, 2)
+          [id]: [].concat(item[id], metaCreator).slice(0, 2),
         });
       });
       Object.assign(result);

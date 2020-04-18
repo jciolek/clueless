@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const RouterContext = React.createContext({});
+const RouterContext = React.createContext();
 
 function withRouter(Component) {
   return function ComponentWithRouter(props) {

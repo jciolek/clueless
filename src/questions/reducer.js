@@ -34,14 +34,14 @@ const reducer = handleActions(
 
         return {
           ...question,
-          pieces: question.pieces.filter((item) => item !== pieceId)
+          pieces: question.pieces.filter((item) => item !== pieceId),
         };
       });
     },
 
     [types.QUESTIONS.RESET]() {
       return defaultQuestions;
-    }
+    },
   },
   defaultQuestions
 );

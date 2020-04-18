@@ -12,7 +12,7 @@ describe('undoable enhancer', () => {
       handleAction(
         'ACTION',
         (state) => ({
-          counter: state.counter + 1
+          counter: state.counter + 1,
         }),
         { counter: 0 }
       )
@@ -35,22 +35,22 @@ describe('undoable enhancer', () => {
       counter: 0,
       undoable: {
         past: [],
-        future: []
-      }
+        future: [],
+      },
     });
   });
 
   it('should use "stateProp" parameter as the state property', () => {
     createUndoableStore({
-      stateProp: 'customUndoableProp'
+      stateProp: 'customUndoableProp',
     });
 
     expect(store.getState()).toEqual({
       counter: 0,
       customUndoableProp: {
         past: [],
-        future: []
-      }
+        future: [],
+      },
     });
   });
 
@@ -60,8 +60,8 @@ describe('undoable enhancer', () => {
       counter: 1,
       undoable: {
         past: [{ counter: 0 }],
-        future: []
-      }
+        future: [],
+      },
     });
   });
 
@@ -71,8 +71,8 @@ describe('undoable enhancer', () => {
       counter: 1,
       undoable: {
         past: [],
-        future: []
-      }
+        future: [],
+      },
     });
   });
 
@@ -87,8 +87,8 @@ describe('undoable enhancer', () => {
       counter: 4,
       undoable: {
         past: [{ counter: 3 }, { counter: 2 }, { counter: 1 }],
-        future: []
-      }
+        future: [],
+      },
     });
   });
 
@@ -101,8 +101,8 @@ describe('undoable enhancer', () => {
       counter: 1,
       undoable: {
         past: [{ counter: 0 }],
-        future: [{ counter: 2 }]
-      }
+        future: [{ counter: 2 }],
+      },
     });
   });
 
@@ -114,8 +114,8 @@ describe('undoable enhancer', () => {
       counter: 1,
       undoable: {
         past: [],
-        future: []
-      }
+        future: [],
+      },
     });
   });
 
@@ -130,8 +130,8 @@ describe('undoable enhancer', () => {
       counter: 1,
       undoable: {
         past: [{ counter: 0 }],
-        future: [{ counter: 2 }]
-      }
+        future: [{ counter: 2 }],
+      },
     });
   });
 
@@ -144,15 +144,15 @@ describe('undoable enhancer', () => {
       counter: 2,
       undoable: {
         past: [{ counter: 1 }, { counter: 0 }],
-        future: []
-      }
+        future: [],
+      },
     });
   });
 
   it('should use "undoType" and "redoType" params for action types', () => {
     createUndoableStore({
       undoType: 'CUSTOM_UNDO',
-      redoType: 'CUSTOM_REDO'
+      redoType: 'CUSTOM_REDO',
     });
     dispatch({ type: 'ACTION', meta: { isUndoable: true } });
     dispatch({ type: 'CUSTOM_UNDO' });
@@ -161,8 +161,8 @@ describe('undoable enhancer', () => {
       counter: 0,
       undoable: {
         past: [],
-        future: [{ counter: 1 }]
-      }
+        future: [{ counter: 1 }],
+      },
     });
 
     dispatch({ type: 'CUSTOM_REDO' });
@@ -171,8 +171,8 @@ describe('undoable enhancer', () => {
       counter: 1,
       undoable: {
         past: [{ counter: 0 }],
-        future: []
-      }
+        future: [],
+      },
     });
   });
 });

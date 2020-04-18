@@ -34,7 +34,7 @@ function createError(action, error) {
   return {
     ...action,
     error: true,
-    payload: new Error(error)
+    payload: new Error(error),
   };
 }
 

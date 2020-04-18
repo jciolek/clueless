@@ -42,7 +42,7 @@ describe('pieces reducer', () => {
     dispatch(
       actions.pieces.replace({
         id,
-        name: 'Baseball bat'
+        name: 'Baseball bat',
       })
     );
 

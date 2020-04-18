@@ -4,7 +4,7 @@ import type { PlayerType, PlayerIdType, PlayerNameType } from './types';
 type Props = {
   id: PlayerIdType,
   name: PlayerNameType,
-  isProtected: boolean
+  isProtected: boolean,
 };
 
 function Player({ id, name, isProtected = false }: Props): PlayerType {
@@ -12,7 +12,7 @@ function Player({ id, name, isProtected = false }: Props): PlayerType {
     id,
     name,
     isProtected,
-    pieces: {}
+    pieces: {},
   };
 }
 

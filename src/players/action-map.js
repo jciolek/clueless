@@ -5,7 +5,7 @@ const actionMap = createActionMap([
   'REMOVE',
   'RENAME',
   'UPDATE',
-  'RESET'
+  'RESET',
 ]);
 
 export default actionMap;

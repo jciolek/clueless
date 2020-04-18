@@ -20,7 +20,7 @@ describe('questions saga', () => {
         id: '1',
         playerId: '1',
         pieces: ['weapons.dagger', 'locations.study', 'suspects.white'],
-        answer: 1
+        answer: 1,
       })
     );
     dispatch(
@@ -28,7 +28,7 @@ describe('questions saga', () => {
         id: '2',
         playerId: '2',
         pieces: ['weapons.wrench', 'locations.bathroom', 'suspects.white'],
-        answer: 1
+        answer: 1,
       })
     );
     const { questions } = initialState;
@@ -76,8 +76,8 @@ describe('questions saga', () => {
         actions.players.update({
           id: '1',
           pieceId: 'locations.study',
-          status: true
-        })
+          status: true,
+        }),
       ]);
     });
   });
@@ -97,7 +97,7 @@ describe('questions saga', () => {
           id: '3',
           playerId: '2',
           pieces: ['weapons.dagger', 'locations.bathroom', 'suspects.green'],
-          answer: 'weapons.dagger'
+          answer: 'weapons.dagger',
         })
       );
       store.runner.cancel();
@@ -106,8 +106,8 @@ describe('questions saga', () => {
         actions.players.update({
           id: '2',
           pieceId: 'weapons.dagger',
-          status: true
-        })
+          status: true,
+        }),
       ]);
     });
 
@@ -117,7 +117,7 @@ describe('questions saga', () => {
           id: '3',
           playerId: '2',
           pieces: ['weapons.dagger', 'locations.bathroom', 'suspects.green'],
-          answer: 0
+          answer: 0,
         })
       );
       store.runner.cancel();
@@ -126,18 +126,18 @@ describe('questions saga', () => {
         actions.players.update({
           id: '2',
           pieceId: 'weapons.dagger',
-          status: false
+          status: false,
         }),
         actions.players.update({
           id: '2',
           pieceId: 'locations.bathroom',
-          status: false
+          status: false,
         }),
         actions.players.update({
           id: '2',
           pieceId: 'suspects.green',
-          status: false
-        })
+          status: false,
+        }),
       ]);
     });
 
@@ -146,7 +146,7 @@ describe('questions saga', () => {
         actions.players.update({
           id: '2',
           pieceId: 'weapons.rope',
-          status: true
+          status: true,
         })
       );
       dispatch(
@@ -154,7 +154,7 @@ describe('questions saga', () => {
           id: '3',
           playerId: '2',
           pieces: ['weapons.rope', 'locations.bathroom', 'suspects.green'],
-          answer: 1
+          answer: 1,
         })
       );
       store.runner.cancel();
@@ -167,14 +167,14 @@ describe('questions saga', () => {
         actions.players.update({
           id: '2',
           pieceId: 'suspects.green',
-          status: false
+          status: false,
         })
       );
       dispatch(
         actions.players.update({
           id: '2',
           pieceId: 'locations.bathroom',
-          status: false
+          status: false,
         })
       );
       dispatch(
@@ -182,14 +182,14 @@ describe('questions saga', () => {
           id: '3',
           playerId: '2',
           pieces: ['weapons.rope', 'locations.bathroom', 'suspects.green'],
-          answer: 1
+          answer: 1,
         })
       );
       store.runner.cancel();
 
       expect(store.output).toEqual([
         actions.questions.update({ id: '3', pieceId: 'locations.bathroom' }),
-        actions.questions.update({ id: '3', pieceId: 'suspects.green' })
+        actions.questions.update({ id: '3', pieceId: 'suspects.green' }),
       ]);
     });
   });

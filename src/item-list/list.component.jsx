@@ -10,16 +10,20 @@ type Props = {
   onAdd?: (ItemNameType, MetaType) => void,
   onSave?: (ItemIdType, ItemNameType, MetaType) => void,
   onRemove?: (ItemIdType, MetaType) => void,
-  meta?: MetaType
+  meta?: MetaType,
 };
 type State = {
-  isCreateMode: boolean
+  isCreateMode: boolean,
 };
 
 class List extends React.Component<Props, State> {
-  state = {
-    isCreateMode: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isCreateMode: false,
+    };
+  }
 
   handleCreate = () => {
     this.setState({ isCreateMode: true });
@@ -69,6 +73,7 @@ class List extends React.Component<Props, State> {
     const addItemButton =
       !isCreateMode && onAdd ? (
         <button
+          type="button"
           className="clear small secondary button margin-bottom-0"
           onClick={this.handleCreate}
         >
@@ -87,5 +92,12 @@ class List extends React.Component<Props, State> {
     );
   }
 }
+
+List.defaultProps = {
+  onAdd: undefined,
+  onSave: undefined,
+  onRemove: undefined,
+  meta: undefined,
+};
 
 export default List;

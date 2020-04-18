@@ -3,7 +3,7 @@ function getDefaultStorage() {
     ? window.localStorage
     : {
         setItem: () => undefined,
-        getItem: () => null
+        getItem: () => null,
       };
 }
 

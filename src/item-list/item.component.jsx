@@ -6,26 +6,26 @@ import type { ItemIdType, ItemNameType } from './types';
 
 type Props = {
   id?: ItemIdType,
-  name: ItemNameType,
-  isEditMode: boolean,
+  name?: ItemNameType,
+  isEditMode?: boolean,
   onCancel?: () => void,
   onSave?: (?ItemIdType, ItemNameType) => void,
-  onRemove?: (ItemIdType) => void
+  onRemove?: (ItemIdType) => void,
 };
 
 type State = {
-  isEditMode: boolean
+  isEditMode: boolean,
 };
 
 class Item extends React.Component<Props, State> {
-  static defaultProps = {
-    name: '',
-    isEditMode: false
-  };
+  constructor(props) {
+    const { isEditMode } = props;
 
-  state = {
-    isEditMode: this.props.isEditMode
-  };
+    super(props);
+    this.state = {
+      isEditMode,
+    };
+  }
 
   handleEdit = () => {
     this.setState({ isEditMode: true });
@@ -86,5 +86,14 @@ class Item extends React.Component<Props, State> {
     );
   }
 }
+
+Item.defaultProps = {
+  id: undefined,
+  name: '',
+  isEditMode: false,
+  onCancel: undefined,
+  onSave: undefined,
+  onRemove: undefined,
+};
 
 export default Item;

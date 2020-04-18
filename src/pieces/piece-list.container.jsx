@@ -6,7 +6,7 @@ import actions from '../redux-store/actions';
 function mapStateToProps(state) {
   return {
     groups: state.pieces,
-    isStarted: state.game.isStarted
+    isStarted: state.game.isStarted,
   };
 }
 
@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch) {
     },
     onRemove(id) {
       dispatch(actions.pieces.remove({ id }));
-    }
+    },
   };
 }
 
@@ -28,7 +28,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
   const props = {
     ...ownProps,
     ...stateProps,
-    ...(!stateProps.isStarted ? dispatchProps : null)
+    ...(!stateProps.isStarted ? dispatchProps : null),
   };
 
   delete props.isStarted;

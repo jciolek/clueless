@@ -50,7 +50,7 @@ describe('autoid middleware', () => {
     const idIterator = {
       next() {
         return { value: 'hello' };
-      }
+      },
     };
     middleware = createAutoIdMiddleware({ idIterator });
 

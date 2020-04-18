@@ -1,35 +1,31 @@
 module.exports = {
   extends: [
     'airbnb',
+    'airbnb/hooks',
     'plugin:flowtype/recommended',
     'prettier',
-    'prettier/react'
+    'prettier/react',
   ],
-  plugins: ['react', 'flowtype', 'prettier'],
+  plugins: ['react', 'flowtype', 'prettier', 'filenames'],
   rules: {
     'prettier/prettier': 'error',
-    'react/jsx-filename-extension': [
-      'error',
-      { extensions: ['.jsx'] }
-    ],
-    'jsx-a11y/anchor-is-valid': [
-      'error',
-      { 'components': [] }
-    ]
+    'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
+    'jsx-a11y/anchor-is-valid': ['error', { components: [] }],
+    'react/jsx-props-no-spreading': 'off',
   },
   env: {
-    browser: true
+    browser: true,
   },
   overrides: [
     {
       files: ['*.test.js', '*.test.jsx'],
       env: {
-        jest: true
+        jest: true,
       },
       rules: {
-        'no-unused-expressions': 'off'
-      }
-    }
+        'no-unused-expressions': 'off',
+      },
+    },
   ],
   parser: 'babel-eslint',
   settings: {

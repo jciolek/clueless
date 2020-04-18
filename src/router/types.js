@@ -5,5 +5,5 @@ export type RouteType = string;
 
 export type RouterType = {
   onNavigate: (PathType) => void,
-  path: PathType
+  path: PathType,
 };

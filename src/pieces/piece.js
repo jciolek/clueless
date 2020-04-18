@@ -5,13 +5,13 @@ import type { PieceIdType, PieceNameType } from './types';
 
 type Props = {
   name: PieceNameType,
-  groupId: PieceIdType
+  groupId: PieceIdType,
 };
 
 function Piece({ name, groupId }: Props) {
   return {
     id: `${groupId}.${_.camelCase(name)}`,
-    name
+    name,
   };
 }
 

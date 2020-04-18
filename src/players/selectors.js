@@ -56,5 +56,5 @@ export {
   getPlayersIds,
   getPlayersById,
   getPlayersPiecesByPlayerId,
-  getPlayersPiecesByPieceId
+  getPlayersPiecesByPieceId,
 };

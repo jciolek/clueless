@@ -13,12 +13,15 @@ describe('players reducer', () => {
     store = createMockStore(reducer);
     ({ dispatch } = store);
 
-    const payloads = [{ id: '1', name: 'Shrek' }, { id: '2', name: 'Fiona' }];
+    const payloads = [
+      { id: '1', name: 'Shrek' },
+      { id: '2', name: 'Fiona' },
+    ];
     players = {
       table: Player({ id: 'table', name: 'Table', isProtected: true }),
       me: Player({ id: 'me', name: 'Me', isProtected: true }),
       shrek: Player(payloads[0]),
-      fiona: Player(payloads[1])
+      fiona: Player(payloads[1]),
     };
     dispatch(add(payloads[0]));
     dispatch(add(payloads[1]));
@@ -35,7 +38,7 @@ describe('players reducer', () => {
       players.table,
       players.me,
       players.shrek,
-      players.fiona
+      players.fiona,
     ]);
   });
 
@@ -45,7 +48,7 @@ describe('players reducer', () => {
     expect(store.getState()).toEqual([
       players.table,
       players.me,
-      players.fiona
+      players.fiona,
     ]);
   });
 
@@ -56,7 +59,7 @@ describe('players reducer', () => {
       players.table,
       players.me,
       players.shrek,
-      players.fiona
+      players.fiona,
     ]);
   });
 
@@ -66,7 +69,7 @@ describe('players reducer', () => {
       players.table,
       players.me,
       { ...players.shrek, name: 'Donkey' },
-      players.fiona
+      players.fiona,
     ]);
   });
 
@@ -76,7 +79,7 @@ describe('players reducer', () => {
       { ...players.table, name: 'Donkey' },
       players.me,
       players.shrek,
-      players.fiona
+      players.fiona,
     ]);
   });
 
@@ -87,9 +90,9 @@ describe('players reducer', () => {
       players.me,
       {
         ...players.shrek,
-        pieces: { 'weapons.wrench': false }
+        pieces: { 'weapons.wrench': false },
       },
-      players.fiona
+      players.fiona,
     ]);
   });
 
@@ -103,7 +106,7 @@ describe('players reducer', () => {
       players.table,
       players.me,
       players.shrek,
-      players.fiona
+      players.fiona,
     ]);
   });
 });

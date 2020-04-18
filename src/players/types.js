@@ -8,5 +8,5 @@ export type PlayerType = {
   id: PlayerIdType,
   name: PlayerNameType,
   isProtected: boolean,
-  pieces: PlayerPiecesType
+  pieces: PlayerPiecesType,
 };

@@ -20,7 +20,7 @@ function mapStateToProps(state) {
     murderPiecesById: getPiecesForMurdererById(state),
     isQuestion:
       selectedPlayerId !== null &&
-      Object.keys(selectedPieceIds).length === state.pieces.length
+      Object.keys(selectedPieceIds).length === state.pieces.length,
   };
 }
 
@@ -62,7 +62,7 @@ function mapDispatchToProps(dispatch) {
           { isUndoable: true }
         )
       );
-    }
+    },
   };
 }
 

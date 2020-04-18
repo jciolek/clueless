@@ -7,13 +7,17 @@ type Props = {
   path: PathType,
   onNavigate: (PathType) => void,
   className?: string,
-  children: React.Node
+  children: React.Node,
 };
 
 class Link extends React.Component<Props> {
   handleClick = (evt: SyntheticEvent<HTMLAnchorElement>) => {
+    const {
+      router: { onNavigate },
+    } = this.props;
+
     evt.preventDefault();
-    this.props.router.onNavigate(evt.currentTarget.pathname);
+    onNavigate(evt.currentTarget.pathname);
   };
 
   render() {
@@ -26,5 +30,9 @@ class Link extends React.Component<Props> {
     );
   }
 }
+
+Link.defaultProps = {
+  className: undefined,
+};
 
 export default Link;

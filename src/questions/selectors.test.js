@@ -23,7 +23,7 @@ describe('questions selectors', () => {
         id: '2',
         playerId: '1',
         pieces: ['weapons.dagger', 'locations.study', 'suspects.green'],
-        answer: 1
+        answer: 1,
       })
     );
     dispatch(
@@ -31,7 +31,7 @@ describe('questions selectors', () => {
         id: '5',
         playerId: '2',
         pieces: ['weapons.wrench', 'locations.study', 'suspects.white'],
-        answer: 1
+        answer: 1,
       })
     );
 
@@ -46,7 +46,7 @@ describe('questions selectors', () => {
 
       expect(getQuestionsById(state)).toEqual({
         2: questions[0],
-        5: questions[1]
+        5: questions[1],
       });
     });
   });
@@ -58,7 +58,7 @@ describe('questions selectors', () => {
           id: '3',
           playerId: '1',
           pieces: ['weapons.dagger', 'locations.study', 'suspects.white'],
-          answer: 1
+          answer: 1,
         })
       );
       const questions = clone(state.questions);
@@ -70,13 +70,13 @@ describe('questions selectors', () => {
           'weapons.dagger': [questions[0], questions[2]],
           'locations.study': [questions[0], questions[2]],
           'suspects.green': [questions[0]],
-          'suspects.white': [questions[2]]
+          'suspects.white': [questions[2]],
         },
         2: {
           'weapons.wrench': [questions[1]],
           'locations.study': [questions[1]],
-          'suspects.white': [questions[1]]
-        }
+          'suspects.white': [questions[1]],
+        },
       });
     });
   });

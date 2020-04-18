@@ -1,44 +1,41 @@
 // @flow
 import * as React from 'react';
+import { useMemo, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import RouterContext from './router.context';
 import type { PathType, RouterType } from './types';
+import actions from '../redux-store/actions';
 
 type Props = {
-  path: PathType,
-  onNavigate: (PathType) => void,
-  children: React.Node
+  children: React.Node,
 };
 
-type State = RouterType;
+function selector(state): PathType {
+  return state.router.path;
+}
 
-class Router extends React.Component<Props, State> {
-  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
-    const { path } = nextProps;
+function Router({ children }: Props) {
+  const dispatch = useDispatch();
+  const currPath = useSelector(selector);
 
-    if (path === prevState.path) {
-      return null;
-    }
+  const onNavigate = useCallback(
+    (path) => {
+      dispatch(actions.router.navigate({ path }));
+    },
+    [dispatch]
+  );
 
-    return { path };
-  }
+  const router: RouterType = useMemo(
+    () => ({
+      onNavigate,
+      path: currPath,
+    }),
+    [onNavigate, currPath]
+  );
 
-  /* eslint-disable react/no-unused-state */
-  state = {
-    onNavigate: this.handleNavigate.bind(this),
-    path: this.props.path
-  };
-
-  handleNavigate(path: PathType) {
-    this.props.onNavigate(path);
-  }
-
-  render() {
-    return (
-      <RouterContext.Provider value={this.state}>
-        {this.props.children}
-      </RouterContext.Provider>
-    );
-  }
+  return (
+    <RouterContext.Provider value={router}>{children}</RouterContext.Provider>
+  );
 }
 
 export default Router;

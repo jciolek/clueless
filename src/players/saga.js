@@ -5,16 +5,16 @@ import { getQuestionsByPlayerIdByPieceId } from '../questions/selectors';
 import {
   getPiecesIds,
   getPiecesNumberPerPlayer,
-  getPiecesNumberForTable
+  getPiecesNumberForTable,
 } from '../pieces/selectors';
 
 function* watchPlayersUpdate() {
   yield takeEvery(types.PLAYERS.UPDATE, function* playersUpdate(action) {
     const { id, pieceId, status } = action.payload;
     const playerIds = yield select(getPlayersIds);
-    const { [id]: { [pieceId]: questions = [] } } = yield select(
-      getQuestionsByPlayerIdByPieceId
-    );
+    const {
+      [id]: { [pieceId]: questions = [] },
+    } = yield select(getQuestionsByPlayerIdByPieceId);
 
     if (!status) {
       // The player hasn't got the piece, so all of their related questions
@@ -48,15 +48,17 @@ function* watchPlayersUpdate() {
 
     // -  all of the other players have to be updated...
     yield all(
-      playerIds.filter((playerId) => playerId !== id).map((playerId) =>
-        put(
-          actions.players.update({
-            id: playerId,
-            pieceId,
-            status: false
-          })
+      playerIds
+        .filter((playerId) => playerId !== id)
+        .map((playerId) =>
+          put(
+            actions.players.update({
+              id: playerId,
+              pieceId,
+              status: false,
+            })
+          )
         )
-      )
     );
     // - check if we know all of the players pieces already.
     if (playerOwnedPieceIds.length === piecesNumberForPlayer) {
@@ -72,7 +74,7 @@ function* watchPlayersUpdate() {
               actions.players.update({
                 id,
                 pieceId: localPieceId,
-                status: false
+                status: false,
               })
             )
           )

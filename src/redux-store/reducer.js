@@ -10,7 +10,7 @@ const reducer = combineReducers({
   players,
   pieces,
   game,
-  router
+  router,
 });
 
 export default reducer;

@@ -69,7 +69,7 @@ describe('pieces validator', () => {
     it('should return the same action if it is valid', () => {
       const action = replace({
         id: 'weapons.dagger',
-        name: 'Pen'
+        name: 'Pen',
       });
 
       expect(validator(store.getState(), action)).toEqual(action);
@@ -79,7 +79,7 @@ describe('pieces validator', () => {
       dispatch(actions.game.start());
       const action = replace({
         id: 'weapons.dagger',
-        name: 'Pen'
+        name: 'Pen',
       });
 
       expect(validator(store.getState(), action)).toEqual(
@@ -106,7 +106,7 @@ describe('pieces validator', () => {
     it('should return an error if id is not valid', () => {
       const action = replace({
         id: 'magic.expelliarmus',
-        name: 'Avada Kedavra'
+        name: 'Avada Kedavra',
       });
 
       expect(validator(store.getState(), action)).toEqual(
@@ -118,7 +118,7 @@ describe('pieces validator', () => {
   describe('REMOVE', () => {
     it('should return the same action if it is valid', () => {
       const action = remove({
-        id: 'weapons.dagger'
+        id: 'weapons.dagger',
       });
 
       expect(validator(store.getState(), action)).toEqual(action);
@@ -127,7 +127,7 @@ describe('pieces validator', () => {
     it('should return an error when the game is in progress', () => {
       dispatch(actions.game.start());
       const action = remove({
-        id: 'weapons.dagger'
+        id: 'weapons.dagger',
       });
 
       expect(validator(store.getState(), action)).toEqual(
@@ -137,7 +137,7 @@ describe('pieces validator', () => {
 
     it('should return an error if id is not valid', () => {
       const action = remove({
-        id: 'magic.expelliarmus'
+        id: 'magic.expelliarmus',
       });
 
       expect(validator(store.getState(), action)).toEqual(

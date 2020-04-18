@@ -6,7 +6,7 @@ const actionMap = createActionMap([
   'FINISH',
   'TOGGLE_PLAYER',
   'TOGGLE_PIECE',
-  'UNSELECT_ALL_PIECES'
+  'UNSELECT_ALL_PIECES',
 ]);
 
 export default actionMap;

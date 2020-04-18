@@ -8,7 +8,7 @@ describe('game reducer', () => {
     finish,
     togglePlayer,
     togglePiece,
-    unselectAllPieces
+    unselectAllPieces,
   } = actions.game;
   let store;
   let dispatch;
@@ -22,7 +22,7 @@ describe('game reducer', () => {
     expect(store.getState()).toEqual({
       isStarted: false,
       selectedPlayerId: null,
-      selectedPieceIds: {}
+      selectedPieceIds: {},
     });
   });
 
@@ -61,7 +61,7 @@ describe('game reducer', () => {
     dispatch(togglePiece({ id: 'weapons.wrench' }));
 
     expect(store.getState()).toHaveProperty('selectedPieceIds', {
-      weapons: 'weapons.wrench'
+      weapons: 'weapons.wrench',
     });
 
     dispatch(togglePiece({ id: 'weapons.wrench' }));
@@ -75,12 +75,12 @@ describe('game reducer', () => {
 
     expect(store.getState()).toHaveProperty('selectedPieceIds', {
       weapons: 'weapons.wrench',
-      suspects: 'suspects.white'
+      suspects: 'suspects.white',
     });
 
     dispatch(togglePiece({ id: 'suspects.white' }));
     expect(store.getState()).toHaveProperty('selectedPieceIds', {
-      weapons: 'weapons.wrench'
+      weapons: 'weapons.wrench',
     });
   });
 

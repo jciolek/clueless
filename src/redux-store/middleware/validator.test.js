@@ -1,7 +1,7 @@
 import createValidatorMiddleware, {
   createValidator,
   combineValidators,
-  createError
+  createError,
 } from './validator';
 import createMockStore from '../../../test/reducer-utils';
 
@@ -37,7 +37,7 @@ describe('validator middleware', () => {
       const action = {
         type: 'HELLO',
         error: true,
-        payload: 'some error'
+        payload: 'some error',
       };
       middleware(store)(next)(action);
 
@@ -66,7 +66,7 @@ describe('validator middleware', () => {
       const actionWorld = { type: 'WORLD' };
       const validator = createValidator({
         HELLO: passValidator,
-        WORLD: passValidator
+        WORLD: passValidator,
       });
       const state = {};
       validator(state, actionHello);
@@ -76,7 +76,7 @@ describe('validator middleware', () => {
       expect(passValidator).toHaveBeenCalledTimes(2);
       expect(passValidator.mock.calls).toEqual([
         [state, actionHello],
-        [state, actionWorld]
+        [state, actionWorld],
       ]);
     });
   });
@@ -98,7 +98,7 @@ describe('validator middleware', () => {
       expect(passValidator).toHaveBeenCalledTimes(2);
       expect(passValidator.mock.calls).toEqual([
         [state, action],
-        [state, action]
+        [state, action],
       ]);
     });
 
@@ -126,7 +126,7 @@ describe('validator middleware', () => {
       action = {
         type: 'HELLO',
         payload: 'world',
-        meta: { isCool: true }
+        meta: { isCool: true },
       };
     });
 
@@ -137,7 +137,7 @@ describe('validator middleware', () => {
         type: 'HELLO',
         payload: new Error('oops'),
         meta: { isCool: true },
-        error: true
+        error: true,
       });
     });
 

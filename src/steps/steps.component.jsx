@@ -6,29 +6,31 @@ import type { PathType, RouterType } from '../router/types';
 type LabelType = string;
 type StepType = {
   path: PathType,
-  label: LabelType
+  label: LabelType,
 };
 type Props = {
-  router: RouterType
+  router: RouterType,
 };
 
 const stepList: StepType[] = [
   {
     path: '/pieces',
-    label: 'Pieces'
+    label: 'Pieces',
   },
   {
     path: '/players',
-    label: 'Players'
+    label: 'Players',
   },
   {
     path: '/game',
-    label: 'Game'
-  }
+    label: 'Game',
+  },
 ];
 
 function Steps(props: Props) {
-  const { path } = props.router;
+  const {
+    router: { path },
+  } = props;
   const menuItemNodes = stepList.map((step) => {
     const className = step.path === path ? 'is-active' : '';
 

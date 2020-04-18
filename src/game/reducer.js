@@ -5,7 +5,7 @@ import { types } from '../redux-store/actions';
 const defaultGame = {
   isStarted: false,
   selectedPlayerId: null,
-  selectedPieceIds: {}
+  selectedPieceIds: {},
 };
 
 const isStarted = handleActions(
@@ -15,7 +15,7 @@ const isStarted = handleActions(
     },
     [types.GAME.FINISH]() {
       return false;
-    }
+    },
   },
   defaultGame.isStarted
 );
@@ -37,7 +37,7 @@ const selectedPieceIds = handleActions(
       const [groupId] = id.split('.');
       const newState = {
         ...state,
-        [groupId]: id
+        [groupId]: id,
       };
 
       if (state[groupId] === id) {
@@ -48,7 +48,7 @@ const selectedPieceIds = handleActions(
     },
     [types.GAME.UNSELECT_ALL_PIECES]() {
       return defaultGame.selectedPieceIds;
-    }
+    },
   },
   defaultGame.selectedPieceIds
 );
@@ -56,7 +56,7 @@ const selectedPieceIds = handleActions(
 const reducer = combineReducers({
   isStarted,
   selectedPlayerId,
-  selectedPieceIds
+  selectedPieceIds,
 });
 
 export default reducer;

@@ -5,14 +5,14 @@ import type { PlayerIdType } from '../players/types';
 type Props = {
   id: QuestionIdType,
   playerId: PlayerIdType,
-  pieces: QuestionPiecesType
+  pieces: QuestionPiecesType,
 };
 
 function Question({ id, playerId, pieces }: Props): QuestionType {
   return {
     id,
     playerId,
-    pieces
+    pieces,
   };
 }
 

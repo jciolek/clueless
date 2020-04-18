@@ -17,14 +17,14 @@ describe('questions reducer', () => {
         id: '1',
         playerId: '1',
         pieces: ['weapons.knife', 'locations.study', 'suspects.green'],
-        answer: 1
+        answer: 1,
       },
       {
         id: '2',
         playerId: '2',
         pieces: ['weapons.rope', 'locations.livingRoom', 'suspects.mustard'],
-        answer: 1
-      }
+        answer: 1,
+      },
     ];
     dispatch(add(payloads[0]));
     dispatch(add(payloads[1]));
@@ -40,7 +40,7 @@ describe('questions reducer', () => {
         id: '3',
         playerId: '1',
         pieces: ['weapons.wrench', 'locations.livingRoom', 'suspects.white'],
-        answer: 0
+        answer: 0,
       })
     );
     dispatch(
@@ -48,13 +48,13 @@ describe('questions reducer', () => {
         id: '4',
         playerId: '3',
         pieces: ['weapons.wrench', 'locations.study', 'suspects.white'],
-        answer: 'weapons.wrench'
+        answer: 'weapons.wrench',
       })
     );
 
     expect(store.getState()).toEqual([
       Question(payloads[0]),
-      Question(payloads[1])
+      Question(payloads[1]),
     ]);
   });
 
@@ -69,8 +69,8 @@ describe('questions reducer', () => {
     expect(store.getState()).toEqual([
       Question(payloads[0]),
       Object.assign(Question(payloads[1]), {
-        pieces: ['locations.livingRoom', 'suspects.mustard']
-      })
+        pieces: ['locations.livingRoom', 'suspects.mustard'],
+      }),
     ]);
   });
 

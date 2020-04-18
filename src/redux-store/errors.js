@@ -3,7 +3,7 @@ import PLAYERS from '../players/errors';
 
 const errors = {
   PIECES,
-  PLAYERS
+  PLAYERS,
 };
 
 export default errors;

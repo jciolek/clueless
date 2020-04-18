@@ -6,11 +6,15 @@ import type { RouteType, RouterType } from './types';
 type Props = {
   router: RouterType,
   route: RouteType,
-  children: React.Node
+  children: React.Node,
 };
 
 function Route(props: Props) {
-  const { route, router: { path }, children } = props;
+  const {
+    route,
+    router: { path },
+    children,
+  } = props;
 
   return matchRoute(route, path) ? children : null;
 }

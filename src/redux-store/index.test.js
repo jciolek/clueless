@@ -1,4 +1,4 @@
-import { createStore, getStore } from './';
+import { createStore, getStore } from '.';
 
 describe('createStore', () => {
   it('should return new store every time', () => {

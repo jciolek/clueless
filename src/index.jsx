@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { hot } from 'react-hot-loader';
 import { getStore } from './redux-store';
 import App from './app/app.component';
@@ -13,10 +13,10 @@ const store = getStore();
 const HotApp = hot(module)(App);
 
 ReactDOM.render(
-  <Provider store={store}>
+  <ReduxProvider store={store}>
     <Router>
       <HotApp />
     </Router>
-  </Provider>,
+  </ReduxProvider>,
   document.getElementById('app')
 );

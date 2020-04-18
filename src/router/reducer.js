@@ -8,12 +8,12 @@ const reducer = handleActions(
 
       return {
         ...state,
-        path
+        path,
       };
-    }
+    },
   },
   {
-    path: '/'
+    path: '/',
   }
 );
 

@@ -5,14 +5,14 @@ import type {
   PieceIdType,
   PieceNameType,
   PieceGroupType,
-  PieceGroupIdType
+  PieceGroupIdType,
 } from './types';
 
 type Props = {
   groups: PieceGroupType[],
   onAdd?: (PieceGroupIdType, PieceNameType) => void,
   onSave?: (PieceIdType, PieceNameType) => void,
-  onRemove?: (PieceIdType) => void
+  onRemove?: (PieceIdType) => void,
 };
 
 class PieceList extends React.Component<Props> {
@@ -39,5 +39,11 @@ class PieceList extends React.Component<Props> {
     ));
   }
 }
+
+PieceList.defaultProps = {
+  onAdd: undefined,
+  onSave: undefined,
+  onRemove: undefined,
+};
 
 export default PieceList;
