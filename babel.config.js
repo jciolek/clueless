@@ -8,33 +8,31 @@ module.exports = {
         loose: true,
         useBuiltIns: false,
         targets: {
-          browsers: ['last 2 versions', 'ie >= 11']
-        }
-      }
+          browsers: ['last 2 versions', 'ie >= 11'],
+        },
+      },
     ],
-    '@babel/flow'
+    '@babel/flow',
   ],
   plugins: [
     '@babel/transform-runtime',
     '@babel/proposal-class-properties',
     '@babel/transform-flow-strip-types',
-    'lodash'
+    'lodash',
+    'react-hot-loader/babel',
   ],
   env: {
-    development: {
-      plugins: ['react-hot-loader/babel']
-    },
     test: {
       presets: [
         [
           '@babel/env',
           {
             targets: {
-              node: true
-            }
-          }
-        ]
-      ]
-    }
-  }
+              node: true,
+            },
+          },
+        ],
+      ],
+    },
+  },
 };
