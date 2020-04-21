@@ -1,5 +1,5 @@
+import { types } from '@/redux-store/actions';
 import { handleActions } from 'redux-actions';
-import { types } from '../redux-store/actions';
 import Player from './player';
 
 const defaultPlayers = [

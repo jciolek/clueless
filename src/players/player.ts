@@ -1,10 +1,9 @@
-// @flow
-import type { PlayerType, PlayerIdType, PlayerNameType } from './types';
+import type { PlayerType } from './types';
 
 type Props = {
-  id: PlayerIdType,
-  name: PlayerNameType,
-  isProtected: boolean,
+  id: string;
+  name: string;
+  isProtected: boolean;
 };
 
 function Player({ id, name, isProtected = false }: Props): PlayerType {

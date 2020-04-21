@@ -1,31 +1,33 @@
-// @flow
 import * as React from 'react';
 import { useMemo, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from '@/redux-store/actions';
+import { StateType } from '@/redux-store/types';
 import RouterContext from './router.context';
-import type { PathType, RouterType } from './types';
-import actions from '../redux-store/actions';
+import type { PathType } from './types';
 
 type Props = {
-  children: React.Node,
+  children: React.ReactNode;
 };
 
-function selector(state): PathType {
+function selector(state: StateType): PathType {
   return state.router.path;
 }
 
-function Router({ children }: Props) {
+function Router({ children }: Props): React.ReactNode {
   const dispatch = useDispatch();
   const currPath = useSelector(selector);
 
   const onNavigate = useCallback(
     (path) => {
+      // @ts-ignore
+      // We cannot infer the actions types at the moment.
       dispatch(actions.router.navigate({ path }));
     },
     [dispatch]
   );
 
-  const router: RouterType = useMemo(
+  const router = useMemo(
     () => ({
       onNavigate,
       path: currPath,

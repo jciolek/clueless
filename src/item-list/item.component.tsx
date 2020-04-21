@@ -1,27 +1,35 @@
-// @flow
 import * as React from 'react';
 import ItemText from './item-text.component';
 import ItemInput from './item-input.component';
-import type { ItemIdType, ItemNameType } from './types';
 
 type Props = {
-  id?: ItemIdType,
-  name?: ItemNameType,
-  isEditMode?: boolean,
-  onCancel?: () => void,
-  onSave?: (?ItemIdType, ItemNameType) => void,
-  onRemove?: (ItemIdType) => void,
+  id?: string;
+  name: string;
+  isEditMode?: boolean;
+  onCancel?: () => void;
+  onSave?: (id: string | undefined, name: string) => void;
+  onRemove?: (id: string) => void;
 };
 
 type State = {
-  isEditMode: boolean,
+  isEditMode: boolean;
 };
 
 class Item extends React.Component<Props, State> {
-  constructor(props) {
-    const { isEditMode } = props;
+  static defaultProps = {
+    id: undefined,
+    name: '',
+    isEditMode: false,
+    onCancel: undefined,
+    onSave: undefined,
+    onRemove: undefined,
+  };
 
+  constructor(props: Props) {
     super(props);
+
+    const { isEditMode = false } = props;
+
     this.state = {
       isEditMode,
     };
@@ -41,7 +49,7 @@ class Item extends React.Component<Props, State> {
     }
   };
 
-  handleSave = (name: ItemNameType) => {
+  handleSave = (name: string) => {
     const { id, onSave } = this.props;
 
     this.setState({ isEditMode: false });
@@ -86,14 +94,5 @@ class Item extends React.Component<Props, State> {
     );
   }
 }
-
-Item.defaultProps = {
-  id: undefined,
-  name: '',
-  isEditMode: false,
-  onCancel: undefined,
-  onSave: undefined,
-  onRemove: undefined,
-};
 
 export default Item;

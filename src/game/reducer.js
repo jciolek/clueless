@@ -1,6 +1,6 @@
 import { handleAction, handleActions } from 'redux-actions';
 import { combineReducers } from 'redux';
-import { types } from '../redux-store/actions';
+import { types } from '@/redux-store/actions';
 
 const defaultGame = {
   isStarted: false,

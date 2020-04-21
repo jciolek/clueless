@@ -1,9 +1,8 @@
-// @flow
 import { connect } from 'react-redux';
-import actions from '../redux-store/actions';
+import actions from '@/redux-store/actions';
+import { getQuestionsByPlayerIdByPieceId } from '@/questions/selectors';
+import { getPiecesForMurdererById } from '@/pieces/selectors';
 import Notes from './notes.component';
-import { getQuestionsByPlayerIdByPieceId } from '../questions/selectors';
-import { getPiecesForMurdererById } from '../pieces/selectors';
 
 function mapStateToProps(state) {
   const { selectedPlayerId, selectedPieceIds } = state.game;

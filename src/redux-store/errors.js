@@ -1,5 +1,5 @@
-import PIECES from '../pieces/errors';
-import PLAYERS from '../players/errors';
+import PIECES from '@/pieces/errors';
+import PLAYERS from '@/players/errors';
 
 const errors = {
   PIECES,

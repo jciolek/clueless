@@ -1,24 +1,66 @@
-module.exports = {
+const baseConfig = {
   extends: [
     'airbnb',
     'airbnb/hooks',
-    'plugin:flowtype/recommended',
+    'plugin:import/typescript',
     'prettier',
     'prettier/react',
+    'prettier/@typescript-eslint',
   ],
-  plugins: ['react', 'flowtype', 'prettier', 'filenames'],
+};
+
+module.exports = {
+  plugins: ['@typescript-eslint', 'react', 'prettier', 'filenames'],
+  extends: baseConfig.extends,
   rules: {
     'prettier/prettier': 'error',
-    'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
     'jsx-a11y/anchor-is-valid': ['error', { components: [] }],
     'react/jsx-props-no-spreading': 'off',
+    'react/static-property-placement': ['error', 'static public field'],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
   },
   env: {
     browser: true,
   },
+  parser: 'babel-eslint',
+  settings: {
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        extensions: ['.ts', '.tsx'],
+      },
+      alias: {
+        map: [['@', './src']],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
   overrides: [
     {
-      files: ['*.test.js', '*.test.jsx'],
+      files: ['*.ts?(x)'],
+      extends: ['plugin:@typescript-eslint/recommended'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/ban-ts-ignore': 'warn'
+      }
+    },
+    {
+      files: ['*.tsx'],
+      rules: {
+        'react/jsx-filename-extension': 'off',
+      },
+    },
+    {
+      files: ['*.test.[jt]s?(x)'],
       env: {
         jest: true,
       },
@@ -27,10 +69,4 @@ module.exports = {
       },
     },
   ],
-  parser: 'babel-eslint',
-  settings: {
-    flowtype: {
-      onlyFilesWithFlowAnnotation: true,
-    },
-  },
 };

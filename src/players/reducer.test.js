@@ -1,6 +1,6 @@
+import actions from '@/redux-store/actions';
 import reducer from './reducer';
 import Player from './player';
-import actions from '../redux-store/actions';
 import createMockStore from '../../test/reducer-utils';
 
 describe('players reducer', () => {

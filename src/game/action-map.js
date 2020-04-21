@@ -1,4 +1,4 @@
-import { createActionMap } from '../redux-store/utils';
+import { createActionMap } from '@/redux-store/utils';
 
 const actionMap = createActionMap([
   'START',

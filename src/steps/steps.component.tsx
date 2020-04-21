@@ -1,15 +1,14 @@
-// @flow
 import * as React from 'react';
-import { Link } from '../router';
-import type { PathType, RouterType } from '../router/types';
+import { Link } from '@/router';
+import type { PathType, RouterType } from '@/router/types';
 
 type LabelType = string;
 type StepType = {
-  path: PathType,
-  label: LabelType,
+  path: PathType;
+  label: LabelType;
 };
 type Props = {
-  router: RouterType,
+  router: RouterType;
 };
 
 const stepList: StepType[] = [

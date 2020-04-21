@@ -67,7 +67,7 @@ const commonConfig = {
     new CopyPlugin([{ from: 'assets/', to: './' }]),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   },
   stats: {
     colors: true,
@@ -78,12 +78,12 @@ const commonConfig = {
     rules: [
       {
         enforce: 'pre',
-        test: /\.jsx?$/,
+        test: /\.[jt]sx?$/,
         loader: 'eslint-loader',
         exclude: /node_modules/,
       },
       {
-        test: /\.jsx?$/,
+        test: /\.[jt]sx?$/,
         loader: 'babel-loader',
         include: [path.resolve(__dirname, 'src')],
       },

@@ -1,11 +1,11 @@
+import reducer from '@/redux-store/reducer';
+import actions from '@/redux-store/actions';
 import {
   getPlayersIds,
   getPlayersById,
   getPlayersPiecesByPlayerId,
   getPlayersPiecesByPieceId,
 } from './selectors';
-import reducer from '../redux-store/reducer';
-import actions from '../redux-store/actions';
 
 describe('players selectors', () => {
   let state;

@@ -1,6 +1,6 @@
+import reducer from '@/redux-store/reducer';
+import actions from '@/redux-store/actions';
 import { getQuestionsById, getQuestionsByPlayerIdByPieceId } from './selectors';
-import reducer from '../redux-store/reducer';
-import actions from '../redux-store/actions';
 
 describe('questions selectors', () => {
   let state;

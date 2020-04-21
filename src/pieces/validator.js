@@ -2,9 +2,9 @@ import {
   createValidator,
   combineValidators,
   createError,
-} from '../redux-store/middleware/validator';
-import { types } from '../redux-store/actions';
-import errors from '../redux-store/errors';
+} from '@/redux-store/middleware/validator';
+import { types } from '@/redux-store/actions';
+import errors from '@/redux-store/errors';
 import { getPiecesIds, getPiecesGroupIds } from './selectors';
 import Piece from './piece';
 

@@ -1,5 +1,5 @@
 import { takeEvery, all, put } from 'redux-saga/effects';
-import actions, { types } from '../redux-store/actions';
+import actions, { types } from '@/redux-store/actions';
 
 function* watchGameFinish() {
   yield takeEvery(types.GAME.FINISH, function* gameFinish() {

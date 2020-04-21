@@ -1,10 +1,8 @@
-// @flow
 import * as React from 'react';
-import type { ItemNameType } from './types';
 
 type Props = {
-  name: ItemNameType,
-  onEdit: ?() => void,
+  name: string;
+  onEdit?: () => void;
 };
 
 function ItemText({ name, onEdit }: Props) {

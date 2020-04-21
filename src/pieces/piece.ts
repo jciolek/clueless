@@ -1,11 +1,8 @@
-// @flow
 import _ from 'lodash';
 
-import type { PieceIdType, PieceNameType } from './types';
-
 type Props = {
-  name: PieceNameType,
-  groupId: PieceIdType,
+  name: string;
+  groupId: string;
 };
 
 function Piece({ name, groupId }: Props) {

@@ -1,17 +1,20 @@
-// @flow
 import * as React from 'react';
 import type { PathType, RouterType } from './types';
 
 type Props = {
-  router: RouterType,
-  path: PathType,
-  onNavigate: (PathType) => void,
-  className?: string,
-  children: React.Node,
+  router: RouterType;
+  path: PathType;
+  onNavigate: (path: PathType) => void;
+  className?: string;
+  children: React.ReactNode;
 };
 
 class Link extends React.Component<Props> {
-  handleClick = (evt: SyntheticEvent<HTMLAnchorElement>) => {
+  static defaultProps = {
+    className: undefined,
+  };
+
+  handleClick = (evt: React.SyntheticEvent<HTMLAnchorElement>) => {
     const {
       router: { onNavigate },
     } = this.props;
@@ -30,9 +33,5 @@ class Link extends React.Component<Props> {
     );
   }
 }
-
-Link.defaultProps = {
-  className: undefined,
-};
 
 export default Link;

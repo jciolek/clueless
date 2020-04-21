@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { getPlayersPiecesByPieceId } from '../players/selectors';
+import { getPlayersPiecesByPieceId } from '@/players/selectors';
 
 const getPiecesGroupIds = createSelector(
   (state) => state.pieces,

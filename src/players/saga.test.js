@@ -1,6 +1,6 @@
+import reducer from '@/redux-store/reducer';
+import actions from '@/redux-store/actions';
 import { watchPlayersUpdate } from './saga';
-import reducer from '../redux-store/reducer';
-import actions from '../redux-store/actions';
 import createMockStore from '../../test/saga-utils';
 
 describe('players saga', () => {

@@ -1,30 +1,32 @@
-// @flow
 import * as React from 'react';
 
-import type { PlayerType, PlayerIdType } from '../players/types';
-import type { PieceType, PieceIdType } from '../pieces/types';
-import type { QuestionType } from '../questions/types';
+import type { PlayerType } from '@/players/types';
+import type { PieceType } from '@/pieces/types';
+import type { QuestionType } from '@/questions/types';
 
 type Props = {
-  piece: PieceType,
-  players: PlayerType[],
-  selectedPlayerId: ?PlayerIdType,
-  isSelected: boolean,
-  murderStatus: ?boolean,
+  piece: PieceType;
+  players: PlayerType[];
+  selectedPlayerId?: string;
+  isSelected: boolean;
+  murderStatus?: boolean;
   questionsByPlayerIdByPieceId: {
-    [PlayerIdType]: {
-      [PieceIdType]: QuestionType[],
-    },
-  },
-  onPieceToggle: (PieceIdType) => void,
-  onStatusToggle: (PieceIdType, PlayerIdType) => void,
+    [playerId: string]: {
+      [pieceId: string]: QuestionType[];
+    };
+  };
+  onPieceToggle: (pieceId: string) => void;
+  onStatusToggle: (pieceId: string, playerId: string) => void;
 };
 
 const statusMap = {
   undefined: 'fa-question',
   true: 'fa-check',
   questions: 'fa-search',
+  false: undefined,
 };
+
+type StatusType = keyof typeof statusMap;
 
 class NotesRow extends React.Component<Props> {
   handlePieceToggle = () => {
@@ -32,7 +34,7 @@ class NotesRow extends React.Component<Props> {
     onPieceToggle(piece.id);
   };
 
-  handleStatusToggle = (evt: SyntheticEvent<HTMLButtonElement>) => {
+  handleStatusToggle = (evt: React.SyntheticEvent<HTMLButtonElement>) => {
     const playerId = evt.currentTarget.getAttribute('data-player-id');
     const { piece, onStatusToggle } = this.props;
 
@@ -55,7 +57,7 @@ class NotesRow extends React.Component<Props> {
       const isActive = isSelected && isPlayerSelected;
       const status = questionsByPlayerIdByPieceId[player.id][piece.id]
         ? 'questions'
-        : String(player.pieces[piece.id]);
+        : (String(player.pieces[piece.id]) as StatusType);
       const statusIcon = statusMap[status];
       const iconNode =
         !murderStatus && statusIcon ? (

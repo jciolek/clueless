@@ -1,10 +1,10 @@
 import { createActions } from 'redux-actions';
+import QUESTIONS from '@/questions/action-map';
+import PLAYERS from '@/players/action-map';
+import PIECES from '@/pieces/action-map';
+import GAME from '@/game/action-map';
+import ROUTER from '@/router/action-map';
 import { createTypes, createActionMap } from './utils';
-import QUESTIONS from '../questions/action-map';
-import PLAYERS from '../players/action-map';
-import PIECES from '../pieces/action-map';
-import GAME from '../game/action-map';
-import ROUTER from '../router/action-map';
 
 const actionMap = {
   QUESTIONS,

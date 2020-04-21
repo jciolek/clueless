@@ -1,12 +1,12 @@
 import { takeEvery, select, all, put } from 'redux-saga/effects';
-import actions, { types } from '../redux-store/actions';
-import { getPlayersIds, getPlayersPiecesByPlayerId } from './selectors';
-import { getQuestionsByPlayerIdByPieceId } from '../questions/selectors';
+import actions, { types } from '@/redux-store/actions';
+import { getQuestionsByPlayerIdByPieceId } from '@/questions/selectors';
 import {
   getPiecesIds,
   getPiecesNumberPerPlayer,
   getPiecesNumberForTable,
-} from '../pieces/selectors';
+} from '@/pieces/selectors';
+import { getPlayersIds, getPlayersPiecesByPlayerId } from './selectors';
 
 function* watchPlayersUpdate() {
   yield takeEvery(types.PLAYERS.UPDATE, function* playersUpdate(action) {

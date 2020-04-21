@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { types } from '../redux-store/actions';
+import { types } from '@/redux-store/actions';
 import Piece from './piece';
 
 const defaultPieces = [

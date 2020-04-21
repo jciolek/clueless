@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider } from 'react-redux';
-import { getStore } from './redux-store';
-import App from './app/app.component';
-import { Router } from './router';
+import App from '@/app/app.component';
+import { getStore } from '@/redux-store';
+import { Router } from '@/router';
 
 import '../scss/foundation.scss';
 import '../scss/font-awesome.scss';

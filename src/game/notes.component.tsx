@@ -1,46 +1,45 @@
-// @flow
 import * as React from 'react';
-import NotesRow from './notes-row.component';
-import type {
-  PieceIdType,
-  PieceGroupType,
-  PieceGroupIdType,
-} from '../pieces/types';
-import type { PlayerType, PlayerIdType } from '../players/types';
+import type { PieceGroupType } from '@/pieces/types';
+import type { PlayerType } from '@/players/types';
 import type {
   QuestionType,
   QuestionPiecesType,
   QuestionAnswerType,
-} from '../questions/types';
+} from '@/questions/types';
+import NotesRow from './notes-row.component';
 
 type Props = {
-  piecesByGroup: PieceGroupType[],
+  piecesByGroup: PieceGroupType[];
   questionsByPlayerIdByPieceId: {
-    [PlayerIdType]: {
-      [PieceIdType]: QuestionType[],
-    },
-  },
+    [playerId: string]: {
+      [pieceId: string]: QuestionType[];
+    };
+  };
   murderPiecesById: {
-    [PieceIdType]: ?boolean,
-  },
-  players: PlayerType[],
-  isStarted: boolean,
-  isQuestion: boolean,
-  hasUndo: boolean,
-  hasRedo: boolean,
-  onStart: () => void,
-  onFinish: () => void,
-  onUndo: () => void,
-  onRedo: () => void,
-  onAnswer: (PlayerIdType, QuestionPiecesType, QuestionAnswerType) => void,
-  onPlayerToggle: (PlayerIdType) => void,
-  onPieceToggle: (PieceIdType) => void,
-  onAllPiecesUnselect: () => void,
-  onStatusToggle: (PlayerIdType, PieceIdType) => void,
-  selectedPlayerId: ?PlayerIdType,
+    [pieceId: string]: boolean;
+  };
+  players: PlayerType[];
+  isStarted: boolean;
+  isQuestion: boolean;
+  hasUndo: boolean;
+  hasRedo: boolean;
+  onStart: () => void;
+  onFinish: () => void;
+  onUndo: () => void;
+  onRedo: () => void;
+  onAnswer: (
+    playerId: string,
+    pieceIds: QuestionPiecesType,
+    answer: QuestionAnswerType
+  ) => void;
+  onPlayerToggle: (playerId: string) => void;
+  onPieceToggle: (pieceId: string) => void;
+  onAllPiecesUnselect: () => void;
+  onStatusToggle: (playerId: string, pieceId: string) => void;
+  selectedPlayerId?: string;
   selectedPieceIds: {
-    [PieceGroupIdType]: PieceIdType,
-  },
+    [PieceGroupId: string]: string;
+  };
 };
 
 class Notes extends React.Component<Props> {
@@ -123,8 +122,8 @@ class Notes extends React.Component<Props> {
     );
   };
 
-  handleAnswerClick = (evt: SyntheticEvent<HTMLButtonElement>) => {
-    const answer = +evt.currentTarget.getAttribute('data-answer');
+  handleAnswerClick = (evt: React.SyntheticEvent<HTMLButtonElement>) => {
+    const answer = +(evt.currentTarget.getAttribute('data-answer') || -1);
 
     if (answer === 0 || answer === 1) {
       this.handleAnswer(answer);
@@ -154,12 +153,12 @@ class Notes extends React.Component<Props> {
     }
   };
 
-  handlePieceToggle = (pieceId: PieceIdType) => {
+  handlePieceToggle = (pieceId: string) => {
     const { onPieceToggle } = this.props;
     onPieceToggle(pieceId);
   };
 
-  handleStatusToggle = (playerId: PlayerIdType, pieceId: PieceIdType) => {
+  handleStatusToggle = (playerId: string, pieceId: string) => {
     const { onStatusToggle, onPieceToggle, isQuestion } = this.props;
 
     if (isQuestion) {
@@ -170,7 +169,7 @@ class Notes extends React.Component<Props> {
     }
   };
 
-  handlePlayerToggleClick = (evt: SyntheticEvent<HTMLButtonElement>) => {
+  handlePlayerToggleClick = (evt: React.SyntheticEvent<HTMLButtonElement>) => {
     const playerId = evt.currentTarget.getAttribute('data-player-id');
     const { onPlayerToggle } = this.props;
 

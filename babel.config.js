@@ -12,14 +12,21 @@ module.exports = {
         },
       },
     ],
-    '@babel/flow',
+    '@babel/typescript',
   ],
   plugins: [
     '@babel/transform-runtime',
     '@babel/proposal-class-properties',
-    '@babel/transform-flow-strip-types',
     'lodash',
     'react-hot-loader/babel',
+    [
+      'module-resolver',
+      {
+        alias: {
+          '@': './src',
+        },
+      },
+    ],
   ],
   env: {
     test: {

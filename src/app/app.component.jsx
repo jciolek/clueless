@@ -1,11 +1,10 @@
-// @flow
 import * as React from 'react';
 import { hot } from 'react-hot-loader/root';
-import PlayerListContainer from '../players/player-list.container';
-import PieceListContainer from '../pieces/piece-list.container';
-import NotesContainer from '../game/notes.container';
-import { Route, Redirect, Switch } from '../router';
-import StepsContainer from '../steps/steps.container';
+import { Route, Redirect, Switch } from '@/router';
+import PlayerListContainer from '@/players/player-list.container';
+import PieceListContainer from '@/pieces/piece-list.container';
+import NotesContainer from '@/game/notes.container';
+import StepsContainer from '@/steps/steps.container';
 
 function App() {
   return (

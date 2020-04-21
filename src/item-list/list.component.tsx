@@ -1,23 +1,29 @@
-// @flow
 import * as React from 'react';
 import Item from './item.component';
-import type { ItemType, ItemIdType, ItemNameType } from './types';
+import type { ItemType } from './types';
 
 type MetaType = any;
 type Props = {
-  title: string,
-  items: ItemType[],
-  onAdd?: (ItemNameType, MetaType) => void,
-  onSave?: (ItemIdType, ItemNameType, MetaType) => void,
-  onRemove?: (ItemIdType, MetaType) => void,
-  meta?: MetaType,
+  title: string;
+  items: ItemType[];
+  onAdd?: (name: string, meta: MetaType) => void;
+  onSave?: (id: string, name: string, meta: MetaType) => void;
+  onRemove?: (id: string, meta: MetaType) => void;
+  meta?: MetaType;
 };
 type State = {
-  isCreateMode: boolean,
+  isCreateMode: boolean;
 };
 
 class List extends React.Component<Props, State> {
-  constructor(props) {
+  static defaultProps = {
+    onAdd: undefined,
+    onSave: undefined,
+    onRemove: undefined,
+    meta: undefined,
+  };
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -29,7 +35,7 @@ class List extends React.Component<Props, State> {
     this.setState({ isCreateMode: true });
   };
 
-  handleSave = (id: ?ItemIdType, name: ItemNameType) => {
+  handleSave = (id: string | undefined, name: string) => {
     const { meta, onSave, onAdd } = this.props;
 
     this.setState({ isCreateMode: false });
@@ -43,7 +49,7 @@ class List extends React.Component<Props, State> {
     }
   };
 
-  handleRemove = (id: ItemIdType) => {
+  handleRemove = (id: string) => {
     const { onRemove, meta } = this.props;
 
     if (onRemove) {
@@ -92,12 +98,5 @@ class List extends React.Component<Props, State> {
     );
   }
 }
-
-List.defaultProps = {
-  onAdd: undefined,
-  onSave: undefined,
-  onRemove: undefined,
-  meta: undefined,
-};
 
 export default List;

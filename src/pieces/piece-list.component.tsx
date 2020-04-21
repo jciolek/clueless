@@ -1,22 +1,22 @@
-// @flow
 import * as React from 'react';
-import List from '../item-list/list.component';
-import type {
-  PieceIdType,
-  PieceNameType,
-  PieceGroupType,
-  PieceGroupIdType,
-} from './types';
+import List from '@/item-list/list.component';
+import type { PieceGroupType } from './types';
 
 type Props = {
-  groups: PieceGroupType[],
-  onAdd?: (PieceGroupIdType, PieceNameType) => void,
-  onSave?: (PieceIdType, PieceNameType) => void,
-  onRemove?: (PieceIdType) => void,
+  groups: PieceGroupType[];
+  onAdd?: (pieceGroupId: string, name: string) => void;
+  onSave?: (pieceId: string, name: string) => void;
+  onRemove?: (pieceId: string) => void;
 };
 
 class PieceList extends React.Component<Props> {
-  handleAdd = (name: PieceNameType, groupId: PieceGroupIdType) => {
+  static defaultProps = {
+    onAdd: undefined,
+    onSave: undefined,
+    onRemove: undefined,
+  };
+
+  handleAdd = (name: string, groupId: string) => {
     const { onAdd } = this.props;
     if (onAdd) {
       onAdd(groupId, name);
@@ -39,11 +39,5 @@ class PieceList extends React.Component<Props> {
     ));
   }
 }
-
-PieceList.defaultProps = {
-  onAdd: undefined,
-  onSave: undefined,
-  onRemove: undefined,
-};
 
 export default PieceList;

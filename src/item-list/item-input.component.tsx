@@ -1,30 +1,30 @@
-// @flow
 import * as React from 'react';
-import type { ItemIdType, ItemNameType } from './types';
 
 type Props = {
-  name: ItemNameType,
-  onCancel: () => void,
-  onSave: ?(name: ItemNameType) => void,
-  onRemove: ?(ItemIdType) => void,
+  name: string;
+  onCancel: () => void;
+  onSave?: (name: string) => void;
+  onRemove?: () => void;
 };
+
 type State = {
-  name: ItemNameType,
-  isSaveEnabled: boolean,
+  name: string;
+  isSaveEnabled: boolean;
 };
 
 class ItemInput extends React.Component<Props, State> {
-  constructor(props) {
+  constructor(props: Props) {
+    super(props);
+
     const { name } = props;
 
-    super(props);
     this.state = {
       name,
       isSaveEnabled: !!name,
     };
   }
 
-  handleChange = (evt: SyntheticEvent<HTMLInputElement>) => {
+  handleChange = (evt: React.SyntheticEvent<HTMLInputElement>) => {
     const name = evt.currentTarget.value;
     this.setState({ name, isSaveEnabled: !!name });
   };

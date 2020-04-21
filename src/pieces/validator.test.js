@@ -1,8 +1,8 @@
+import actions from '@/redux-store/actions';
+import reducer from '@/redux-store/reducer';
+import errors from '@/redux-store/errors';
+import { createError } from '@/redux-store/middleware/validator';
 import validator from './validator';
-import actions from '../redux-store/actions';
-import reducer from '../redux-store/reducer';
-import errors from '../redux-store/errors';
-import { createError } from '../redux-store/middleware/validator';
 import createMockStore from '../../test/reducer-utils';
 
 describe('pieces validator', () => {

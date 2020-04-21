@@ -1,7 +1,6 @@
-// @flow
 import { connect } from 'react-redux';
+import actions from '@/redux-store/actions';
 import PieceList from './piece-list.component';
-import actions from '../redux-store/actions';
 
 function mapStateToProps(state) {
   return {

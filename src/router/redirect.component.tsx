@@ -1,10 +1,9 @@
-// @flow
 import * as React from 'react';
 import type { RouterType, PathType } from './types';
 
 type Props = {
-  path: PathType,
-  router: RouterType,
+  path: PathType;
+  router: RouterType;
 };
 
 class Redirect extends React.Component<Props> {

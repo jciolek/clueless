@@ -1,5 +1,5 @@
+import actions from '@/redux-store/actions';
 import reducer from './reducer';
-import actions from '../redux-store/actions';
 import createMockStore from '../../test/reducer-utils';
 
 describe('pieces reducer', () => {

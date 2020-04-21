@@ -1,11 +1,10 @@
-// @flow
 import * as React from 'react';
 import { matchRoute } from './utils';
-import type { RouterType } from './types';
+import { RouterType } from './types';
 
 type Props = {
-  children: React.Node,
-  router: RouterType,
+  children: React.ReactElement;
+  router: RouterType;
 };
 
 function Switch(props: Props) {
@@ -14,6 +13,7 @@ function Switch(props: Props) {
     router: { path },
   } = props;
   const matchingRoute = React.Children.toArray(children).find((child) =>
+    // @ts-ignore
     matchRoute(child.props.route, path)
   );
 

@@ -1,4 +1,4 @@
-import { withRouter } from '../router';
+import { withRouter } from '@/router';
 import Steps from './steps.component';
 
 const StepsContainer = withRouter(Steps);

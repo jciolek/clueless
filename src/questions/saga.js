@@ -1,6 +1,6 @@
 import { takeEvery, put, select, all } from 'redux-saga/effects';
-import actions, { types } from '../redux-store/actions';
-import { getPlayersPiecesByPlayerId } from '../players/selectors';
+import actions, { types } from '@/redux-store/actions';
+import { getPlayersPiecesByPlayerId } from '@/players/selectors';
 import { getQuestionsById } from './selectors';
 
 function* watchQuestionsAdd() {
