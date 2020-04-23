@@ -5,7 +5,6 @@ const baseConfig = {
     'plugin:import/typescript',
     'prettier',
     'prettier/react',
-    'prettier/@typescript-eslint',
   ],
 };
 
@@ -47,11 +46,14 @@ module.exports = {
   overrides: [
     {
       files: ['*.ts?(x)'],
-      extends: ['plugin:@typescript-eslint/recommended'],
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'prettier/@typescript-eslint',
+      ],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
-        '@typescript-eslint/ban-ts-ignore': 'warn'
-      }
+        '@typescript-eslint/ban-ts-ignore': 'warn',
+      },
     },
     {
       files: ['*.tsx'],
