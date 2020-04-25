@@ -4,7 +4,7 @@ import { Route, Redirect, Switch } from '@/router';
 import PlayerListContainer from '@/players/player-list.container';
 import PieceListContainer from '@/pieces/piece-list.container';
 import NotesContainer from '@/game/notes.container';
-import StepsContainer from '@/steps/steps.container';
+import Steps from '@/steps/Steps';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <div className="grid-x grid-margin-x grid-padding-x">
         <div className="cell small-12">
           <h1>Cluedo notes</h1>
-          <StepsContainer />
+          <Steps />
           <Switch>
             <Route route="/pieces">
               <PieceListContainer />

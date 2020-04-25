@@ -1,14 +1,11 @@
 import * as React from 'react';
-import { Link } from '@/router';
-import type { PathType, RouterType } from '@/router/types';
+import { Link, useRouter } from '@/router';
+import type { PathType } from '@/router/types';
 
 type LabelType = string;
 type StepType = {
   path: PathType;
   label: LabelType;
-};
-type Props = {
-  router: RouterType;
 };
 
 const stepList: StepType[] = [
@@ -26,10 +23,8 @@ const stepList: StepType[] = [
   },
 ];
 
-function Steps(props: Props) {
-  const {
-    router: { path },
-  } = props;
+function Steps() {
+  const { path } = useRouter();
   const menuItemNodes = stepList.map((step) => {
     const className = step.path === path ? 'is-active' : '';
 
