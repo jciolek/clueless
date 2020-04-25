@@ -14,7 +14,7 @@ function App() {
           <h1>Cluedo notes</h1>
           <StepsContainer />
           <Switch>
-            <Route route="/pieces" isDefault>
+            <Route route="/pieces">
               <PieceListContainer />
             </Route>
             <Route route="/players">

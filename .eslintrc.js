@@ -53,6 +53,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/ban-ts-ignore': 'warn',
+        'react/prop-types': 'off'
       },
     },
     {

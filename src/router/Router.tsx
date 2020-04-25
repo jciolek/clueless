@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { useMemo, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import actions from '@/redux-store/actions';
 import { StateType } from '@/redux-store/types';
-import RouterContext from './router.context';
+import * as React from 'react';
+import { useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import RouterContext from './RouterContext';
 import type { PathType } from './types';
 
 type Props = {
@@ -14,7 +14,7 @@ function selector(state: StateType): PathType {
   return state.router.path;
 }
 
-function Router({ children }: Props): React.ReactNode {
+function Router({ children }: Props) {
   const dispatch = useDispatch();
   const currPath = useSelector(selector);
 

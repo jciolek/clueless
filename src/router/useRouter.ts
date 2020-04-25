@@ -1,8 +1,14 @@
 import { useContext } from 'react';
-import RouterContext from './router.context';
+import RouterContext from './RouterContext';
 
 function useRouter() {
-  return useContext(RouterContext);
+  const router = useContext(RouterContext);
+
+  if (router === undefined) {
+    throw new Error('useRouter must be used within a Router');
+  }
+
+  return router;
 }
 
 export default useRouter;
