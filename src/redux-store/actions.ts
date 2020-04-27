@@ -3,7 +3,6 @@ import QUESTIONS from '@/questions/action-map';
 import PLAYERS from '@/players/action-map';
 import PIECES from '@/pieces/action-map';
 import GAME from '@/game/action-map';
-import ROUTER from '@/router/action-map';
 import { createTypes, createActionMap } from './utils';
 
 const actionMap = {
@@ -11,7 +10,6 @@ const actionMap = {
   PLAYERS,
   PIECES,
   GAME,
-  ROUTER,
   UNDOABLE: createActionMap(['UNDO', 'REDO']),
 };
 

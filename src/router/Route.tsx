@@ -4,9 +4,11 @@ import type { RouteComponent, RouteElement } from './types';
 import useRouter from './useRouter';
 
 const Route: RouteComponent = ({ route, children = null }) => {
-  const { path } = useRouter();
+  const { location } = useRouter();
 
-  return matchRoute(route, path) && children ? <>{children}</> : null;
+  return matchRoute(route, location.pathname) && children ? (
+    <>{children}</>
+  ) : null;
 };
 
 function isRouteElement(node: React.ReactNode): node is RouteElement {

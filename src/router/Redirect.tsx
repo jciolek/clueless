@@ -6,7 +6,7 @@ const Redirect: RedirectComponent = ({ path }) => {
   const router = useRouter();
 
   useEffect(() => {
-    router.onNavigate(path);
+    router.history.replace(path);
   }, [path, router]);
 
   return null;

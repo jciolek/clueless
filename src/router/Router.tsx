@@ -1,39 +1,32 @@
-import actions from '@/redux-store/actions';
-import { StateType } from '@/redux-store/types';
-import * as React from 'react';
-import { useCallback, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useMemo, useEffect, useState } from 'react';
+import { createBrowserHistory } from 'history';
 import RouterContext from './RouterContext';
-import type { PathType } from './types';
 
 type Props = {
   children: React.ReactNode;
 };
 
-function selector(state: StateType): PathType {
-  return state.router.path;
-}
-
 function Router({ children }: Props) {
-  const dispatch = useDispatch();
-  const currPath = useSelector(selector);
-
-  const onNavigate = useCallback(
-    (path) => {
-      // @ts-ignore
-      // We cannot infer the actions types at the moment.
-      dispatch(actions.router.navigate({ path }));
-    },
-    [dispatch]
+  const [history] = useState(createBrowserHistory());
+  const [location, setLocation] = useState(history.location);
+  // We need to add listener here and not in the useEffect hook,
+  // because there may be a redirect on the first render
+  // and we would miss it otherwise.
+  const [unlisten] = useState(() =>
+    history.listen((newLocation) => {
+      setLocation(newLocation);
+    })
   );
 
   const router = useMemo(
     () => ({
-      onNavigate,
-      path: currPath,
+      history,
+      location,
     }),
-    [onNavigate, currPath]
+    [history, location]
   );
+
+  useEffect(() => unlisten, [unlisten]);
 
   return (
     <RouterContext.Provider value={router}>{children}</RouterContext.Provider>

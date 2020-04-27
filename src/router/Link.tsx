@@ -14,7 +14,7 @@ function Link({ className, path, children }: Props) {
   const handleClick = useCallback(
     (evt: React.SyntheticEvent<HTMLAnchorElement>) => {
       evt.preventDefault();
-      router.onNavigate(evt.currentTarget.pathname);
+      router.history.push(evt.currentTarget.pathname);
     },
     [router]
   );

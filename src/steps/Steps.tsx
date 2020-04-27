@@ -24,9 +24,9 @@ const stepList: StepType[] = [
 ];
 
 function Steps() {
-  const { path } = useRouter();
+  const { location } = useRouter();
   const menuItemNodes = stepList.map((step) => {
-    const className = step.path === path ? 'is-active' : '';
+    const className = step.path === location.pathname ? 'is-active' : '';
 
     return (
       <li key={step.path} className={className}>

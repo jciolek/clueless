@@ -1,10 +1,12 @@
+import { History, Location } from 'history';
+
 export type PathType = string;
 
 export type RouteType = string;
 
 export type RouterType = {
-  onNavigate: (path: PathType) => void;
-  path: PathType;
+  history: History;
+  location: Location;
 };
 
 // Route types

@@ -14,7 +14,7 @@ function isSwitchChild(node: React.ReactNode): node is SwitchChild {
 }
 
 function Switch({ children }: Props) {
-  const { path } = useRouter();
+  const { location } = useRouter();
   const switchChildren = React.Children.toArray(children).filter<SwitchChild>(
     isSwitchChild
   );
@@ -22,7 +22,10 @@ function Switch({ children }: Props) {
   for (let i = 0; i < switchChildren.length; i += 1) {
     const child = switchChildren[i];
 
-    if (isRouteElement(child) && matchRoute(child.props.route, path)) {
+    if (
+      isRouteElement(child) &&
+      matchRoute(child.props.route, location.pathname)
+    ) {
       return child;
     }
 
