@@ -1,4 +1,5 @@
-const baseConfig = {
+module.exports = {
+  plugins: ['@typescript-eslint', 'react', 'prettier', 'filenames'],
   extends: [
     'airbnb',
     'airbnb/hooks',
@@ -6,11 +7,6 @@ const baseConfig = {
     'prettier',
     'prettier/react',
   ],
-};
-
-module.exports = {
-  plugins: ['@typescript-eslint', 'react', 'prettier', 'filenames'],
-  extends: baseConfig.extends,
   rules: {
     'prettier/prettier': 'error',
     'jsx-a11y/anchor-is-valid': ['error', { components: [] }],
@@ -53,7 +49,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/ban-ts-ignore': 'warn',
-        'react/prop-types': 'off'
+        'react/prop-types': 'off',
       },
     },
     {
