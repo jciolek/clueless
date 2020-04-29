@@ -1,4 +1,4 @@
-import { createTypes, createActionMap, metaCreator } from './utils';
+import { createTypes, metaCreator, createActionMap } from './utils';
 
 describe('redux-store utils', () => {
   describe('createActionMap', () => {

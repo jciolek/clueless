@@ -1,22 +1,4 @@
-function createTypes(actionMap, ns = '') {
-  if (typeof actionMap !== 'object' || Array.isArray(actionMap)) {
-    return ns;
-  }
-
-  const types = {};
-
-  Object.keys(actionMap).forEach((key) => {
-    const nsKey = ns ? `${ns}/${key}` : key;
-
-    types[key] = createTypes(actionMap[key], nsKey);
-  });
-
-  return types;
-}
-
-function metaCreator(payload, meta) {
-  return meta;
-}
+import metaCreator from './metaCreator';
 
 // Create action map digestible by createActions
 // and add default metaCreator.
@@ -33,9 +15,8 @@ function createActionMap(typeIds) {
     } else {
       Object.assign(result, { [item]: [undefined, metaCreator] });
     }
-
     return result;
   }, {});
 }
 
-export { createTypes, createActionMap, metaCreator };
+export default createActionMap;

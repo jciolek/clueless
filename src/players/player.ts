@@ -3,7 +3,7 @@ import type { PlayerType } from './types';
 type Props = {
   id: string;
   name: string;
-  isProtected: boolean;
+  isProtected?: boolean;
 };
 
 function Player({ id, name, isProtected = false }: Props): PlayerType {
