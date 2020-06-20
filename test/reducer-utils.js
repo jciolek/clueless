@@ -7,7 +7,7 @@ function createMockStore(reducer, initialState = undefined) {
     },
     dispatch(action) {
       state = reducer(state, action);
-    }
+    },
   };
 }
 

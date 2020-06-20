@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import {
   createAutoIdMiddleware,
@@ -14,30 +14,23 @@ import { types } from './actions';
 
 let store = null;
 
-const reduxDevtoolsExtensionCompose = '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__';
-const composeEnhancers =
-  typeof window === 'object' &&
-  window[reduxDevtoolsExtensionCompose] &&
-  process.env.NODE_ENV === 'development'
-    ? window[reduxDevtoolsExtensionCompose]
-    : compose;
-
-function createCustomStore() {
+function createStore() {
   const sagaMiddleware = createSagaMiddleware();
-  const middlewareList = [
-    createAutoIdMiddleware(),
-    createValidatorMiddleware(validator),
-    createPersistentMiddleware(),
-    sagaMiddleware,
-  ];
-  const newStore = createStore(
-    createUndoableEnhancer({
+  const newStore = configureStore({
+    reducer: createUndoableEnhancer({
       undoType: types.UNDOABLE.UNDO,
       redoType: types.UNDOABLE.REDO,
     })(reducer),
-    getPersistedState(),
-    composeEnhancers(applyMiddleware(...middlewareList))
-  );
+    middleware: [
+      createAutoIdMiddleware(),
+      createValidatorMiddleware(validator),
+      createPersistentMiddleware(),
+      sagaMiddleware,
+    ],
+    devTools: true,
+    preloadedState: getPersistedState(),
+  });
+
   sagaMiddleware.run(saga);
 
   return newStore;
@@ -45,11 +38,11 @@ function createCustomStore() {
 
 function getStore() {
   if (!store) {
-    store = createCustomStore();
+    store = createStore();
   }
 
   return store;
 }
 
-export { getStore, createCustomStore as createStore };
+export { getStore, createStore };
 export { default as actions } from './actions';
