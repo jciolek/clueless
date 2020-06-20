@@ -107,7 +107,7 @@ const commonConfig = {
 
 const developmentConfig = {
   mode: 'development',
-  entry: ['./src/index.jsx'],
+  entry: ['./src/index.tsx'],
   module: {
     rules: [
       {

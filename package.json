@@ -2,7 +2,7 @@
   "name": "clueless",
   "version": "1.0.0",
   "description": "Clueless will help you obliterate your opponents.",
-  "main": "index.js",
+  "main": "src/index.tsx",
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "test": "jest --verbose",
