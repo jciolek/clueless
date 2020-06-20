@@ -1,5 +1,4 @@
-import actions from '@/redux-store/actions';
-import reducer from './reducer';
+import { reducer, actions } from './slice';
 import createMockStore from '../../test/reducer-utils';
 
 describe('game reducer', () => {
@@ -9,7 +8,7 @@ describe('game reducer', () => {
     togglePlayer,
     togglePiece,
     unselectAllPieces,
-  } = actions.game;
+  } = actions;
   let store;
   let dispatch;
 
@@ -58,13 +57,13 @@ describe('game reducer', () => {
   });
 
   it('should allow to toggle piece', () => {
-    dispatch(togglePiece({ id: 'weapons.wrench' }));
+    dispatch(togglePiece({ id: 'locations.study' }));
 
     expect(store.getState()).toHaveProperty('selectedPieceIds', {
-      weapons: 'weapons.wrench',
+      locations: 'locations.study',
     });
 
-    dispatch(togglePiece({ id: 'weapons.wrench' }));
+    dispatch(togglePiece({ id: 'locations.study' }));
 
     expect(store.getState()).toHaveProperty('selectedPieceIds', {});
   });
