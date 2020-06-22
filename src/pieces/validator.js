@@ -3,8 +3,8 @@ import {
   combineValidators,
   createError,
 } from '@/redux-store/middleware/validator';
-import { types } from '@/redux-store/actions';
 import errors from '@/redux-store/errors';
+import { actions } from './slice';
 import { getPiecesIds, getPiecesGroupIds } from './selectors';
 import Piece from './piece';
 
@@ -57,7 +57,7 @@ function validateGameNotStarted(state, action) {
 }
 
 const validator = createValidator({
-  [types.PIECES.ADD]: combineValidators(
+  [actions.add.type]: combineValidators(
     validateGameNotStarted,
     validateGroupIdExists,
     validateIdAvailable,
@@ -65,14 +65,14 @@ const validator = createValidator({
     validateNameValue
   ),
 
-  [types.PIECES.REPLACE]: combineValidators(
+  [actions.replace.type]: combineValidators(
     validateGameNotStarted,
     validateIdExists,
     validateNameType,
     validateNameValue
   ),
 
-  [types.PIECES.REMOVE]: combineValidators(
+  [actions.remove.type]: combineValidators(
     validateGameNotStarted,
     validateIdExists
   ),

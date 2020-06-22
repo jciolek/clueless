@@ -1,6 +1,7 @@
-import actions from '@/redux-store/actions';
-import reducer from './reducer';
+import { reducer, actions } from './slice';
 import createMockStore from '../../test/reducer-utils';
+
+const { add, remove, replace } = actions;
 
 describe('pieces reducer', () => {
   let store = null;
@@ -18,7 +19,7 @@ describe('pieces reducer', () => {
   it('should allow to add an item to a group', () => {
     const [{ id: groupId, items }] = store.getState();
 
-    dispatch(actions.pieces.add({ groupId, name: 'Baseball bat' }));
+    dispatch(add({ groupId, name: 'Baseball bat' }));
 
     const state = store.getState();
     expect(state[0].items.length).toBe(items.length + 1);
@@ -28,7 +29,7 @@ describe('pieces reducer', () => {
     const [, { items }] = store.getState();
     const [{ id }] = items;
 
-    dispatch(actions.pieces.remove({ id }));
+    dispatch(remove({ id }));
 
     const state = store.getState();
     expect(state[1].items.length).toBe(items.length - 1);
@@ -40,7 +41,7 @@ describe('pieces reducer', () => {
     const [, { id }] = items;
 
     dispatch(
-      actions.pieces.replace({
+      replace({
         id,
         name: 'Baseball bat',
       })
