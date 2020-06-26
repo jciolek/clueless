@@ -1,10 +1,10 @@
-import actions from '@/redux-store/actions';
-import reducer from './reducer';
+import { reducer, actions } from './slice';
 import Player from './player';
 import createMockStore from '../../test/reducer-utils';
 
+const { add, update, remove, rename, reset } = actions;
+
 describe('players reducer', () => {
-  const { add, update, remove, reset } = actions.players;
   let store = null;
   let dispatch = null;
   let players = null;
@@ -64,7 +64,7 @@ describe('players reducer', () => {
   });
 
   it('should allow to rename a player', () => {
-    dispatch(actions.players.rename({ id: '1', name: 'Donkey' }));
+    dispatch(rename({ id: '1', name: 'Donkey' }));
     expect(store.getState()).toEqual([
       players.table,
       players.me,
@@ -74,7 +74,7 @@ describe('players reducer', () => {
   });
 
   it('should allow to rename a protected player', () => {
-    dispatch(actions.players.rename({ id: 'table', name: 'Donkey' }));
+    dispatch(rename({ id: 'table', name: 'Donkey' }));
     expect(store.getState()).toEqual([
       { ...players.table, name: 'Donkey' },
       players.me,

@@ -1,5 +1,5 @@
 import { takeEvery, select, all, put } from 'redux-saga/effects';
-import actions, { types } from '@/redux-store/actions';
+import actions from '@/redux-store/actions';
 import { getQuestionsByPlayerIdByPieceId } from '@/questions/selectors';
 import {
   getPiecesIds,
@@ -9,7 +9,7 @@ import {
 import { getPlayersIds, getPlayersPiecesByPlayerId } from './selectors';
 
 function* watchPlayersUpdate() {
-  yield takeEvery(types.PLAYERS.UPDATE, function* playersUpdate(action) {
+  yield takeEvery(actions.players.update.type, function* playersUpdate(action) {
     const { id, pieceId, status } = action.payload;
     const playerIds = yield select(getPlayersIds);
     const {
