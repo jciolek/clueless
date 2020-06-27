@@ -1,12 +1,11 @@
 import { createActions } from 'redux-actions';
-import QUESTIONS from '@/questions/action-map';
 import { actions as pieces } from '@/pieces/slice';
 import { actions as game } from '@/game/slice';
 import { actions as players } from '@/players/slice';
+import { actions as questions } from '@/questions/slice';
 import { createTypes, createActionMap } from './utils';
 
 const actionMap = {
-  QUESTIONS,
   UNDOABLE: createActionMap(['UNDO', 'REDO']),
 };
 
@@ -16,6 +15,7 @@ const actions = {
   game,
   pieces,
   players,
+  questions,
 };
 
 export default actions;

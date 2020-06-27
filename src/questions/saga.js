@@ -1,10 +1,10 @@
 import { takeEvery, put, select, all } from 'redux-saga/effects';
-import actions, { types } from '@/redux-store/actions';
+import actions from '@/redux-store/actions';
 import { getPlayersPiecesByPlayerId } from '@/players/selectors';
 import { getQuestionsById } from './selectors';
 
 function* watchQuestionsAdd() {
-  yield takeEvery(types.QUESTIONS.ADD, function* questionsAdd(action) {
+  yield takeEvery(actions.questions.add.type, function* questionsAdd(action) {
     const { id, answer, pieces, playerId } = action.payload;
 
     if (typeof answer === 'string') {
@@ -47,7 +47,9 @@ function* watchQuestionsAdd() {
 }
 
 function* watchQuestionsUpdate() {
-  yield takeEvery(types.QUESTIONS.UPDATE, function* questionsUpdate(action) {
+  yield takeEvery(actions.questions.update.type, function* questionsUpdate(
+    action
+  ) {
     const { id } = action.payload;
     const { [id]: question } = yield select(getQuestionsById);
 

@@ -1,10 +1,9 @@
-import actions from '@/redux-store/actions';
-import reducer from './reducer';
+import { actions, reducer } from './slice';
 import Question from './question';
 import createMockStore from '../../test/reducer-utils';
 
 describe('questions reducer', () => {
-  const { add, update, remove, reset } = actions.questions;
+  const { add, update, remove, reset } = actions;
   let store = null;
   let dispatch = null;
   let payloads = null;
