@@ -1,4 +1,4 @@
-import { handleAction } from 'redux-actions';
+import { createReducer } from '@reduxjs/toolkit';
 import createUndoableEnhancer from './undoable';
 import createMockStore from '../../../test/reducer-utils';
 
@@ -9,12 +9,14 @@ describe('undoable enhancer', () => {
 
   function createUndoableStore(props) {
     reducer = jest.fn(
-      handleAction(
-        'ACTION',
-        (state) => ({
-          counter: state.counter + 1,
-        }),
-        { counter: 0 }
+      createReducer(
+        { counter: 0 },
+        {
+          ACTION: (state) => {
+            // eslint-disable-next-line no-param-reassign
+            state.counter += 1;
+          },
+        }
       )
     );
     store = createMockStore(createUndoableEnhancer(props)(reducer));

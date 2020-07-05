@@ -10,7 +10,7 @@ import createUndoableEnhancer from './reducer-enhancers/undoable';
 import saga from './saga';
 import reducer from './reducer';
 import validator from './validator';
-import { types } from './actions';
+import actions from './actions';
 
 let store = null;
 
@@ -18,8 +18,8 @@ function createStore() {
   const sagaMiddleware = createSagaMiddleware();
   const newStore = configureStore({
     reducer: createUndoableEnhancer({
-      undoType: types.UNDOABLE.UNDO,
-      redoType: types.UNDOABLE.REDO,
+      undoType: actions.undoable.undo.type,
+      redoType: actions.undoable.redo.type,
     })(reducer),
     middleware: [
       createAutoIdMiddleware(),
