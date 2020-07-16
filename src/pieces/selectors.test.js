@@ -1,6 +1,6 @@
 import reducer from '@/redux-store/reducer';
 import actions from '@/redux-store/actions';
-import createMockStore from '@/test/reducer-utils';
+import createMockStore from '@/test/createMockStore';
 import {
   getPiecesIds,
   getPiecesGroupIds,

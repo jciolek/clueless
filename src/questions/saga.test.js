@@ -1,6 +1,6 @@
 import reducer from '@/redux-store/reducer';
 import actions from '@/redux-store/actions';
-import createMockStore from '@/test/saga-utils';
+import createSagaMockStore from '@/test/createSagaMockStore';
 import { watchQuestionsUpdate, watchQuestionsAdd } from './saga';
 
 describe('questions saga', () => {
@@ -40,7 +40,7 @@ describe('questions saga', () => {
     let dispatch = null;
 
     beforeEach(() => {
-      store = createMockStore(reducer, watchQuestionsUpdate, initialState);
+      store = createSagaMockStore(reducer, watchQuestionsUpdate, initialState);
       ({ dispatch } = store);
     });
 
@@ -87,7 +87,7 @@ describe('questions saga', () => {
     let dispatch = null;
 
     beforeEach(() => {
-      store = createMockStore(reducer, watchQuestionsAdd, initialState);
+      store = createSagaMockStore(reducer, watchQuestionsAdd, initialState);
       ({ dispatch } = store);
     });
 

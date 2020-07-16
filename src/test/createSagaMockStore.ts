@@ -2,7 +2,7 @@ import { runSaga, Saga, stdChannel } from 'redux-saga';
 import type { Reducer, AnyAction } from 'redux';
 import type { SagaMockStoreType } from './types';
 
-function createMockStore<R extends Reducer = Reducer>(
+function createSagaMockStore<R extends Reducer = Reducer>(
   reducer: R,
   saga: Saga,
   initialState?: ReturnType<R>
@@ -34,4 +34,4 @@ function createMockStore<R extends Reducer = Reducer>(
   };
 }
 
-export default createMockStore;
+export default createSagaMockStore;

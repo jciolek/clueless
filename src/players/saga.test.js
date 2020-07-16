@@ -1,6 +1,6 @@
 import reducer from '@/redux-store/reducer';
 import actions from '@/redux-store/actions';
-import createMockStore from '@/test/saga-utils';
+import createSagaMockStore from '@/test/createSagaMockStore';
 import { watchPlayersUpdate } from './saga';
 
 describe('players saga', () => {
@@ -9,7 +9,7 @@ describe('players saga', () => {
   let dispatch = null;
 
   beforeEach(() => {
-    store = createMockStore(reducer, watchPlayersUpdate);
+    store = createSagaMockStore(reducer, watchPlayersUpdate);
     ({ dispatch } = store);
 
     dispatch(add({ id: '1', name: 'Shrek' }));

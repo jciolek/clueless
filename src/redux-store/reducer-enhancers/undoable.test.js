@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import createMockStore from '@/test/reducer-utils';
+import createMockStore from '@/test/createMockStore';
 import createUndoableEnhancer from './undoable';
 
 describe('undoable enhancer', () => {
