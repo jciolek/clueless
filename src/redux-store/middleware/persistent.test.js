@@ -1,5 +1,5 @@
+import createMockStore from '@/test/reducer-utils';
 import createPersistentMiddleware, { getPersistedState } from './persistent';
-import createMockStore from '../../../test/reducer-utils';
 
 describe('persistent middleware', () => {
   let storage;

@@ -1,7 +1,7 @@
 import reducer from '@/redux-store/reducer';
 import actions from '@/redux-store/actions';
+import createMockStore from '@/test/saga-utils';
 import { watchQuestionsUpdate, watchQuestionsAdd } from './saga';
-import createMockStore from '../../test/saga-utils';
 
 describe('questions saga', () => {
   let initialState;

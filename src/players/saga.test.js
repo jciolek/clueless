@@ -1,7 +1,7 @@
 import reducer from '@/redux-store/reducer';
 import actions from '@/redux-store/actions';
+import createMockStore from '@/test/saga-utils';
 import { watchPlayersUpdate } from './saga';
-import createMockStore from '../../test/saga-utils';
 
 describe('players saga', () => {
   const { add, update } = actions.players;

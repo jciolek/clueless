@@ -52,9 +52,7 @@ const initialState: State = [
 ];
 
 function findGroup(state: State, groupId: PieceGroupIdType) {
-  return state.find(({ id }) => id === groupId) as PieceGroupType<
-    PieceGroupIdType
-  >;
+  return state.find(({ id }) => id === groupId) as PieceGroupType;
 }
 
 const slice = createSlice({

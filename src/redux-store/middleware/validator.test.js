@@ -1,9 +1,9 @@
+import createMockStore from '@/test/reducer-utils';
 import createValidatorMiddleware, {
   createValidator,
   combineValidators,
   createError,
 } from './validator';
-import createMockStore from '../../../test/reducer-utils';
 
 describe('validator middleware', () => {
   let passValidator;

@@ -1,5 +1,5 @@
+import createMockStore from '@/test/reducer-utils';
 import { reducer, actions } from './slice';
-import createMockStore from '../../test/reducer-utils';
 
 const { add, remove, replace } = actions;
 

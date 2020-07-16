@@ -1,5 +1,6 @@
 import reducer from '@/redux-store/reducer';
 import actions from '@/redux-store/actions';
+import createMockStore from '@/test/reducer-utils';
 import {
   getPiecesIds,
   getPiecesGroupIds,
@@ -8,7 +9,6 @@ import {
   getPiecesNumberForTable,
   getPiecesForMurdererById,
 } from './selectors';
-import createMockStore from '../../test/reducer-utils';
 
 describe('pieces selectors', () => {
   let store;

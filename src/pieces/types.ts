@@ -6,7 +6,7 @@ export type PieceType = {
 
 export type PieceGroupIdType = 'weapons' | 'suspects' | 'locations';
 
-export type PieceGroupType<T extends PieceGroupIdType> = {
+export type PieceGroupType<T extends PieceGroupIdType = PieceGroupIdType> = {
   id: T;
   name: string;
   items: PieceType[];
