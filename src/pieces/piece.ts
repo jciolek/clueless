@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { camelCase } from 'lodash';
 import type { PieceGroupIdType } from './types';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 
 function Piece({ name, groupId }: Props) {
   return {
-    id: `${groupId}.${_.camelCase(name)}`,
+    id: `${groupId}.${camelCase(name)}`,
     name,
   };
 }
