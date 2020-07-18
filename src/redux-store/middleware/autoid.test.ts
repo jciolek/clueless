@@ -1,40 +1,49 @@
+import { DispatchType } from '@/test/types';
 import createAutoIdMiddleware from './autoid';
 
 describe('autoid middleware', () => {
-  let middleware = null;
-  let next = null;
+  let middleware: ReturnType<typeof createAutoIdMiddleware>;
+  let next: jest.MockedFunction<DispatchType>;
 
   beforeEach(() => {
     middleware = createAutoIdMiddleware();
-    next = jest.fn();
+    next = jest.fn((action) => action);
   });
 
   it('should pass through an action with no meta', () => {
-    const action = {};
+    const action = { type: undefined };
     middleware()(next)(action);
     expect(next).toHaveBeenCalledWith(action);
   });
 
   it('should pass through an action with no meta.autoid', () => {
-    const action = { payload: {}, meta: {} };
+    const action = { type: undefined, payload: {}, meta: {} };
     middleware()(next)(action);
     expect(next).toHaveBeenCalledWith(action);
   });
 
   it('should pass through an action with meta.autoid === false', () => {
-    const action = { payload: { id: 'hello' }, meta: { autoid: false } };
+    const action = {
+      type: undefined,
+      payload: { id: 'hello' },
+      meta: { autoid: false },
+    };
     middleware()(next)(action);
     expect(next).toHaveBeenCalledWith(action);
   });
 
   it('should pass through an action with meta.autoid === true and payload.id !== undefined', () => {
-    const action = { payload: { id: 'hello' }, meta: { autoid: true } };
+    const action = {
+      type: undefined,
+      payload: { id: 'hello' },
+      meta: { autoid: true },
+    };
     middleware()(next)(action);
     expect(next).toHaveBeenCalledWith(action);
   });
 
   it('should create a sequential id:string by default if meta.autoid === true', () => {
-    const action = { meta: { autoid: true } };
+    const action = { type: undefined, meta: { autoid: true } };
     middleware()(next)(action);
     let [[result]] = next.mock.calls;
     expect(result).not.toBe(action);
@@ -46,12 +55,9 @@ describe('autoid middleware', () => {
   });
 
   it('should take custom id iterator', () => {
-    const action = { meta: { autoid: true } };
-    const idIterator = {
-      next() {
-        return { value: 'hello' };
-      },
-    };
+    const action = { type: undefined, meta: { autoid: true } };
+    const idIterator = ['hello'].values();
+
     middleware = createAutoIdMiddleware({ idIterator });
 
     middleware()(next)(action);
