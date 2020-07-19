@@ -1,13 +1,14 @@
 import reducer from '@/redux-store/reducer';
 import actions from '@/redux-store/actions';
 import createSagaMockStore from '@/test/createSagaMockStore';
-import type { SagaMockStoreType, DispatchType } from '@/test/types';
+import type { SagaMockStoreType } from '@/test/types';
 import type { ReducerType } from '@/redux-store/types';
+import type { Dispatch } from 'redux';
 import { watchGameFinish } from './saga';
 
 describe('game saga', () => {
   let store: SagaMockStoreType<ReducerType>;
-  let dispatch: DispatchType;
+  let dispatch: Dispatch;
 
   describe('watchGameFinish', () => {
     beforeEach(() => {

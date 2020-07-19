@@ -3,12 +3,16 @@ import reducer from '@/redux-store/reducer';
 import errors from '@/redux-store/errors';
 import { createError } from '@/redux-store/middleware/validator';
 import createMockStore from '@/test/createMockStore';
+import type { MockStoreType } from '@/test/types';
+import type { Dispatch } from 'redux';
 import validator from './validator';
+
+type ReducerType = typeof reducer;
 
 describe('players validator', () => {
   const { add, rename, remove, update } = actions.players;
-  let store;
-  let dispatch;
+  let store: MockStoreType<ReducerType>;
+  let dispatch: Dispatch;
 
   beforeEach(() => {
     store = createMockStore(reducer);
@@ -17,13 +21,13 @@ describe('players validator', () => {
 
   describe('ADD', () => {
     it('should return the same action if it is valid', () => {
-      const action = add({ id: '1', name: 'Douglas' });
+      const action = { type: add.type, payload: { id: '1', name: 'Douglas' } };
 
       expect(validator(store.getState(), action)).toEqual(action);
     });
 
     it('should return an error when the game is in progress', () => {
-      const action = add({ id: '1', name: 'Douglas' });
+      const action = { type: add.type, payload: { id: '1', name: 'Douglas' } };
       dispatch(actions.game.start());
 
       expect(validator(store.getState(), action)).toEqual(
@@ -32,7 +36,7 @@ describe('players validator', () => {
     });
 
     it('should return an error if the name is not a string', () => {
-      const action = add({ id: '1', name: null });
+      const action = { type: add.type, payload: { id: '1', name: null } };
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_TYPE)
@@ -40,7 +44,7 @@ describe('players validator', () => {
     });
 
     it('should return an error if the name is an empty string', () => {
-      const action = add({ id: '1', name: '' });
+      const action = { type: add.type, payload: { id: '1', name: '' } };
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_VALUE)
@@ -48,7 +52,7 @@ describe('players validator', () => {
     });
 
     it('should return an error if player id already exists', () => {
-      const action = add({ id: '1', name: 'Snape' });
+      const action = { type: add.type, payload: { id: '1', name: 'Snape' } };
       dispatch(action);
 
       expect(validator(store.getState(), action)).toEqual(
@@ -57,7 +61,7 @@ describe('players validator', () => {
     });
 
     it('should return an error if id is missing from the payload', () => {
-      const action = add({ name: 'Anakin' });
+      const action = { type: add.type, payload: { name: 'Anakin' } };
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PLAYERS.PARAMS.INVALID_ID_TYPE)
@@ -67,7 +71,7 @@ describe('players validator', () => {
 
   describe('RENAME', () => {
     beforeEach(() => {
-      dispatch(add({ id: '1', name: 'Doug' }));
+      dispatch({ type: add.type, payload: { id: '1', name: 'Doug' } });
     });
 
     it('should return the same action if it is valid', () => {
@@ -84,7 +88,7 @@ describe('players validator', () => {
     });
 
     it('should return an error if the name is not a string', () => {
-      const action = rename({ id: '1', name: null });
+      const action = { type: rename.type, payload: { id: '1', name: null } };
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PLAYERS.PARAMS.INVALID_NAME_TYPE)
@@ -110,7 +114,7 @@ describe('players validator', () => {
 
   describe('REMOVE', () => {
     beforeEach(() => {
-      dispatch(add({ id: '1', name: 'Doug' }));
+      dispatch({ type: add.type, payload: { id: '1', name: 'Doug' } });
     });
 
     it('should return the same action if it is valid', () => {
@@ -139,7 +143,7 @@ describe('players validator', () => {
 
   describe('UPDATE', () => {
     beforeEach(() => {
-      dispatch(add({ id: '1', name: 'Doug' }));
+      dispatch({ type: add.type, payload: { id: '1', name: 'Doug' } });
     });
 
     it('should return the same action if it is valid', () => {
@@ -192,11 +196,14 @@ describe('players validator', () => {
     });
 
     it('should return an error if piece status is not boolean', () => {
-      const action = update({
-        id: '1',
-        pieceId: 'weapons.dagger',
-        status: null,
-      });
+      const action = {
+        type: update.type,
+        payload: {
+          id: '1',
+          pieceId: 'weapons.dagger',
+          status: null,
+        },
+      };
       dispatch(actions.game.start());
 
       expect(validator(store.getState(), action)).toEqual(

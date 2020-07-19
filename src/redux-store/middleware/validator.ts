@@ -1,12 +1,29 @@
-function createValidatorMiddleware(validator) {
+import { AnyAction, Middleware } from 'redux';
+import {
+  ValidatorType,
+  ErrorActionType,
+  ValidatorMapType,
+} from '@/redux-store/types';
+
+function isErrorAction(
+  action: AnyAction | ErrorActionType
+): action is ErrorActionType {
+  return action.error === true;
+}
+
+function createValidatorMiddleware<State>(
+  validator: ValidatorType<State>
+): Middleware {
   return (store) => (next) => (action) => {
     const result = validator(store.getState(), action);
 
-    return result.error ? result : next(result);
+    return isErrorAction(result) ? result : next(result);
   };
 }
 
-function createValidator(validatorMap) {
+function createValidator<State>(
+  validatorMap: ValidatorMapType<State>
+): ValidatorType<State> {
   return function validator(state, action) {
     const { [action.type]: actionValidator } = validatorMap;
 
@@ -14,7 +31,9 @@ function createValidator(validatorMap) {
   };
 }
 
-function combineValidators(...validators) {
+function combineValidators<State>(
+  ...validators: Array<ValidatorType<State>>
+): ValidatorType<State> {
   return function validator(state, action) {
     const { length } = validators;
     let result = action;
@@ -30,7 +49,7 @@ function combineValidators(...validators) {
   };
 }
 
-function createError(action, error) {
+function createError(action: AnyAction, error: string) {
   return {
     ...action,
     error: true,

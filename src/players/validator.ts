@@ -3,12 +3,14 @@ import {
   combineValidators,
   createError,
 } from '@/redux-store/middleware/validator';
-import actions from '@/redux-store/actions';
 import errors from '@/redux-store/errors';
 import { getPiecesIds } from '@/pieces/selectors';
+import type { StateType } from '@/redux-store/types';
+import type { AnyAction } from 'redux';
+import { actions } from './slice';
 import { getPlayersIds } from './selectors';
 
-function validateNameType(state, action) {
+function validateNameType(state: StateType, action: AnyAction) {
   const { name } = action.payload;
 
   return typeof name !== 'string'
@@ -16,7 +18,7 @@ function validateNameType(state, action) {
     : action;
 }
 
-function validateNameValue(state, action) {
+function validateNameValue(state: StateType, action: AnyAction) {
   const { name } = action.payload;
 
   return name === ''
@@ -24,7 +26,7 @@ function validateNameValue(state, action) {
     : action;
 }
 
-function validateId(state, action) {
+function validateId(state: StateType, action: AnyAction) {
   const { id } = action.payload;
 
   return getPlayersIds(state).indexOf(id) === -1
@@ -32,19 +34,19 @@ function validateId(state, action) {
     : action;
 }
 
-function validateIdType(state, action) {
+function validateIdType(state: StateType, action: AnyAction) {
   return typeof action.payload.id !== 'string'
     ? createError(action, errors.PLAYERS.PARAMS.INVALID_ID_TYPE)
     : action;
 }
 
-function validateNewId(state, action) {
+function validateNewId(state: StateType, action: AnyAction) {
   return getPlayersIds(state).indexOf(action.payload.id) !== -1
     ? createError(action, errors.PLAYERS.ADD.EXISTING_ID)
     : action;
 }
 
-function validatePieceId(state, action) {
+function validatePieceId(state: StateType, action: AnyAction) {
   const { pieceId } = action.payload;
 
   return getPiecesIds(state).indexOf(pieceId) === -1
@@ -52,7 +54,7 @@ function validatePieceId(state, action) {
     : action;
 }
 
-function validatePieceStatus(state, action) {
+function validatePieceStatus(state: StateType, action: AnyAction) {
   const { status } = action.payload;
 
   return typeof status !== 'boolean'
@@ -60,38 +62,38 @@ function validatePieceStatus(state, action) {
     : action;
 }
 
-function validateGameNotStarted(state, action) {
+function validateGameNotStarted(state: StateType, action: AnyAction) {
   return state.game.isStarted
     ? createError(action, errors.PLAYERS.GENERAL.GAME_IS_STARTED)
     : action;
 }
 
-function validateGameIsStarted(state, action) {
+function validateGameIsStarted(state: StateType, action: AnyAction) {
   return !state.game.isStarted
     ? createError(action, errors.PLAYERS.GENERAL.GAME_NOT_STARTED)
     : action;
 }
 
 const validator = createValidator({
-  [actions.players.add]: combineValidators(
+  [actions.add.type]: combineValidators(
     validateGameNotStarted,
     validateIdType,
     validateNewId,
     validateNameType,
     validateNameValue
   ),
-  [actions.players.rename]: combineValidators(
+  [actions.rename.type]: combineValidators(
     validateIdType,
     validateId,
     validateNameType,
     validateNameValue
   ),
-  [actions.players.remove]: combineValidators(
+  [actions.remove.type]: combineValidators(
     validateGameNotStarted,
     validateIdType,
     validateId
   ),
-  [actions.players.update]: combineValidators(
+  [actions.update.type]: combineValidators(
     validateGameIsStarted,
     validateIdType,
     validateId,

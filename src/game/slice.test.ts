@@ -1,5 +1,6 @@
 import createMockStore from '@/test/createMockStore';
-import { MockStoreType, DispatchType } from '@/test/types';
+import type { MockStoreType } from '@/test/types';
+import type { Dispatch } from 'redux';
 import { reducer, actions } from './slice';
 
 type ReducerType = typeof reducer;
@@ -13,7 +14,7 @@ describe('game reducer', () => {
     unselectAllPieces,
   } = actions;
   let store: MockStoreType<ReducerType>;
-  let dispatch: DispatchType;
+  let dispatch: Dispatch;
 
   beforeEach(() => {
     store = createMockStore(reducer);

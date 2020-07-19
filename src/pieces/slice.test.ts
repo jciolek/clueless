@@ -1,11 +1,15 @@
 import createMockStore from '@/test/createMockStore';
+import type { MockStoreType } from '@/test/types';
+import type { Dispatch } from 'redux';
 import { reducer, actions } from './slice';
 
 const { add, remove, replace } = actions;
 
+type ReducerType = typeof reducer;
+
 describe('pieces reducer', () => {
-  let store = null;
-  let dispatch = null;
+  let store: MockStoreType<ReducerType>;
+  let dispatch: Dispatch;
 
   beforeEach(() => {
     store = createMockStore(reducer);

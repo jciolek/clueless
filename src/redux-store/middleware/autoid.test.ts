@@ -1,24 +1,28 @@
-import { DispatchType } from '@/test/types';
+import { Dispatch, Middleware } from 'redux';
+import { MockStoreType } from '@/test/types';
+import createMockStore from '@/test/createMockStore';
 import createAutoIdMiddleware from './autoid';
 
 describe('autoid middleware', () => {
-  let middleware: ReturnType<typeof createAutoIdMiddleware>;
-  let next: jest.MockedFunction<DispatchType>;
+  let store: MockStoreType;
+  let middleware: Middleware;
+  let next: jest.MockedFunction<Dispatch>;
 
   beforeEach(() => {
+    store = createMockStore(() => ({}));
     middleware = createAutoIdMiddleware();
-    next = jest.fn((action) => action);
+    next = jest.fn();
   });
 
   it('should pass through an action with no meta', () => {
     const action = { type: undefined };
-    middleware()(next)(action);
+    middleware(store)(next)(action);
     expect(next).toHaveBeenCalledWith(action);
   });
 
   it('should pass through an action with no meta.autoid', () => {
     const action = { type: undefined, payload: {}, meta: {} };
-    middleware()(next)(action);
+    middleware(store)(next)(action);
     expect(next).toHaveBeenCalledWith(action);
   });
 
@@ -28,7 +32,7 @@ describe('autoid middleware', () => {
       payload: { id: 'hello' },
       meta: { autoid: false },
     };
-    middleware()(next)(action);
+    middleware(store)(next)(action);
     expect(next).toHaveBeenCalledWith(action);
   });
 
@@ -38,17 +42,17 @@ describe('autoid middleware', () => {
       payload: { id: 'hello' },
       meta: { autoid: true },
     };
-    middleware()(next)(action);
+    middleware(store)(next)(action);
     expect(next).toHaveBeenCalledWith(action);
   });
 
   it('should create a sequential id:string by default if meta.autoid === true', () => {
     const action = { type: undefined, meta: { autoid: true } };
-    middleware()(next)(action);
+    middleware(store)(next)(action);
     let [[result]] = next.mock.calls;
     expect(result).not.toBe(action);
     expect(result).toHaveProperty('payload.id', '1');
-    middleware()(next)(action);
+    middleware(store)(next)(action);
     [, [result]] = next.mock.calls;
     expect(result).not.toBe(action);
     expect(result).toHaveProperty('payload.id', '2');
@@ -60,7 +64,7 @@ describe('autoid middleware', () => {
 
     middleware = createAutoIdMiddleware({ idIterator });
 
-    middleware()(next)(action);
+    middleware(store)(next)(action);
     const result = next.mock.calls[0][0];
     expect(result).toHaveProperty('payload.id', 'hello');
   });

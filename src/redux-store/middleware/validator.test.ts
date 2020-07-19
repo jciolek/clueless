@@ -1,23 +1,28 @@
 import createMockStore from '@/test/createMockStore';
+import { Middleware, Dispatch, AnyAction } from 'redux';
+import { MockStoreType } from '@/test/types';
 import createValidatorMiddleware, {
   createValidator,
   combineValidators,
   createError,
 } from './validator';
+import { ValidatorType } from '../types';
 
 describe('validator middleware', () => {
-  let passValidator;
-  let failValidator;
+  let passValidator: jest.MockedFunction<ValidatorType>;
+  let failValidator: jest.MockedFunction<ValidatorType>;
 
   beforeEach(() => {
     passValidator = jest.fn((state, action) => action);
-    failValidator = jest.fn((state, action) => createError(action));
+    failValidator = jest.fn((state, action) =>
+      createError(action, 'error happened')
+    );
   });
 
   describe('createValidatorMiddleware', () => {
-    let store;
-    let middleware;
-    let next;
+    let store: MockStoreType;
+    let middleware: Middleware;
+    let next: jest.MockedFunction<Dispatch>;
 
     beforeEach(() => {
       store = createMockStore(() => ({}));
@@ -111,7 +116,9 @@ describe('validator middleware', () => {
         passValidator
       );
 
-      expect(validator(state, action)).toEqual(createError(action));
+      expect(validator(state, action)).toEqual(
+        createError(action, 'error happened')
+      );
       expect(passValidator).toHaveBeenCalledTimes(1);
       expect(passValidator).toHaveBeenCalledWith(state, action);
       expect(failValidator).toHaveBeenCalledTimes(1);
@@ -120,7 +127,7 @@ describe('validator middleware', () => {
   });
 
   describe('createError', () => {
-    let action;
+    let action: AnyAction;
 
     beforeEach(() => {
       action = {

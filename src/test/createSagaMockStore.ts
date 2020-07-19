@@ -23,7 +23,7 @@ function createSagaMockStore<R extends Reducer = Reducer>(
   );
 
   return {
-    dispatch(action: AnyAction) {
+    dispatch(action) {
       state = reducer(state, action);
       channel.put(action);
       return action;

@@ -4,11 +4,13 @@ import {
   createError,
 } from '@/redux-store/middleware/validator';
 import errors from '@/redux-store/errors';
+import type { AnyAction } from 'redux';
+import type { StateType } from '@/redux-store/types';
 import { actions } from './slice';
 import { getPiecesIds, getPiecesGroupIds } from './selectors';
 import Piece from './piece';
 
-function validateIdExists(state, action) {
+function validateIdExists(state: StateType, action: AnyAction) {
   const { id } = action.payload;
 
   return getPiecesIds(state).indexOf(id) === -1
@@ -16,7 +18,7 @@ function validateIdExists(state, action) {
     : action;
 }
 
-function validateIdAvailable(state, action) {
+function validateIdAvailable(state: StateType, action: AnyAction) {
   const { name, groupId } = action.payload;
   const piece = Piece({ name, groupId });
 
@@ -25,7 +27,7 @@ function validateIdAvailable(state, action) {
     : action;
 }
 
-function validateGroupIdExists(state, action) {
+function validateGroupIdExists(state: StateType, action: AnyAction) {
   const groupIds = getPiecesGroupIds(state);
   const { groupId } = action.payload;
 
@@ -34,7 +36,7 @@ function validateGroupIdExists(state, action) {
     : action;
 }
 
-function validateNameType(state, action) {
+function validateNameType(state: StateType, action: AnyAction) {
   const { name } = action.payload;
 
   return typeof name !== 'string'
@@ -42,7 +44,7 @@ function validateNameType(state, action) {
     : action;
 }
 
-function validateNameValue(state, action) {
+function validateNameValue(state: StateType, action: AnyAction) {
   const { name } = action.payload;
 
   return name === ''
@@ -50,7 +52,7 @@ function validateNameValue(state, action) {
     : action;
 }
 
-function validateGameNotStarted(state, action) {
+function validateGameNotStarted(state: StateType, action: AnyAction) {
   return state.game.isStarted
     ? createError(action, errors.PIECES.GENERAL.GAME_IS_STARTED)
     : action;
@@ -64,14 +66,12 @@ const validator = createValidator({
     validateNameType,
     validateNameValue
   ),
-
   [actions.replace.type]: combineValidators(
     validateGameNotStarted,
     validateIdExists,
     validateNameType,
     validateNameValue
   ),
-
   [actions.remove.type]: combineValidators(
     validateGameNotStarted,
     validateIdExists

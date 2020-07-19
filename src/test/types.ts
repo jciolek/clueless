@@ -1,10 +1,8 @@
-import type { Reducer, AnyAction } from 'redux';
+import type { Reducer, AnyAction, Dispatch } from 'redux';
 import type { Task } from 'redux-saga';
 
-export type DispatchType = (action: AnyAction) => AnyAction;
-
 export type MockStoreType<R extends Reducer = Reducer> = {
-  dispatch: DispatchType;
+  dispatch: Dispatch;
   getState: () => ReturnType<R>;
 };
 

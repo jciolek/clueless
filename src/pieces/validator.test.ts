@@ -3,12 +3,16 @@ import reducer from '@/redux-store/reducer';
 import errors from '@/redux-store/errors';
 import { createError } from '@/redux-store/middleware/validator';
 import createMockStore from '@/test/createMockStore';
+import type { MockStoreType } from '@/test/types';
+import type { Dispatch } from 'redux';
 import validator from './validator';
+
+type ReducerType = typeof reducer;
 
 describe('pieces validator', () => {
   const { add, replace, remove } = actions.pieces;
-  let store;
-  let dispatch;
+  let store: MockStoreType<ReducerType>;
+  let dispatch: Dispatch;
 
   beforeEach(() => {
     store = createMockStore(reducer);
@@ -32,7 +36,10 @@ describe('pieces validator', () => {
     });
 
     it('should return an error if the group id is incorrect', () => {
-      const action = add({ groupId: 'animals', name: 'scruffy' });
+      const action = {
+        type: add.type,
+        payload: { groupId: 'animals', name: 'scruffy' },
+      };
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PIECES.PARAMS.INVALID_GROUP)
@@ -40,7 +47,10 @@ describe('pieces validator', () => {
     });
 
     it('should return an error if the name is not a string', () => {
-      const action = add({ groupId: 'weapons', name: null });
+      const action = {
+        type: add.type,
+        payload: { groupId: 'weapons', name: null },
+      };
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PIECES.PARAMS.INVALID_NAME_TYPE)
@@ -88,7 +98,10 @@ describe('pieces validator', () => {
     });
 
     it('should return an error if the name is not a string', () => {
-      const action = replace({ id: 'weapons.dagger', name: null });
+      const action = {
+        type: replace.type,
+        payload: { id: 'weapons.dagger', name: null },
+      };
 
       expect(validator(store.getState(), action)).toEqual(
         createError(action, errors.PIECES.PARAMS.INVALID_NAME_TYPE)

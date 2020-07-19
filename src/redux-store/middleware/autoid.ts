@@ -1,5 +1,4 @@
-import type { AnyAction } from 'redux';
-import { DispatchType } from '@/test/types';
+import type { Middleware, AnyAction } from 'redux';
 
 function* defaultIdGenerator(): Generator<string, string, undefined> {
   let currId = 1;
@@ -16,8 +15,8 @@ type Props = {
 
 function createAutoIdMiddleware({
   idIterator = defaultIdGenerator(),
-}: Props = {}) {
-  return () => (next: DispatchType) => (action: AnyAction) => {
+}: Props = {}): Middleware {
+  return () => (next) => (action: AnyAction) => {
     let newAction = action;
     const { payload: { id = undefined } = {} } = action;
     const { meta: { autoid: isAutoId = false } = {} } = action;

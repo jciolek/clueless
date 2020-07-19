@@ -1,5 +1,5 @@
-import { Reducer, AnyAction } from 'redux';
-import { MockStoreType } from './types';
+import type { Reducer } from 'redux';
+import type { MockStoreType } from './types';
 
 function createMockStore<R extends Reducer = Reducer>(
   reducer: R,
@@ -11,7 +11,7 @@ function createMockStore<R extends Reducer = Reducer>(
     getState() {
       return state;
     },
-    dispatch(action: AnyAction) {
+    dispatch(action) {
       state = reducer(state, action);
       return action;
     },
