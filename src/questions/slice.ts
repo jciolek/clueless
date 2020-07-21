@@ -3,9 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { QuestionAnswerType, QuestionPiecesType, QuestionType } from './types';
 import Question from './question';
 
-type State = Array<QuestionType>;
+type QuestionsSliceState = Array<QuestionType>;
 
-const initialState: State = [];
+const initialState: QuestionsSliceState = [];
 
 const slice = createSlice({
   name: 'questions',

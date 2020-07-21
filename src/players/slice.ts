@@ -3,9 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Player from './player';
 import { PlayerType } from './types';
 
-type State = Array<PlayerType>;
+type PlayerSliceState = Array<PlayerType>;
 
-const initialState: State = [
+const initialState: PlayerSliceState = [
   Player({ id: 'table', name: 'Table', isProtected: true }),
   Player({ id: 'me', name: 'Me', isProtected: true }),
 ];
@@ -24,7 +24,7 @@ const slice = createSlice({
       ) {
         state.push(Player(action.payload));
       },
-      prepare(payload, meta) {
+      prepare(payload, meta = undefined) {
         return {
           payload,
           meta: { ...meta, autoid: true },

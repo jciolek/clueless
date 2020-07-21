@@ -3,13 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PieceGroupType, PieceGroupIdType, isPieceGroupId } from './types';
 import Piece from './piece';
 
-type State = [
+type PiecesSliceState = [
   PieceGroupType<'suspects'>,
   PieceGroupType<'weapons'>,
   PieceGroupType<'locations'>
 ];
 
-const initialState: State = [
+const initialState: PiecesSliceState = [
   {
     id: 'suspects',
     name: 'Suspects',
@@ -51,7 +51,7 @@ const initialState: State = [
   },
 ];
 
-function findGroup(state: State, groupId: PieceGroupIdType) {
+function findGroup(state: PiecesSliceState, groupId: PieceGroupIdType) {
   return state.find(({ id }) => id === groupId) as PieceGroupType;
 }
 

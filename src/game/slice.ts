@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PieceGroupIdType, isPieceGroupId } from '@/pieces/types';
 
-type State = {
+type GameSliceState = {
   isStarted: boolean;
   selectedPlayerId: null | string;
   selectedPieceIds: {
@@ -10,7 +10,7 @@ type State = {
   };
 };
 
-const initialState: State = {
+const initialState: GameSliceState = {
   isStarted: false,
   selectedPlayerId: null,
   selectedPieceIds: {},
