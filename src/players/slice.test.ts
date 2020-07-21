@@ -1,13 +1,20 @@
 import createMockStore from '@/test/createMockStore';
+import type { MockStoreType } from '@/test/types';
+import type { Dispatch } from 'redux';
 import { reducer, actions } from './slice';
 import Player from './player';
+import type { PlayerType } from './types';
 
 const { add, update, remove, rename, reset } = actions;
 
+type ReducerType = typeof reducer;
+
 describe('players reducer', () => {
-  let store = null;
-  let dispatch = null;
-  let players = null;
+  let store: MockStoreType<ReducerType>;
+  let dispatch: Dispatch;
+  let players: {
+    [id: string]: PlayerType;
+  };
 
   beforeEach(() => {
     store = createMockStore(reducer);

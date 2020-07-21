@@ -1,33 +1,31 @@
 import { createSelector } from 'reselect';
+import type { StateType } from '@/redux-store/types';
+
+type PlayersPiecesByIdType = {
+  [id: string]: Array<boolean>;
+};
 
 const getPlayersIds = createSelector(
-  (state) => state.players,
+  (state: StateType) => state.players,
   (players) => players.map((player) => player.id)
 );
 
 const getPlayersById = createSelector(
-  (state) => state.players,
-  (players) =>
-    players.reduce(
-      (result, player) => Object.assign(result, { [player.id]: player }),
-      {}
-    )
+  (state: StateType) => state.players,
+  (players) => Object.fromEntries(players.map((player) => [player.id, player]))
 );
 
 const getPlayersPiecesByPlayerId = createSelector(
-  (state) => state.players,
+  (state: StateType) => state.players,
   (players) =>
-    players.reduce(
-      (result, player) => Object.assign(result, { [player.id]: player.pieces }),
-      {}
-    )
+    Object.fromEntries(players.map((player) => [player.id, player.pieces]))
 );
 
 const getPlayersPiecesByPieceId = createSelector(
   (state) => state.players,
   getPlayersById,
   (players, playersById) =>
-    players.reduce((result, player) => {
+    players.reduce((result: PlayersPiecesByIdType, player) => {
       const tablePieces = playersById.table.pieces;
       const mePieces = playersById.me.pieces;
 

@@ -1,5 +1,8 @@
 import reducer from '@/redux-store/reducer';
-import actions from '@/redux-store/actions';
+import type { Dispatch } from 'redux';
+import type { MockStoreType } from '@/test/types';
+import createMockStore from '@/test/createMockStore';
+import { actions } from './slice';
 import {
   getPlayersIds,
   getPlayersById,
@@ -7,37 +10,44 @@ import {
   getPlayersPiecesByPieceId,
 } from './selectors';
 
+type ReducerType = typeof reducer;
+
+const { add, update } = actions;
+
 describe('players selectors', () => {
-  let state;
+  let store: MockStoreType<ReducerType>;
+  let dispatch: Dispatch;
 
-  function dispatch(action) {
-    state = reducer(state, action);
-  }
-
-  function clone(value) {
+  function clone(value: unknown) {
     return JSON.parse(JSON.stringify(value));
   }
 
   beforeEach(() => {
-    const { add } = actions.players;
+    store = createMockStore(reducer);
+    ({ dispatch } = store);
 
-    state = undefined;
-    dispatch({});
     dispatch(add({ id: '1', name: 'Shrek' }));
     dispatch(add({ id: '2', name: 'Fiona' }));
     dispatch(add({ id: '3', name: 'Donkey' }));
 
-    expect(state.players).toHaveLength(5);
+    expect(store.getState().players).toHaveLength(5);
   });
 
   describe('getPlayersIds', () => {
     it('should return an array [playerId, ...]', () => {
-      expect(getPlayersIds(state)).toEqual(['table', 'me', '1', '2', '3']);
+      expect(getPlayersIds(store.getState())).toEqual([
+        'table',
+        'me',
+        '1',
+        '2',
+        '3',
+      ]);
     });
   });
 
   describe('getPlayersById', () => {
     it('should return an object { [playerId]: <Player>, ...}', () => {
+      const state = store.getState();
       const players = clone(state.players);
 
       expect(getPlayersById(state)).toEqual({
@@ -52,8 +62,6 @@ describe('players selectors', () => {
 
   describe('getPlayersPiecesByPlayerId', () => {
     it('should return an object { [playerId]: [pieceId, ...] }', () => {
-      const { update } = actions.players;
-
       dispatch(update({ id: '1', pieceId: 'weapons.wrench', status: true }));
       dispatch(update({ id: '1', pieceId: 'location.study', status: true }));
       dispatch(update({ id: '2', pieceId: 'weapons.dagger', status: false }));
@@ -62,6 +70,7 @@ describe('players selectors', () => {
       );
       dispatch(update({ id: '2', pieceId: 'suspects.white', status: false }));
 
+      const state = store.getState();
       const players = clone(state.players);
 
       expect(getPlayersPiecesByPlayerId(state)).toEqual({
@@ -76,8 +85,6 @@ describe('players selectors', () => {
 
   describe('getPlayersPiecesByPieceId', () => {
     it('should return an object { [pieceId]: [boolean, ...], ... } ', () => {
-      const { update } = actions.players;
-
       dispatch(
         update({ id: 'table', pieceId: 'weapons.dagger', status: true })
       );
@@ -96,7 +103,7 @@ describe('players selectors', () => {
       // The first two values in each array always represent table an me players.
       // Please note, that if table has a piece and me does not,
       // the order for the two will be reversed.
-      expect(getPlayersPiecesByPieceId(state)).toEqual({
+      expect(getPlayersPiecesByPieceId(store.getState())).toEqual({
         'weapons.wrench': [false, false, true, false],
         'weapons.rope': [false, true],
         'location.study': [false, false, false],
