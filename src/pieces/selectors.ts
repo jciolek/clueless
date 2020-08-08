@@ -1,13 +1,15 @@
 import { createSelector } from 'reselect';
 import { getPlayersPiecesByPieceId } from '@/players/selectors';
+import type { StateType } from '@/redux-store/types';
+import type { Dictionary } from '@reduxjs/toolkit';
 
 const getPiecesGroupIds = createSelector(
-  (state) => state.pieces,
+  (state: StateType) => state.pieces,
   (groups) => groups.map((group) => group.id)
 );
 
 const getPiecesIdsByGroup = createSelector(
-  (state) => state.pieces,
+  (state: StateType) => state.pieces,
   (groups) => groups.map((group) => group.items.map((piece) => piece.id))
 );
 
@@ -16,7 +18,7 @@ const getPiecesIds = createSelector(getPiecesIdsByGroup, (groups) =>
 );
 
 const getPiecesNumberPerPlayer = createSelector(
-  (state) => state.players,
+  (state: StateType) => state.players,
   getPiecesIds,
   (players, piecesIds) => {
     // We subtract 1, because table does not count as a regular player.
@@ -41,7 +43,7 @@ const getPiecesNumberForTable = createSelector(
   }
 );
 
-function getMurderStatus(statusList = [], playerCount) {
+function getMurderStatus(statusList: Array<boolean> = [], playerCount: number) {
   // If any of the players has the piece, then murderer does not have it.
   if (statusList.some((status) => status)) {
     return false;
@@ -59,16 +61,18 @@ function getMurderStatus(statusList = [], playerCount) {
 const getPiecesForMurdererById = createSelector(
   getPiecesIdsByGroup,
   getPlayersPiecesByPieceId,
-  (state) => state.players.length,
+  (state: StateType) => state.players.length,
   (groups, pieces, playerCount) => {
-    const statsAll = {};
+    const statsAll: Dictionary<boolean> = {};
 
     groups.forEach((group) => {
       const stats = group.reduce(
         (result, pieceId) => {
           const status = getMurderStatus(pieces[pieceId], playerCount);
 
-          result[status].push(pieceId);
+          result[
+            status === undefined ? 'undefined' : (status && 'true') || 'false'
+          ].push(pieceId);
 
           if (status !== undefined) {
             Object.assign(result.all, {
@@ -78,15 +82,20 @@ const getPiecesForMurdererById = createSelector(
 
           return result;
         },
-        { false: [], undefined: [], true: [], all: statsAll }
+        {
+          false: [] as Array<string>,
+          undefined: [] as Array<string>,
+          true: [] as Array<string>,
+          all: statsAll,
+        }
       );
 
       if (!stats.true.length && stats.false.length === group.length - 1) {
-        const murderPieceId = stats.undefined.pop();
-        stats.all[murderPieceId] = true;
+        const [murderPieceId] = stats.undefined;
+        if (murderPieceId !== undefined) {
+          stats.all[murderPieceId] = true;
+        }
       }
-
-      return stats.all;
     });
 
     return statsAll;

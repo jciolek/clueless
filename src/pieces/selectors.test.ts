@@ -1,6 +1,7 @@
 import reducer from '@/redux-store/reducer';
-import actions from '@/redux-store/actions';
 import createMockStore from '@/test/createMockStore';
+import type { MockStoreType } from '@/test/types';
+import type { Dispatch } from 'redux';
 import {
   getPiecesIds,
   getPiecesGroupIds,
@@ -9,10 +10,13 @@ import {
   getPiecesNumberForTable,
   getPiecesForMurdererById,
 } from './selectors';
+import { actions as playerActions } from '../players/slice';
+
+type ReducerType = typeof reducer;
 
 describe('pieces selectors', () => {
-  let store;
-  let dispatch;
+  let store: MockStoreType<ReducerType>;
+  let dispatch: Dispatch;
 
   beforeEach(() => {
     store = createMockStore(reducer);
@@ -21,69 +25,85 @@ describe('pieces selectors', () => {
 
   describe('getPiecesIds', () => {
     it('should return an array [id, ...]', () => {
-      const state = {
-        pieces: [
-          {
-            id: 'weapons',
-            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }],
-          },
-          {
-            id: 'suspects',
-            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }],
-          },
-        ],
-      };
-      expect(getPiecesIds(state)).toEqual([
-        'weapons.wrench',
-        'weapons.dagger',
-        'suspects.white',
-        'suspects.green',
-      ]);
+      expect(getPiecesIds(store.getState())).toMatchInlineSnapshot(`
+        Array [
+          "suspects.white",
+          "suspects.green",
+          "suspects.mustard",
+          "suspects.scarlet",
+          "suspects.peacock",
+          "suspects.plum",
+          "weapons.candlestick",
+          "weapons.dagger",
+          "weapons.wrench",
+          "weapons.rope",
+          "weapons.leadPipe",
+          "weapons.pistol",
+          "locations.livingRoom",
+          "locations.diningRoom",
+          "locations.gamesRoom",
+          "locations.courtyard",
+          "locations.bathroom",
+          "locations.bedroom",
+          "locations.garage",
+          "locations.kitchen",
+          "locations.study",
+        ]
+      `);
     });
   });
 
   describe('getPiecesGroupIds', () => {
     it('should return an array [groupId, ...]', () => {
-      const state = {
-        pieces: [
-          {
-            id: 'weapons',
-            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }],
-          },
-          {
-            id: 'suspects',
-            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }],
-          },
-        ],
-      };
-      expect(getPiecesGroupIds(state)).toEqual(['weapons', 'suspects']);
+      expect(getPiecesGroupIds(store.getState())).toMatchInlineSnapshot(`
+        Array [
+          "suspects",
+          "weapons",
+          "locations",
+        ]
+      `);
     });
   });
 
   describe('getPiecesIdsByGroup', () => {
     it('should return an array [[groupId.pieceId, ... ], ... ]', () => {
-      const state = {
-        pieces: [
-          {
-            id: 'weapons',
-            items: [{ id: 'weapons.wrench' }, { id: 'weapons.dagger' }],
-          },
-          {
-            id: 'suspects',
-            items: [{ id: 'suspects.white' }, { id: 'suspects.green' }],
-          },
-        ],
-      };
-      expect(getPiecesIdsByGroup(state)).toEqual([
-        ['weapons.wrench', 'weapons.dagger'],
-        ['suspects.white', 'suspects.green'],
-      ]);
+      expect(getPiecesIdsByGroup(store.getState())).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            "suspects.white",
+            "suspects.green",
+            "suspects.mustard",
+            "suspects.scarlet",
+            "suspects.peacock",
+            "suspects.plum",
+          ],
+          Array [
+            "weapons.candlestick",
+            "weapons.dagger",
+            "weapons.wrench",
+            "weapons.rope",
+            "weapons.leadPipe",
+            "weapons.pistol",
+          ],
+          Array [
+            "locations.livingRoom",
+            "locations.diningRoom",
+            "locations.gamesRoom",
+            "locations.courtyard",
+            "locations.bathroom",
+            "locations.bedroom",
+            "locations.garage",
+            "locations.kitchen",
+            "locations.study",
+          ],
+        ]
+      `);
     });
   });
 
   describe('getPiecesNumberPerPlayer', () => {
     it('should return number of pieces per player, excluding table', () => {
-      const { add } = actions.players;
+      const { add } = playerActions;
       // We exclude 3 pieces from the envelope as well.
       const piecesLength = getPiecesIds(store.getState()).length - 3;
 
@@ -106,7 +126,7 @@ describe('pieces selectors', () => {
 
   describe('getPiecesNumberForTable', () => {
     it('should return number of pieces per player, excluding table', () => {
-      const { add } = actions.players;
+      const { add } = playerActions;
       // We exclude 3 pieces from the envelope as well.
       const piecesLength = getPiecesIds(store.getState()).length - 3;
 
@@ -128,7 +148,7 @@ describe('pieces selectors', () => {
   });
 
   describe('getPiecesForMurdererById', () => {
-    const { add, update } = actions.players;
+    const { add, update } = playerActions;
 
     beforeEach(() => {
       dispatch(add({ id: '1', name: 'Shrek' }));
