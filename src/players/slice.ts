@@ -24,7 +24,7 @@ const slice = createSlice({
       ) {
         state.push(Player(action.payload));
       },
-      prepare(payload, meta = undefined) {
+      prepare(payload, meta?) {
         return {
           payload,
           meta: { ...meta, autoid: true },

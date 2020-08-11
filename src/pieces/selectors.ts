@@ -31,7 +31,7 @@ const getPiecesNumberPerPlayer = createSelector(
 );
 
 const getPiecesNumberForTable = createSelector(
-  (state) => state.players,
+  (state: StateType) => state.players,
   getPiecesIds,
   (players, piecesIds) => {
     // We subtract 1, because table does not count as a regular player.

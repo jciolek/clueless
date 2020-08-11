@@ -1,25 +1,32 @@
 import reducer from '@/redux-store/reducer';
-import actions from '@/redux-store/actions';
+import type { MockStoreType } from '@/test/types';
+import type { Dispatch } from 'redux';
+import createMockStore from '@/test/createMockStore';
+import { actions as playerActions } from '@/players/slice';
 import { getQuestionsById, getQuestionsByPlayerIdByPieceId } from './selectors';
+import { actions as questionActions } from './slice';
+
+type ReducerType = typeof reducer;
 
 describe('questions selectors', () => {
-  let state;
+  let store: MockStoreType<ReducerType>;
+  let dispatch: Dispatch;
 
-  function dispatch(action) {
-    state = reducer(state, action);
-  }
-
-  function clone(value) {
+  function clone(value: unknown) {
     return JSON.parse(JSON.stringify(value));
   }
 
   beforeEach(() => {
-    state = undefined;
-    dispatch({});
-    dispatch(actions.players.add({ id: '1', name: 'Shrek' }));
-    dispatch(actions.players.add({ id: '2', name: 'Fiona' }));
+    const { add: addPlayer } = playerActions;
+    const { add: addQuestion } = questionActions;
+
+    store = createMockStore(reducer);
+    ({ dispatch } = store);
+
+    dispatch(addPlayer({ id: '1', name: 'Shrek' }));
+    dispatch(addPlayer({ id: '2', name: 'Fiona' }));
     dispatch(
-      actions.questions.add({
+      addQuestion({
         id: '2',
         playerId: '1',
         pieces: ['weapons.dagger', 'locations.study', 'suspects.green'],
@@ -27,7 +34,7 @@ describe('questions selectors', () => {
       })
     );
     dispatch(
-      actions.questions.add({
+      addQuestion({
         id: '5',
         playerId: '2',
         pieces: ['weapons.wrench', 'locations.study', 'suspects.white'],
@@ -35,16 +42,16 @@ describe('questions selectors', () => {
       })
     );
 
-    const { players, questions } = state;
+    const { players, questions } = store.getState();
     expect(players).toHaveLength(4);
     expect(questions).toHaveLength(2);
   });
 
   describe('getQeustionsById', () => {
     it('should return an object { [questionId]: <Question>, ... }', () => {
-      const questions = clone(state.questions);
+      const questions = clone(store.getState().questions);
 
-      expect(getQuestionsById(state)).toEqual({
+      expect(getQuestionsById(store.getState())).toEqual({
         2: questions[0],
         5: questions[1],
       });
@@ -53,17 +60,19 @@ describe('questions selectors', () => {
 
   describe('getQuestionsByPlayerIdByPieceId', () => {
     it('should return an object { [playerId]: { [pieceId]: [<Question>, ...], ... }, ... }', () => {
+      const { add } = questionActions;
+
       dispatch(
-        actions.questions.add({
+        add({
           id: '3',
           playerId: '1',
           pieces: ['weapons.dagger', 'locations.study', 'suspects.white'],
           answer: 1,
         })
       );
-      const questions = clone(state.questions);
+      const questions = clone(store.getState().questions);
 
-      expect(getQuestionsByPlayerIdByPieceId(state)).toEqual({
+      expect(getQuestionsByPlayerIdByPieceId(store.getState())).toEqual({
         table: {},
         me: {},
         1: {

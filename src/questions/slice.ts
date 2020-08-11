@@ -28,7 +28,7 @@ const slice = createSlice({
           state.push(Question(action.payload));
         }
       },
-      prepare(payload, meta) {
+      prepare(payload, meta?) {
         return {
           payload,
           meta: { ...meta, autoid: true },
