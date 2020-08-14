@@ -64,7 +64,9 @@ const commonConfig = {
       filename: 'index.html',
       template: 'src/index.ejs',
     }),
-    new CopyPlugin([{ from: 'assets/', to: './' }]),
+    new CopyPlugin({
+      patterns: [{ from: 'assets/', to: './' }],
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
