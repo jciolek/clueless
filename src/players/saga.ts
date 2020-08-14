@@ -6,15 +6,19 @@ import {
   getPiecesNumberPerPlayer,
   getPiecesNumberForTable,
 } from '@/pieces/selectors';
+import type { Dictionary } from '@reduxjs/toolkit';
+import type { QuestionType } from '@/questions/types';
 import { getPlayersIds, getPlayersPiecesByPlayerId } from './selectors';
 
 function* watchPlayersUpdate() {
-  yield takeEvery(actions.players.update.type, function* playersUpdate(action) {
+  yield takeEvery(actions.players.update, function* playersUpdate(action) {
     const { id, pieceId, status } = action.payload;
-    const playerIds = yield select(getPlayersIds);
+    const playerIds: string[] = yield select(getPlayersIds);
     const {
-      [id]: { [pieceId]: questions = [] },
-    } = yield select(getQuestionsByPlayerIdByPieceId);
+      [id]: { [pieceId]: questions = [] } = {},
+    }: Dictionary<Dictionary<Array<QuestionType>>> = yield select(
+      getQuestionsByPlayerIdByPieceId
+    );
 
     if (!status) {
       // The player hasn't got the piece, so all of their related questions
@@ -27,7 +31,7 @@ function* watchPlayersUpdate() {
       return;
     }
 
-    const pieceIds = yield select(getPiecesIds);
+    const pieceIds: string[] = yield select(getPiecesIds);
     const piecesNumberForPlayer =
       id === 'table'
         ? yield select(getPiecesNumberForTable)

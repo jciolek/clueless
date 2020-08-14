@@ -1,22 +1,29 @@
 import reducer from '@/redux-store/reducer';
-import actions from '@/redux-store/actions';
 import createSagaMockStore from '@/test/createSagaMockStore';
+import type { SagaMockStoreType } from '@/test/types';
+import type { Dispatch } from 'redux';
+import { actions as questionActions } from '@/questions/slice';
+import { actions as playerActions } from './slice';
 import { watchPlayersUpdate } from './saga';
 
+type ReducerType = typeof reducer;
+
 describe('players saga', () => {
-  const { add, update } = actions.players;
-  let store = null;
-  let dispatch = null;
+  let store: SagaMockStoreType<ReducerType>;
+  let dispatch: Dispatch;
 
   beforeEach(() => {
+    const { add: addPlayer } = playerActions;
+    const { add: addQuestion } = questionActions;
+
     store = createSagaMockStore(reducer, watchPlayersUpdate);
     ({ dispatch } = store);
 
-    dispatch(add({ id: '1', name: 'Shrek' }));
-    dispatch(add({ id: '2', name: 'Fiona' }));
-    dispatch(add({ id: '3', name: 'Donkey' }));
+    dispatch(addPlayer({ id: '1', name: 'Shrek' }));
+    dispatch(addPlayer({ id: '2', name: 'Fiona' }));
+    dispatch(addPlayer({ id: '3', name: 'Donkey' }));
     dispatch(
-      actions.questions.add({
+      addQuestion({
         id: '1',
         playerId: '1',
         pieces: ['weapons.pistol', 'suspects.white'],
@@ -24,7 +31,7 @@ describe('players saga', () => {
       })
     );
     dispatch(
-      actions.questions.add({
+      addQuestion({
         id: '2',
         playerId: '1',
         pieces: ['locations.study', 'suspects.green'],
@@ -32,7 +39,7 @@ describe('players saga', () => {
       })
     );
     dispatch(
-      actions.questions.add({
+      addQuestion({
         id: '3',
         playerId: '1',
         pieces: ['weapons.pistol', 'locations.courtyard'],
@@ -40,7 +47,7 @@ describe('players saga', () => {
       })
     );
     dispatch(
-      actions.questions.add({
+      addQuestion({
         id: '4',
         playerId: '2',
         pieces: ['weapons.pistol', 'locations.bedroom'],
@@ -55,8 +62,11 @@ describe('players saga', () => {
 
   describe('watchPlayersUpdate', () => {
     it("should remove player's related questions and update other players if status === true", () => {
+      const { update: updatePlayer } = playerActions;
+      const { remove: removeQuestion } = questionActions;
+
       dispatch(
-        update({
+        updatePlayer({
           id: '1',
           pieceId: 'weapons.pistol',
           status: true,
@@ -65,20 +75,22 @@ describe('players saga', () => {
       store.runner.cancel();
 
       expect(store.output).toEqual([
-        actions.questions.remove({
+        removeQuestion({
           id: '1',
         }),
-        actions.questions.remove({
+        removeQuestion({
           id: '3',
         }),
-        update({ id: 'table', pieceId: 'weapons.pistol', status: false }),
-        update({ id: 'me', pieceId: 'weapons.pistol', status: false }),
-        update({ id: '2', pieceId: 'weapons.pistol', status: false }),
-        update({ id: '3', pieceId: 'weapons.pistol', status: false }),
+        updatePlayer({ id: 'table', pieceId: 'weapons.pistol', status: false }),
+        updatePlayer({ id: 'me', pieceId: 'weapons.pistol', status: false }),
+        updatePlayer({ id: '2', pieceId: 'weapons.pistol', status: false }),
+        updatePlayer({ id: '3', pieceId: 'weapons.pistol', status: false }),
       ]);
     });
 
     it("should only update other players if status === true and there aren't related questions", () => {
+      const { update } = playerActions;
+
       dispatch(update({ id: '1', pieceId: 'weapons.wrench', status: true }));
       store.runner.cancel();
 
@@ -91,22 +103,23 @@ describe('players saga', () => {
     });
 
     it("should update only player's related questions if status === false", () => {
-      dispatch(update({ id: '1', pieceId: 'weapons.pistol', status: false }));
+      const { update: updatePlayer } = playerActions;
+      const { update: updateQuestion } = questionActions;
+
+      dispatch(
+        updatePlayer({ id: '1', pieceId: 'weapons.pistol', status: false })
+      );
       store.runner.cancel();
 
       expect(store.output).toEqual([
-        actions.questions.update({
-          id: '1',
-          pieceId: 'weapons.pistol',
-        }),
-        actions.questions.update({
-          id: '3',
-          pieceId: 'weapons.pistol',
-        }),
+        updateQuestion({ id: '1', pieceId: 'weapons.pistol' }),
+        updateQuestion({ id: '3', pieceId: 'weapons.pistol' }),
       ]);
     });
 
     it("should mark false all unmarked player's pieces when status === true and player's hand is known", () => {
+      const { update } = playerActions;
+
       // There are 4 players, exluding table, and there is 18 pieces to share
       // 21 altogether - 3 in the envelope.
       // That means floor((21 - 3) / 4) = 4 pieces per player.
@@ -146,6 +159,8 @@ describe('players saga', () => {
     });
 
     it("should mark false all unmarked table's pieces when status === true and table's hand is known", () => {
+      const { update } = playerActions;
+
       // There are 4 players, excluding table, and there is 18 pieces to share
       // 21 altogether - 3 in the envelope.
       // That means floor((21 - 3) / 4) = 4 pieces per player,

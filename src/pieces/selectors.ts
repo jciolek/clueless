@@ -14,7 +14,7 @@ const getPiecesIdsByGroup = createSelector(
 );
 
 const getPiecesIds = createSelector(getPiecesIdsByGroup, (groups) =>
-  groups.reduce((result, group) => result.concat(group))
+  groups.flat()
 );
 
 const getPiecesNumberPerPlayer = createSelector(

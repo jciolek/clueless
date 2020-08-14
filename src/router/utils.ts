@@ -1,4 +1,4 @@
-function matchRoute(route, path) {
+function matchRoute(route: string, path: string) {
   return !route || route === path;
 }
 
