@@ -5,6 +5,12 @@ import { PlayerType } from './types';
 
 type PlayerSliceState = Array<PlayerType>;
 
+type AddPlayerPayloadType = {
+  id: string;
+  name: string;
+  isProtected?: boolean;
+};
+
 const initialState: PlayerSliceState = [
   Player({ id: 'table', name: 'Table', isProtected: true }),
   Player({ id: 'me', name: 'Me', isProtected: true }),
@@ -14,17 +20,10 @@ const slice = createSlice({
   name: 'players',
   reducers: {
     add: {
-      reducer(
-        state,
-        action: PayloadAction<{
-          id: string;
-          name: string;
-          isProtected?: boolean;
-        }>
-      ) {
+      reducer(state, action: PayloadAction<AddPlayerPayloadType>) {
         state.push(Player(action.payload));
       },
-      prepare(payload, meta?) {
+      prepare(payload: AddPlayerPayloadType, meta?) {
         return {
           payload,
           meta: { ...meta, autoid: true },

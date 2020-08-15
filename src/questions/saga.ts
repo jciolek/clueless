@@ -4,7 +4,7 @@ import { getPlayersPiecesByPlayerId } from '@/players/selectors';
 import { getQuestionsById } from './selectors';
 
 function* watchQuestionsAdd() {
-  yield takeEvery(actions.questions.add.type, function* questionsAdd(action) {
+  yield takeEvery(actions.questions.add, function* questionsAdd(action) {
     const { id, answer, pieces, playerId } = action.payload;
 
     if (typeof answer === 'string') {
@@ -47,11 +47,11 @@ function* watchQuestionsAdd() {
 }
 
 function* watchQuestionsUpdate() {
-  yield takeEvery(actions.questions.update.type, function* questionsUpdate(
-    action
-  ) {
+  yield takeEvery(actions.questions.update, function* questionsUpdate(action) {
     const { id } = action.payload;
-    const { [id]: question } = yield select(getQuestionsById);
+    const {
+      [id]: question,
+    }: ReturnType<typeof getQuestionsById> = yield select(getQuestionsById);
 
     if (!question) {
       return;

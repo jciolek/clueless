@@ -6,8 +6,6 @@ import {
   getPiecesNumberPerPlayer,
   getPiecesNumberForTable,
 } from '@/pieces/selectors';
-import type { Dictionary } from '@reduxjs/toolkit';
-import type { QuestionType } from '@/questions/types';
 import { getPlayersIds, getPlayersPiecesByPlayerId } from './selectors';
 
 function* watchPlayersUpdate() {
@@ -16,7 +14,7 @@ function* watchPlayersUpdate() {
     const playerIds: string[] = yield select(getPlayersIds);
     const {
       [id]: { [pieceId]: questions = [] } = {},
-    }: Dictionary<Dictionary<Array<QuestionType>>> = yield select(
+    }: ReturnType<typeof getQuestionsByPlayerIdByPieceId> = yield select(
       getQuestionsByPlayerIdByPieceId
     );
 

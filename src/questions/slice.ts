@@ -5,21 +5,20 @@ import Question from './question';
 
 type QuestionsSliceState = Array<QuestionType>;
 
+type AddQuestionPayloadType = {
+  id: string;
+  playerId: string;
+  answer: QuestionAnswerType;
+  pieces: QuestionPiecesType;
+};
+
 const initialState: QuestionsSliceState = [];
 
 const slice = createSlice({
   name: 'questions',
   reducers: {
     add: {
-      reducer(
-        state,
-        action: PayloadAction<{
-          id: string;
-          playerId: string;
-          answer: QuestionAnswerType;
-          pieces: QuestionPiecesType;
-        }>
-      ) {
+      reducer(state, action: PayloadAction<AddQuestionPayloadType>) {
         const { answer } = action.payload;
         // We only add to the store question with an answer === 1.
         // That's because other questions (with answer === 0 and typeof answer === 'string')
@@ -28,7 +27,7 @@ const slice = createSlice({
           state.push(Question(action.payload));
         }
       },
-      prepare(payload, meta?) {
+      prepare(payload: AddQuestionPayloadType, meta?) {
         return {
           payload,
           meta: { ...meta, autoid: true },
