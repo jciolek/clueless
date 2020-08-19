@@ -1,16 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { QuestionAnswerType, QuestionPiecesType, QuestionType } from './types';
+import type { QuestionType, AddQuestionPayloadType } from './types';
 import Question from './question';
 
 type QuestionsSliceState = Array<QuestionType>;
-
-type AddQuestionPayloadType = {
-  id: string;
-  playerId: string;
-  answer: QuestionAnswerType;
-  pieces: QuestionPiecesType;
-};
 
 const initialState: QuestionsSliceState = [];
 

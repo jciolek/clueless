@@ -1,12 +1,17 @@
 import createMockStore from '@/test/createMockStore';
+import type { MockStoreType } from '@/test/types';
+import type { Dispatch } from 'redux';
 import { actions, reducer } from './slice';
 import Question from './question';
+import type { AddQuestionPayloadType } from './types';
+
+type ReducerType = typeof reducer;
 
 describe('questions reducer', () => {
   const { add, update, remove, reset } = actions;
-  let store = null;
-  let dispatch = null;
-  let payloads = null;
+  let store: MockStoreType<ReducerType>;
+  let dispatch: Dispatch;
+  let payloads: Array<AddQuestionPayloadType>;
 
   beforeEach(() => {
     store = createMockStore(reducer);
@@ -30,7 +35,7 @@ describe('questions reducer', () => {
   });
 
   it('should return empty list of questions', () => {
-    expect(reducer(undefined, {})).toEqual([]);
+    expect(reducer(undefined, { type: 'whatevs' })).toEqual([]);
   });
 
   it('should add only a question with answer === 1', () => {
