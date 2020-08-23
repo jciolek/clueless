@@ -31,11 +31,11 @@ class List extends React.Component<Props, State> {
     };
   }
 
-  handleCreate = () => {
+  handleCreate = (): void => {
     this.setState({ isCreateMode: true });
   };
 
-  handleSave = (id: string | undefined, name: string) => {
+  handleSave = (id: string | undefined, name: string): void => {
     const { meta, onSave, onAdd } = this.props;
 
     this.setState({ isCreateMode: false });
@@ -49,7 +49,7 @@ class List extends React.Component<Props, State> {
     }
   };
 
-  handleRemove = (id: string) => {
+  handleRemove = (id: string): void => {
     const { onRemove, meta } = this.props;
 
     if (onRemove) {
@@ -57,11 +57,11 @@ class List extends React.Component<Props, State> {
     }
   };
 
-  handleCancel = () => {
+  handleCancel = (): void => {
     this.setState({ isCreateMode: false });
   };
 
-  render() {
+  render(): JSX.Element {
     const { title, items, onRemove, onAdd, onSave } = this.props;
     const { isCreateMode } = this.state;
     const itemNodes = items.map((item) => (

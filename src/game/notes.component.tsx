@@ -43,7 +43,7 @@ type Props = {
 };
 
 class Notes extends React.Component<Props> {
-  getPlayersRow() {
+  getPlayersRow(): JSX.Element {
     const { players, selectedPlayerId, isQuestion } = this.props;
     const playerNodes = players.map((player) => (
       <th key={player.id} className="notes-player">
@@ -88,7 +88,7 @@ class Notes extends React.Component<Props> {
     );
   }
 
-  getGroupRows = (group: PieceGroupType) => {
+  getGroupRows = (group: PieceGroupType): JSX.Element => {
     const {
       players,
       questionsByPlayerIdByPieceId,
@@ -122,7 +122,7 @@ class Notes extends React.Component<Props> {
     );
   };
 
-  handleAnswerClick = (evt: React.SyntheticEvent<HTMLButtonElement>) => {
+  handleAnswerClick = (evt: React.SyntheticEvent<HTMLButtonElement>): void => {
     const answer = +(evt.currentTarget.getAttribute('data-answer') || -1);
 
     if (answer === 0 || answer === 1) {
@@ -130,7 +130,7 @@ class Notes extends React.Component<Props> {
     }
   };
 
-  handleAnswer = (answer: QuestionAnswerType) => {
+  handleAnswer = (answer: QuestionAnswerType): void => {
     const {
       onAnswer,
       onPlayerToggle,
@@ -153,12 +153,12 @@ class Notes extends React.Component<Props> {
     }
   };
 
-  handlePieceToggle = (pieceId: string) => {
+  handlePieceToggle = (pieceId: string): void => {
     const { onPieceToggle } = this.props;
     onPieceToggle(pieceId);
   };
 
-  handleStatusToggle = (playerId: string, pieceId: string) => {
+  handleStatusToggle = (playerId: string, pieceId: string): void => {
     const { onStatusToggle, onPieceToggle, isQuestion } = this.props;
 
     if (isQuestion) {
@@ -169,7 +169,9 @@ class Notes extends React.Component<Props> {
     }
   };
 
-  handlePlayerToggleClick = (evt: React.SyntheticEvent<HTMLButtonElement>) => {
+  handlePlayerToggleClick = (
+    evt: React.SyntheticEvent<HTMLButtonElement>
+  ): void => {
     const playerId = evt.currentTarget.getAttribute('data-player-id');
     const { onPlayerToggle } = this.props;
 
@@ -178,7 +180,7 @@ class Notes extends React.Component<Props> {
     }
   };
 
-  render() {
+  render(): JSX.Element {
     const {
       piecesByGroup,
       players,

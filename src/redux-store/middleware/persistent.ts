@@ -23,7 +23,7 @@ function createPersistentMiddleware({
   };
 }
 
-function getPersistedState(storage = getDefaultStorage()) {
+function getPersistedState(storage = getDefaultStorage()): unknown {
   const serializedState = storage.getItem('state');
 
   try {

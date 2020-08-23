@@ -48,7 +48,7 @@ module.exports = {
       ],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
-        '@typescript-eslint/ban-ts-ignore': 'warn',
+        '@typescript-eslint/ban-ts-comment': 'warn',
         'react/prop-types': 'off',
       },
     },

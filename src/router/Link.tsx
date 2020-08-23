@@ -9,7 +9,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-function Link({ className, path, children }: Props) {
+function Link({ className, path, children }: Props): JSX.Element {
   const router = useRouter();
   const handleClick = useCallback(
     (evt: React.SyntheticEvent<HTMLAnchorElement>) => {

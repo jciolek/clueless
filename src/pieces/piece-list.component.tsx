@@ -16,14 +16,14 @@ class PieceList extends React.Component<Props> {
     onRemove: undefined,
   };
 
-  handleAdd = (name: string, groupId: string) => {
+  handleAdd = (name: string, groupId: string): void => {
     const { onAdd } = this.props;
     if (onAdd) {
       onAdd(groupId, name);
     }
   };
 
-  render() {
+  render(): Array<JSX.Element> {
     const { onSave, onRemove, onAdd, groups } = this.props;
 
     return groups.map((group) => (

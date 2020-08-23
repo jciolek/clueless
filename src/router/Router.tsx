@@ -6,7 +6,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-function Router({ children }: Props) {
+function Router({ children }: Props): JSX.Element {
   const [history] = useState(createBrowserHistory());
   const [location, setLocation] = useState(history.location);
   // We need to add listener here and not in the useEffect hook,

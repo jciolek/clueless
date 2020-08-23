@@ -24,12 +24,12 @@ class ItemInput extends React.Component<Props, State> {
     };
   }
 
-  handleChange = (evt: React.SyntheticEvent<HTMLInputElement>) => {
+  handleChange = (evt: React.SyntheticEvent<HTMLInputElement>): void => {
     const name = evt.currentTarget.value;
     this.setState({ name, isSaveEnabled: !!name });
   };
 
-  handleSave = () => {
+  handleSave = (): void => {
     const { onSave } = this.props;
     const { name, isSaveEnabled } = this.state;
 
@@ -38,7 +38,7 @@ class ItemInput extends React.Component<Props, State> {
     }
   };
 
-  render() {
+  render(): JSX.Element {
     const { onCancel, onRemove, onSave } = this.props;
     const { name, isSaveEnabled } = this.state;
 

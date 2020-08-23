@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import RouterContext from './RouterContext';
+import type { RouterType } from './types';
 
-function useRouter() {
+function useRouter(): RouterType {
   const router = useContext(RouterContext);
 
   if (router === undefined) {

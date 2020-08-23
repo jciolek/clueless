@@ -5,7 +5,7 @@ type Props = {
   onEdit?: () => void;
 };
 
-function ItemText({ name, onEdit }: Props) {
+function ItemText({ name, onEdit }: Props): JSX.Element {
   return (
     <div className="grid-x grid-margin-x align-middle">
       <div className="cell auto">{name}</div>

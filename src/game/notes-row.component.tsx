@@ -29,12 +29,12 @@ const statusMap = {
 type StatusType = keyof typeof statusMap;
 
 class NotesRow extends React.Component<Props> {
-  handlePieceToggle = () => {
+  handlePieceToggle = (): void => {
     const { piece, onPieceToggle } = this.props;
     onPieceToggle(piece.id);
   };
 
-  handleStatusToggle = (evt: React.SyntheticEvent<HTMLButtonElement>) => {
+  handleStatusToggle = (evt: React.SyntheticEvent<HTMLButtonElement>): void => {
     const playerId = evt.currentTarget.getAttribute('data-player-id');
     const { piece, onStatusToggle } = this.props;
 
@@ -43,7 +43,7 @@ class NotesRow extends React.Component<Props> {
     }
   };
 
-  render() {
+  render(): JSX.Element {
     const {
       piece,
       players,

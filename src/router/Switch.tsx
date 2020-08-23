@@ -13,7 +13,7 @@ function isSwitchChild(node: React.ReactNode): node is SwitchChild {
   return isRouteElement(node) || isRedirectElement(node);
 }
 
-function Switch({ children }: Props) {
+function Switch({ children }: Props): JSX.Element | null {
   const { location } = useRouter();
   const switchChildren = React.Children.toArray(children).filter<SwitchChild>(
     isSwitchChild

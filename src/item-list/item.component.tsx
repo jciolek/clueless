@@ -35,11 +35,11 @@ class Item extends React.Component<Props, State> {
     };
   }
 
-  handleEdit = () => {
+  handleEdit = (): void => {
     this.setState({ isEditMode: true });
   };
 
-  handleCancel = () => {
+  handleCancel = (): void => {
     const { onCancel } = this.props;
 
     this.setState({ isEditMode: false });
@@ -49,7 +49,7 @@ class Item extends React.Component<Props, State> {
     }
   };
 
-  handleSave = (name: string) => {
+  handleSave = (name: string): void => {
     const { id, onSave } = this.props;
 
     this.setState({ isEditMode: false });
@@ -58,7 +58,7 @@ class Item extends React.Component<Props, State> {
     }
   };
 
-  handleRemove = () => {
+  handleRemove = (): void => {
     const { id, onRemove } = this.props;
 
     if (onRemove && id !== undefined) {
@@ -66,7 +66,7 @@ class Item extends React.Component<Props, State> {
     }
   };
 
-  render() {
+  render(): JSX.Element {
     const { name, onRemove, onSave } = this.props;
     const { isEditMode } = this.state;
     const className = ['callout', 'small'];

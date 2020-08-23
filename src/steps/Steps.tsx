@@ -23,7 +23,7 @@ const stepList: StepType[] = [
   },
 ];
 
-function Steps() {
+function Steps(): JSX.Element {
   const { location } = useRouter();
   const menuItemNodes = stepList.map((step) => {
     const className = step.path === location.pathname ? 'is-active' : '';

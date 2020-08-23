@@ -1,5 +1,5 @@
 import { AnyAction, Middleware } from 'redux';
-import {
+import type {
   ValidatorType,
   ErrorActionType,
   ValidatorMapType,
@@ -49,7 +49,7 @@ function combineValidators<State>(
   };
 }
 
-function createError(action: AnyAction, error: string) {
+function createError(action: AnyAction, error: string): ErrorActionType {
   return {
     ...action,
     error: true,
