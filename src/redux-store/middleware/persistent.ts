@@ -1,4 +1,7 @@
-function getDefaultStorage() {
+import type { Middleware } from 'redux';
+import type { StorageType } from './types';
+
+function getDefaultStorage(): StorageType {
   return typeof window !== 'undefined' && window.localStorage
     ? window.localStorage
     : {
@@ -7,7 +10,9 @@ function getDefaultStorage() {
       };
 }
 
-function createPersistentMiddleware({ storage = getDefaultStorage() } = {}) {
+function createPersistentMiddleware({
+  storage = getDefaultStorage(),
+} = {}): Middleware {
   return (store) => (next) => (action) => {
     const result = next(action);
     const serializedState = JSON.stringify(store.getState());
@@ -21,7 +26,15 @@ function createPersistentMiddleware({ storage = getDefaultStorage() } = {}) {
 function getPersistedState(storage = getDefaultStorage()) {
   const serializedState = storage.getItem('state');
 
-  return serializedState ? JSON.parse(serializedState) : undefined;
+  try {
+    if (serializedState) {
+      return JSON.parse(serializedState);
+    }
+  } catch (err) {
+    return undefined;
+  }
+
+  return undefined;
 }
 
 export default createPersistentMiddleware;

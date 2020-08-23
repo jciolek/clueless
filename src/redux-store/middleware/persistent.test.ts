@@ -1,8 +1,15 @@
 import createMockStore from '@/test/createMockStore';
+import type { MockStoreType } from '@/test/types';
+import type { Middleware, Dispatch, AnyAction } from 'redux';
 import createPersistentMiddleware, { getPersistedState } from './persistent';
+import type { StorageType } from './types';
+
+interface DispatchInterface extends Dispatch {
+  (action: AnyAction): AnyAction;
+}
 
 describe('persistent middleware', () => {
-  let storage;
+  let storage: StorageType;
 
   beforeEach(() => {
     storage = {
@@ -12,14 +19,14 @@ describe('persistent middleware', () => {
   });
 
   describe('createPersistentMiddleware', () => {
-    let store;
-    let middleware;
-    let next;
+    let store: MockStoreType;
+    let middleware: Middleware;
+    let next: jest.MockedFunction<DispatchInterface>;
 
     beforeEach(() => {
       store = createMockStore(() => ({ prop: 'value' }));
       middleware = createPersistentMiddleware({ storage });
-      next = jest.fn(() => ({ type: 'RESULT' }));
+      next = jest.fn((action) => ({ type: 'RESULT' }));
     });
 
     it('should pass through an action and return result', () => {
@@ -57,14 +64,20 @@ describe('persistent middleware', () => {
         JSON.stringify(store.getState())
       );
 
-      Object.defineProperty(window, 'localStorage', localStorage);
+      Object.defineProperty(
+        window,
+        'localStorage',
+        localStorage || {
+          get: () => undefined,
+        }
+      );
     });
 
     it('should store state *after* passing the action through', () => {
-      next = (action) => {
+      next = jest.fn((action) => {
         expect(storage.setItem).not.toHaveBeenCalled();
         return action;
-      };
+      });
 
       middleware(store)(next)({});
 
@@ -80,14 +93,18 @@ describe('persistent middleware', () => {
         window,
         'localStorage'
       );
-      delete window.localStorage;
+      Object.defineProperty(window, 'localStorage', {
+        get: () => undefined,
+      });
 
       middleware = createPersistentMiddleware();
 
       expect(() => middleware(store)(next)(action)).not.toThrow();
       expect(next).toHaveBeenCalledWith(action);
 
-      Object.defineProperty(window, 'localStorage', localStorage);
+      if (localStorage) {
+        Object.defineProperty(window, 'localStorage', localStorage);
+      }
     });
   });
 
@@ -97,10 +114,14 @@ describe('persistent middleware', () => {
         window,
         'localStorage'
       );
-      delete window.localStorage;
+      Object.defineProperty(window, 'localStorage', {
+        get: () => undefined,
+      });
 
       expect(getPersistedState()).toBe(undefined);
-      Object.defineProperty(window, 'localStorage', localStorage);
+      if (localStorage) {
+        Object.defineProperty(window, 'localStorage', localStorage);
+      }
     });
 
     it('should use localStorage "state" key', () => {
@@ -118,7 +139,13 @@ describe('persistent middleware', () => {
       });
       expect(storage.getItem).toHaveBeenCalledWith('state');
 
-      Object.defineProperty(window, 'localStorage', localStorage);
+      Object.defineProperty(
+        window,
+        'localStorage',
+        localStorage || {
+          get: () => undefined,
+        }
+      );
     });
 
     it('should use given storage', () => {
