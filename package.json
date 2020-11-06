@@ -7,7 +7,7 @@
     "build": "NODE_ENV=production webpack",
     "test": "jest --verbose",
     "test:watch": "npm run test -- --watch",
-    "dev": "NODE_ENV=development webpack-dev-server",
+    "start": "NODE_ENV=development webpack-dev-server",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "types": "tsc"
   },
