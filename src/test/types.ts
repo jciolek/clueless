@@ -6,7 +6,9 @@ export type MockStoreType<R extends Reducer = Reducer> = {
   getState: () => ReturnType<R>;
 };
 
-export type SagaMockStoreType<R extends Reducer = Reducer> = MockStoreType & {
+export type SagaMockStoreType<R extends Reducer = Reducer> = MockStoreType<
+  R
+> & {
   output: Array<AnyAction>;
   runner: Task;
 };
