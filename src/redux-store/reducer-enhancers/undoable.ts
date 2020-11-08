@@ -1,10 +1,16 @@
+import type { AnyAction, Reducer } from 'redux';
+import type { UndoableEnhancerProps, UndoableStateType } from './types';
+
 function createUndoableEnhancer({
   stateProp = 'undoable',
   undoType = 'UNDO',
   redoType = 'REDO',
   undoLevels = 5,
-} = {}) {
-  return (reducer) => (state, action) => {
+}: UndoableEnhancerProps = {}) {
+  return <R extends Reducer = Reducer>(reducer: R) => (
+    state: UndoableStateType<ReturnType<R>> | undefined,
+    action: AnyAction
+  ): UndoableStateType<ReturnType<R>> => {
     if (!state) {
       return {
         ...reducer(state, action),
@@ -15,9 +21,10 @@ function createUndoableEnhancer({
       };
     }
 
-    let currState = { ...state };
-    delete currState[stateProp];
-    let { past, future } = state[stateProp];
+    let {
+      [stateProp]: { past, future },
+      ...currState
+    } = state;
 
     if (action.type === undoType && state[stateProp].past.length) {
       future = [currState, ...future];

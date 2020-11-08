@@ -1,24 +1,26 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer, Dispatch } from '@reduxjs/toolkit';
 import createMockStore from '@/test/createMockStore';
+import type { MockStoreType } from '@/test/types';
 import createUndoableEnhancer from './undoable';
+import type { UndoableEnhancerProps } from './types';
+
+const mockReducer = createReducer(
+  { counter: 0 },
+  {
+    ACTION: (state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.counter += 1;
+    },
+  }
+);
 
 describe('undoable enhancer', () => {
-  let reducer;
-  let store;
-  let dispatch;
+  let reducer: jest.MockedFunction<typeof mockReducer>;
+  let dispatch: Dispatch;
+  let store: MockStoreType;
 
-  function createUndoableStore(props) {
-    reducer = jest.fn(
-      createReducer(
-        { counter: 0 },
-        {
-          ACTION: (state) => {
-            // eslint-disable-next-line no-param-reassign
-            state.counter += 1;
-          },
-        }
-      )
-    );
+  function createUndoableStore(props?: UndoableEnhancerProps) {
+    reducer = jest.fn(mockReducer);
     store = createMockStore(createUndoableEnhancer(props)(reducer));
     ({ dispatch } = store);
   }
@@ -28,7 +30,7 @@ describe('undoable enhancer', () => {
   });
 
   it('should call the original reducer', () => {
-    expect(reducer).toHaveBeenCalledOnce;
+    expect(reducer).toHaveBeenCalledTimes(1);
     expect(reducer).toHaveBeenCalledWith(undefined, {});
   });
 

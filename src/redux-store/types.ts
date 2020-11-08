@@ -3,7 +3,7 @@ import reducer from './reducer';
 
 export type ReducerType = typeof reducer;
 
-export type StateType = NonNullable<Parameters<ReducerType>[0]>;
+export type StateType = ReturnType<ReducerType>;
 
 export type ErrorActionType<A = AnyAction> = A & {
   error: true;
