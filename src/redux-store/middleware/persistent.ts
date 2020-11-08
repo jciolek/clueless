@@ -23,7 +23,8 @@ function createPersistentMiddleware({
   };
 }
 
-function getPersistedState(storage = getDefaultStorage()): unknown {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getPersistedState(storage = getDefaultStorage()): any {
   const serializedState = storage.getItem('state');
 
   try {

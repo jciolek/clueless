@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import type { EnhancedStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import {
   createAutoIdMiddleware,
@@ -11,10 +12,14 @@ import saga from './saga';
 import reducer from './reducer';
 import validator from './validator';
 import actions from './actions';
+import type { UndoableStateType } from './reducer-enhancers/types';
+import type { StateType } from './types';
 
-let store = null;
+type StoreType = EnhancedStore<UndoableStateType<StateType>>;
 
-function createStore() {
+let store: StoreType;
+
+function createStore(): StoreType {
   const sagaMiddleware = createSagaMiddleware();
   const newStore = configureStore({
     reducer: createUndoableEnhancer({
@@ -36,7 +41,7 @@ function createStore() {
   return newStore;
 }
 
-function getStore() {
+function getStore(): StoreType {
   if (!store) {
     store = createStore();
   }

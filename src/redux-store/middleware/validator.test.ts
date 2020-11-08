@@ -1,6 +1,6 @@
 import createMockStore from '@/test/createMockStore';
-import { Middleware, Dispatch, AnyAction } from 'redux';
-import { MockStoreType } from '@/test/types';
+import type { Middleware, Dispatch, AnyAction } from 'redux';
+import type { MockStoreType } from '@/test/types';
 import createValidatorMiddleware, {
   createValidator,
   combineValidators,

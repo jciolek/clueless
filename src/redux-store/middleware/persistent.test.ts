@@ -26,6 +26,7 @@ describe('persistent middleware', () => {
     beforeEach(() => {
       store = createMockStore(() => ({ prop: 'value' }));
       middleware = createPersistentMiddleware({ storage });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       next = jest.fn((action) => ({ type: 'RESULT' }));
     });
 
