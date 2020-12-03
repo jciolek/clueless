@@ -6,7 +6,7 @@ import type {
   QuestionPiecesType,
   QuestionAnswerType,
 } from '@/questions/types';
-import NotesRow from './notes-row.component';
+import NotesRow from './NotesRow';
 
 type Props = {
   piecesByGroup: PieceGroupType[];

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import ItemText from './item-text.component';
-import ItemInput from './item-input.component';
+import ItemText from './ItemText';
+import ItemInput from './ItemInput';
 
 type Props = {
   id?: string;

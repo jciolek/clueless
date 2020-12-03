@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Item from './item.component';
+import Item from './Item';
 import type { ItemType } from './types';
 
 type MetaType = any;
