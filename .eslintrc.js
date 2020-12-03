@@ -11,6 +11,8 @@ module.exports = {
     'prettier/prettier': 'error',
     'jsx-a11y/anchor-is-valid': ['error', { components: [] }],
     'react/jsx-props-no-spreading': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-uses-react': 'off',
     'react/static-property-placement': ['error', 'static public field'],
     'import/extensions': [
       'error',
@@ -52,6 +54,7 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/ban-ts-comment': 'warn',
         'react/prop-types': 'off',
+        'react/require-default-props': 'off',
       },
     },
     {

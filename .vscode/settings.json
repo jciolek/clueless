@@ -27,5 +27,9 @@
   "javascript.preferences.importModuleSpecifier": "non-relative",
   "flow.enabled": false,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.language": "en-GB"
+  "cSpell.language": "en-GB",
+  "cSpell.words": [
+    "Undoable",
+    "autoid"
+  ]
 }

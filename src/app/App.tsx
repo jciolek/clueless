@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { hot } from 'react-hot-loader/root';
 import { Route, Redirect, Switch } from '@/router';
-import PlayerListContainer from '@/players/player-list.container';
-import PieceListContainer from '@/pieces/piece-list.container';
+import PlayerListContainer from '@/players/PlayerList';
+import PieceList from '@/pieces/PieceList';
 import NotesContainer from '@/game/notes.container';
 import Steps from '@/steps/Steps';
 
-function App() {
+function App(): JSX.Element {
   return (
     <div className="grid-container">
       <div className="grid-x grid-margin-x grid-padding-x">
@@ -15,7 +14,7 @@ function App() {
           <Steps />
           <Switch>
             <Route route="/pieces">
-              <PieceListContainer />
+              <PieceList />
             </Route>
             <Route route="/players">
               <PlayerListContainer />
@@ -31,4 +30,4 @@ function App() {
   );
 }
 
-export default hot(App);
+export default App;

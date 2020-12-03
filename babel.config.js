@@ -1,6 +1,11 @@
 module.exports = {
   presets: [
-    '@babel/react',
+    [
+      '@babel/react',
+      {
+        runtime: 'automatic',
+      },
+    ],
     [
       '@babel/env',
       {
@@ -18,7 +23,6 @@ module.exports = {
     '@babel/transform-runtime',
     '@babel/proposal-class-properties',
     'lodash',
-    'react-hot-loader/babel',
     [
       'module-resolver',
       {
